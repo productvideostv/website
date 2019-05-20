@@ -123,14 +123,15 @@
 							var ytplayer;
 							function onYouTubeIframeAPIReady()
 							{
-							  ytplayer = new YT.Player('myytplayer', {
-								height: 100,
-								width: 300,
-								videoId: '8tPnX7OPo0Q',
-								playerVars: {
-								  iv_load_policy: 3  // hide annotations
-								}
-							  });
+								  ytplayer = new YT.Player('myytplayer', {
+									height: 800,
+									width: 600,
+									videoId: '8tPnX7OPo0Q',
+									playerVars: {
+									  iv_load_policy: 3  // hide annotations
+									}
+								});
+								ytplayer.playVideo();
 							}
 						</script>
 					</div>
