@@ -124,15 +124,24 @@
 							function onYouTubeIframeAPIReady()
 							{
 								  ytplayer = new YT.Player('myytplayer', {
-									height: 800,
-									width: 600,
-									videoId: '8tPnX7OPo0Q',
+									height: 640,
+									width: 480,
+									videoId: '04F4xlWSFh0',
 									playerVars: {
 									  iv_load_policy: 3  // hide annotations
+									},
+									events: {
+										'onReady': onPlayerReady
 									}
 								});
-								ytplayer.playVideo();
 							}
+							
+							function onPlayerReady(event) 
+							{
+								event.target.playVideo();
+							}
+
+							
 						</script>
 					</div>
 				</div>
