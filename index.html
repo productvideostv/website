@@ -158,7 +158,7 @@
 								if(a.data==YT.PlayerState.ENDED)
 								{
 									//var url = "https://www.youtube.com/watch?v=T_aIzRZmwuQ";
-									var url = parsedResults[1]["VideoURL"];
+									var url = parsedResults.data[1]["VideoURL"];
 									console.log(url);
 									var videoid = url.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
 									if(videoid != null) 
