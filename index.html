@@ -142,6 +142,7 @@
 												var url = parsedResults.data[videoIndex]["VideoURL"];
 												console.log(url);
 												var videoId = getYouTubeVideoIdFromUrl(url);
+												console.log(videoId);
 												videoIndex++;
 												ytplayer = new YT.Player('myytplayer', {
 													width: 640,
@@ -175,6 +176,7 @@
 									var url = parsedResults.data[videoIndex]["VideoURL"];
 									console.log(url);
 									var videoId = getYouTubeVideoIdFromUrl(url);
+									console.log(videoId);
 									if(videoId != null) 
 									{
 									   console.log("video Id = ",videoId[1]);
