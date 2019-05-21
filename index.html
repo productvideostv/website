@@ -120,9 +120,16 @@
 							tag.src = "https://www.youtube.com/iframe_api";
 							var firstScriptTag = document.getElementsByTagName('script')[0];
 							firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+							
+							function getYouTubeVideoIdFromUrl(url)
+							{
+								var videoId = url.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+								return videoId;
+							}
 
 							var parsedResults;
 							var ytplayer;
+							var videoIndex = 0;
 							function onYouTubeIframeAPIReady()
 							{
 								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
@@ -132,10 +139,14 @@
 										complete: function(results) {
 												parsedResults = results;
 												console.log(results);
+												var url = parsedResults.data[videoIndex]["VideoURL"];
+												console.log(url);
+												var videoId = getYouTubeVideoIdFromUrl(url);
+												videoIndex++;
 												ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
-													videoId: '04F4xlWSFh0',
+													videoId: videoId,
 													playerVars: {
 													  iv_load_policy: 3  // hide annotations
 													},
@@ -155,16 +166,20 @@
 							
 							function onytplayerStateChange(a)
 							{
+								if (videoIndex == parsedResults.length)
+								{
+									return;
+								}
 								if(a.data==YT.PlayerState.ENDED)
 								{
-									//var url = "https://www.youtube.com/watch?v=T_aIzRZmwuQ";
-									var url = parsedResults.data[1]["VideoURL"];
+									var url = parsedResults.data[videoIndex]["VideoURL"];
 									console.log(url);
-									var videoid = url.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
-									if(videoid != null) 
+									var videoId = getYouTubeVideoIdFromUrl(url);
+									if(videoId != null) 
 									{
-									   console.log("video id = ",videoid[1]);
-									   ytplayer.loadVideoById(videoid[1]);
+									   console.log("video Id = ",videoId[1]);
+									   videoIndex++;
+									   ytplayer.loadVideoById(videoId[1]);
 									} 
 									else 
 									{ 
