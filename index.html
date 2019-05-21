@@ -124,7 +124,7 @@
 							function getYouTubeVideoIdFromUrl(url)
 							{
 								var videoId = url.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
-								return videoId;
+								return videoId[1];
 							}
 
 							var parsedResults;
@@ -179,9 +179,9 @@
 									console.log(videoId);
 									if(videoId != null) 
 									{
-									   console.log("video Id = ",videoId[1]);
+									   console.log("video Id = ",videoId);
 									   videoIndex++;
-									   ytplayer.loadVideoById(videoId[1]);
+									   ytplayer.loadVideoById(videoId);
 									} 
 									else 
 									{ 
