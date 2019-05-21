@@ -78,7 +78,7 @@
 		</style>
 		
 		<script src="https://apis.google.com/js/client.js?onload=clientApiLoaded"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 		<script src="https://www.papaparse.com/resources/js/papaparse.js"></script>
 		<script type="text/javascript">
 			/* =============================
@@ -131,7 +131,7 @@
 										header: true,
 										complete: function(results) {
 												parsedResults = results;
-												//console.log(results);
+												console.log(results);
 												ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
@@ -158,7 +158,8 @@
 								if(a.data==YT.PlayerState.ENDED)
 								{
 									//var url = "https://www.youtube.com/watch?v=T_aIzRZmwuQ";
-									var url = parsedResults[1][1];
+									var url = parsedResults[1]["VideoURL"];
+									console.log(url);
 									var videoid = url.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
 									if(videoid != null) 
 									{
