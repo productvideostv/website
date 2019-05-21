@@ -124,14 +124,15 @@
 							function onYouTubeIframeAPIReady()
 							{
 								  ytplayer = new YT.Player('myytplayer', {
-									height: 640,
-									width: 480,
+									width: 640,
+									height: 480,
 									videoId: '04F4xlWSFh0',
 									playerVars: {
 									  iv_load_policy: 3  // hide annotations
 									},
 									events: {
-										'onReady': onPlayerReady
+										'onReady': onPlayerReady,
+										'onStateChange': onytplayerStateChange
 									}
 								});
 							}
@@ -139,6 +140,14 @@
 							function onPlayerReady(event) 
 							{
 								event.target.playVideo();
+							}
+							
+							function onytplayerStateChange(a)
+							{
+								if(a.data==YT.PlayerState.ENDED)
+								{
+									ytplayer.loadVideoByUrl("https://www.youtube.com/watch?v=T_aIzRZmwuQ")
+								}
 							}
 
 							
