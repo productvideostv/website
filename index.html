@@ -146,7 +146,18 @@
 							{
 								if(a.data==YT.PlayerState.ENDED)
 								{
-									ytplayer.loadVideoById("T_aIzRZmwuQ");
+									var url = "https://www.youtube.com/watch?v=T_aIzRZmwuQ";
+									var videoid = url.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+									if(videoid != null) 
+									{
+									   console.log("video id = ",videoid[1]);
+									   ytplayer.loadVideoById(videoid[1]);
+									} 
+									else 
+									{ 
+										console.log("The youtube url is not valid.");
+										ytplayer.loadVideoById("VlnWVKe75ZY");
+									}
 								}
 							}
 
