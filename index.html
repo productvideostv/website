@@ -79,6 +79,7 @@
 		
 		<script src="https://apis.google.com/js/client.js?onload=clientApiLoaded"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script src="https://www.papaparse.com/resources/js/papaparse.js"></script>
 		<script type="text/javascript">
 			/* =============================
 			This script generates sample text for the body content. 
@@ -120,21 +121,31 @@
 							var firstScriptTag = document.getElementsByTagName('script')[0];
 							firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+							var parsedResults;
 							var ytplayer;
 							function onYouTubeIframeAPIReady()
 							{
-								  ytplayer = new YT.Player('myytplayer', {
-									width: 640,
-									height: 480,
-									videoId: '04F4xlWSFh0',
-									playerVars: {
-									  iv_load_policy: 3  // hide annotations
-									},
-									events: {
-										'onReady': onPlayerReady,
-										'onStateChange': onytplayerStateChange
-									}
-								});
+								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
+										download: true,
+										delimiter: ';',
+										header: true,
+										complete: function(results) {
+												parsedResults = results;
+												//console.log(results);
+												ytplayer = new YT.Player('myytplayer', {
+													width: 640,
+													height: 480,
+													videoId: '04F4xlWSFh0',
+													playerVars: {
+													  iv_load_policy: 3  // hide annotations
+													},
+													events: {
+														'onReady': onPlayerReady,
+														'onStateChange': onytplayerStateChange
+													}
+												});
+											}
+									})
 							}
 							
 							function onPlayerReady(event) 
@@ -146,7 +157,8 @@
 							{
 								if(a.data==YT.PlayerState.ENDED)
 								{
-									var url = "https://www.youtube.com/watch?v=T_aIzRZmwuQ";
+									//var url = "https://www.youtube.com/watch?v=T_aIzRZmwuQ";
+									var url = parsedResults[1][1];
 									var videoid = url.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
 									if(videoid != null) 
 									{
