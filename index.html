@@ -126,10 +126,43 @@
 								var videoId = url.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
 								return videoId[1];
 							}
+							
+							var videoIndex = 0;
+							function getVideoIdToPlayNext(parsedVideos)
+							{
+								if (videoIndex >= parsedVideos.length)
+								{
+									return null;
+								}
+								var videoId;
+								while(videoIndex < parsedVideos.length)
+								{
+									var url = parsedVideos[videoIndex]["VideoURL"];
+									console.log(url);
+									videoId = getYouTubeVideoIdFromUrl(url);
+									console.log(videoId);	
+									if (localStorage.getItem(videoId) == null)
+									{
+										break;
+									}
+									videoIndex++;
+								}
+								if (videoIndex >= parsedVideos.length)
+								{
+									return null;
+								}
+								return videoId;
+							}
+							
+							function storePlayedVideoId(videoId)
+							{
+								localStorage.setItem(videoId, videoId);
+								videoIndex++;
+							}
 
 							var parsedResults;
 							var ytplayer;
-							var videoIndex = 0;
+							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
 								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
@@ -139,15 +172,11 @@
 										complete: function(results) {
 												parsedResults = results;
 												console.log(results);
-												var url = parsedResults.data[videoIndex]["VideoURL"];
-												console.log(url);
-												var videoId = getYouTubeVideoIdFromUrl(url);
-												console.log(videoId);
-												videoIndex++;
+												currentVideoId = getVideoIdToPlayNext(parsedVideos.data);
 												ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
-													videoId: videoId,
+													videoId: currentVideoId,
 													playerVars: {
 													  iv_load_policy: 3  // hide annotations
 													},
@@ -167,26 +196,18 @@
 							
 							function onytplayerStateChange(a)
 							{
-								if (videoIndex == parsedResults.length)
-								{
-									return;
-								}
 								if(a.data==YT.PlayerState.ENDED)
 								{
-									var url = parsedResults.data[videoIndex]["VideoURL"];
-									console.log(url);
-									var videoId = getYouTubeVideoIdFromUrl(url);
-									console.log(videoId);
+									storePlayedVideoId(currentVideoId);
+									var videoId = getVideoIdToPlayNext(parsedVideos.data);
 									if(videoId != null) 
 									{
-									   console.log("video Id = ",videoId);
-									   videoIndex++;
 									   ytplayer.loadVideoById(videoId);
 									} 
 									else 
 									{ 
 										console.log("The youtube url is not valid.");
-										ytplayer.loadVideoById("VlnWVKe75ZY");
+										ytplayer.stopVideo();
 									}
 								}
 							}
