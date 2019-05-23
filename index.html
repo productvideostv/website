@@ -218,18 +218,6 @@
 							function onPlayerReady(event) 
 							{
 								event.target.playVideo();
-								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
-										download: true,
-										delimiter: ';',
-										header: true,
-										complete: function(results) 
-										{
-												parsedResults = results;
-												console.log(results);
-												playFirstVideo(parsedResults.data);
-												buildPlaylist(parsedResults.data);
-										}
-									});
 							}
 							
 							function playFirstVideo(parsedVideos)
