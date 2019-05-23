@@ -122,10 +122,18 @@
 
 						<script type="text/javascript">
 									
-							var tag = document.createElement('script');
-							tag.src = "https://www.youtube.com/iframe_api";
-							var firstScriptTag = document.getElementsByTagName('script')[0];
-							firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+							Papa.parse("https://productvideostv.github.io/website/productvideosplaylist.csv", {
+										download: true,
+										delimiter: ';',
+										header: true,
+										complete: function(results) 
+										{
+												parsedResults = results;
+												console.log(results);
+												setUpYouTubePlayer();
+												buildplaylist(parsedResults.data);
+										}
+									});
 							
 						</script>
 					</div>

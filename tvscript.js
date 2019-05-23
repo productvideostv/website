@@ -1,24 +1,12 @@
 							var parsedResults;							
 							
-							Papa.parse("https://productvideostv.github.io/website/productvideosplaylist.csv", {
-										download: true,
-										delimiter: ';',
-										header: true,
-										complete: function(results) 
-										{
-												parsedResults = results;
-												console.log(results);
-												buildplaylist(parsedResults.data);
-										}
-									});
 									
-							
-							while(true)
+							function setUpYouTubePlayer()
 							{
-								await Sleep(1000);
-								console.log(parsedResults);
-								if (parsedResults != null)
-									break;
+								var tag = document.createElement('script');
+								tag.src = "https://www.youtube.com/iframe_api";
+								var firstScriptTag = document.getElementsByTagName('script')[0];
+								firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 							}
 							
 							function Sleep(ms) 
