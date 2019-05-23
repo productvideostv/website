@@ -6,9 +6,9 @@
 										header: true,
 										complete: function(results) 
 										{
-												parsedresults = results;
+												parsedResults = results;
 												console.log(results);
-												buildplaylist(parsedresults.data);
+												buildplaylist(parsedResults.data);
 										}
 									});
 							
@@ -89,7 +89,7 @@
 							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
-								var currentVideoId = getVideoIdToPlayNext(parsedresults.data);
+								var currentVideoId = getVideoIdToPlayNext(parsedResults.data);
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
