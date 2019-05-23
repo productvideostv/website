@@ -1,6 +1,6 @@
 							var parsedResults;
 
-							Papa.parse("https://productvideostv.github.io/website/productvideosplaylist.csv", {
+							Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
 										download: true,
 										delimiter: ';',
 										header: true,
