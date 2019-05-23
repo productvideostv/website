@@ -11,18 +11,15 @@
 												buildplaylist(parsedResults.data);
 										}
 									});
+									
+							var wait = ms => new Promise((r, j)=>setTimeout(r, ms))
 							
 							while(true)
 							{
-								Sleep(1000);
+								await Sleep(1000);
 								console.log(parsedResults);
 								if (parsedResults != null)
 									break;
-							}
-							
-							function Sleep(ms) 
-							{
-								return new Promise(resolve => setTimeout(resolve, ms));
 							}
 							
 							function getYouTubeVideoIdFromUrl(url)
