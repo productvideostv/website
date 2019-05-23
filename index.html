@@ -126,7 +126,6 @@
 
 						<script type="text/javascript">
 							var tag = document.createElement('script');
-
 							tag.src = "https://www.youtube.com/iframe_api";
 							var firstScriptTag = document.getElementsByTagName('script')[0];
 							firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -181,8 +180,11 @@
 											{ "title": "TimeWhenAdded", "type" : "string" }
 										],
 										row_numbers : true,
-										sorting : true,
 //										data : parsedVideos,
+										goto : false, 
+										hover_cols : false, 
+										nav_arrows : false, 
+										sorting : false,
 										search : true,
 										search_auto : true,
 										search_container : "#table_id_search",
@@ -216,24 +218,42 @@
 														'onStateChange': onytplayerStateChange
 													}
 												});
-							}
-							
-							function onPlayerReady(event) 
-							{
 								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
 										download: true,
 										delimiter: ';',
 										header: true,
-										complete: function(results) {
+										complete: function(results) 
+										{
 												parsedResults = results;
 												console.log(results);
 												buildPlaylist(parsedResults.data);
-												currentVideoId = getVideoIdToPlayNext(parsedResults.data);
-												ytplayer.loadVideoById(currentVideoId);
-											}
-									})
-								//event.target.playVideo();
+												playFirstVideo(parsedVideos)
+										}
+									});
 							}
+							
+							var playerReady = false;
+							var played = false;
+							function playFirstVideo(parsedVideos)
+							{
+								if (played)
+									return;
+								while(true)
+								{
+									if (playerReady)
+										break;
+								}
+								played = true;
+								currentVideoId = getVideoIdToPlayNext(parsedVideos);
+								ytplayer.loadVideoById(currentVideoId);
+								
+							}
+							
+							function onPlayerReady(event) 
+							{
+								playerReady = true;
+							}
+							
 							
 							function onytplayerStateChange(a)
 							{
