@@ -77,9 +77,14 @@
 		
 		</style>
 		
+		<link href="css/tTable.css" type="text/css" rel="stylesheet"/>
+		
 		<script src="https://apis.google.com/js/client.js?onload=clientApiLoaded"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 		<script src="https://www.papaparse.com/resources/js/papaparse.js"></script>
+		<script src="js/libs/jquery.min.js"></script>
+		<script src="js/libs/lodash.min.js"></script>
+		<script src="tTable.js"></script>
 		<script type="text/javascript">
 			/* =============================
 			This script generates sample text for the body content. 
@@ -113,6 +118,11 @@
 						<div class="videowrapper">
 							<div id="myytplayer"></div>
 						</div>
+						
+						<div id="table_id"></div>
+						<div id="table_id_pager"></div>
+						<div id="table_id_search"></div>
+
 
 						<script type="text/javascript">
 							var tag = document.createElement('script');
@@ -159,6 +169,37 @@
 								localStorage.setItem(videoId, videoId);
 								videoIndex++;
 							}
+							
+							var playlist;
+							function buildPlaylist(parsedVideos)
+							{
+								playlist = new tTable( {
+										titles : [
+											{ "title": "Title", "type" : "string" },
+											{ "title": "VideoURL", "type" : "string" },
+											{ "title": "Description", "type" : "string" },
+											{ "title": "TimeWhenAdded", "type" : "string" }
+										],
+										row_numbers : true,
+										sorting : true,
+//										data : parsedVideos,
+										search : true,
+										search_auto : true,
+										search_container : "#table_id_search",
+										search_sensitive : true,
+										search_value : "",
+										container : "#table_id",
+										pager : "#table_id_pager"
+									} );
+									
+									for(int index = 0; index < parsedVideos.length; ++index)
+									{
+										var parsedVideo = parsedVideos[index];
+										var row = [parsedVideo["Title"], parsedVideo["VideoURL"], 
+													parsedVideo["Description"], parsedVideo["TimeWhenAdded"]];
+										playlist.addRow(row);
+									}
+							}
 
 							var ytplayer;
 							var currentVideoId;
@@ -171,6 +212,7 @@
 										complete: function(results) {
 												parsedResults = results;
 												console.log(results);
+												buildPlaylist(parsedResults.data);
 												currentVideoId = getVideoIdToPlayNext(parsedResults.data);
 												ytplayer = new YT.Player('myytplayer', {
 													width: 640,
