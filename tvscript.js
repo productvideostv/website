@@ -12,6 +12,18 @@
 										}
 									});
 							
+							while(true)
+							{
+								Sleep(1000) ;
+								if (parsedResults != null)
+									break;
+							}
+							
+							function Sleep(ms) 
+							{
+								return new Promise(resolve => setTimeout(resolve, ms));
+							}
+							
 							function getYouTubeVideoIdFromUrl(url)
 							{
 								var videoId = url.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
