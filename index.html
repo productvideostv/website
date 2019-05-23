@@ -125,7 +125,7 @@
 
 
 						<script type="text/javascript">
-							
+								
 							var parsedResults;
 							
 							Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
@@ -137,18 +137,14 @@
 												parsedResults = results;
 												console.log(results);
 												buildPlaylist(parsedResults.data);
-												setUpYouTubePlayer();
 										}
 									});
 									
-							
-							function setUpYouTubePlayer()
-							{
-								var tag = document.createElement('script');
-								tag.src = "https://www.youtube.com/iframe_api";
-								var firstScriptTag = document.getElementsByTagName('script')[0];
-								firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-							}
+							var tag = document.createElement('script');
+							tag.src = "https://www.youtube.com/iframe_api";
+							var firstScriptTag = document.getElementsByTagName('script')[0];
+							firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+									
 							
 							function getYouTubeVideoIdFromUrl(url)
 							{
