@@ -1,5 +1,21 @@
 							var parsedResults;
 							
+							function startPapaParse()
+							{
+								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", 
+									{
+										download: true,
+										delimiter: ';',
+										header: true,
+										complete: function(results) 
+										{
+												parsedResults = results;
+												console.log(results);
+												buildPlaylist(parsedResults.data);
+										}
+									});
+							}
+							
 									
 							function setUpYouTubePlayer()
 							{
