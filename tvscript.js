@@ -1,4 +1,16 @@
-							var parsedResults;							
+							var parsedResults;
+
+							Papa.parse("https://productvideostv.github.io/website/productvideosplaylist.csv", {
+										download: true,
+										delimiter: ';',
+										header: true,
+										complete: function(results) 
+										{
+												parsedResults = results;
+												console.log(results);
+												buildplaylist(parsedResults.data);
+										}
+									});							
 							
 									
 							function setUpYouTubePlayer()
@@ -91,6 +103,33 @@
 							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
+								// var currentVideoId = getVideoIdToPlayNext(parsedResults.data);
+								// ytplayer = new YT.Player('myytplayer', {
+													// width: 640,
+													// height: 480,
+													// //videoId: "8tPnX7OPo0Q",
+													// //videoId: "04F4xlWSFh0",
+													// videoId: currentVideoId,
+													// playerVars: {
+													  // iv_load_policy: 3,  // hide annotations
+													  // autoplay : 1
+													// },
+													// events: {
+														// 'onReady': onPlayerReady,
+														// 'onStateChange': onytplayerStateChange
+													// }
+												// });
+								createYTPlayer();
+							}
+							
+							async function createYTPlayer()
+							{
+								while(true)
+								{
+									await Sleep(500);
+									if (parsedResults != null)
+										break;
+								}
 								var currentVideoId = getVideoIdToPlayNext(parsedResults.data);
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,

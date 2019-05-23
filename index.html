@@ -121,19 +121,8 @@
 
 
 						<script type="text/javascript">
-									
-							Papa.parse("https://productvideostv.github.io/website/productvideosplaylist.csv", {
-										download: true,
-										delimiter: ';',
-										header: true,
-										complete: function(results) 
-										{
-												parsedResults = results;
-												console.log(results);
-												setUpYouTubePlayer();
-												buildplaylist(parsedResults.data);
-										}
-									});
+						
+							setUpYouTubePlayer();
 							
 						</script>
 					</div>
