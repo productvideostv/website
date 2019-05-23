@@ -107,24 +107,14 @@
 							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
-								createYTPlayer();
-							}
-							
-							async function createYTPlayer()
-							{
-								while(true)
-								{
-									await Sleep(500);
-									if (parsedResults != null)
-										break;
-								}
-								var currentVideoId = getVideoIdToPlayNext(parsedResults.data);
+								//createYTPlayer();
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
 													//videoId: "8tPnX7OPo0Q",
 													//videoId: "04F4xlWSFh0",
-													videoId: currentVideoId,
+													videoId: "GlCmAC4MHek",
+													//videoId: currentVideoId,
 													playerVars: {
 													  iv_load_policy: 3,  // hide annotations
 													  autoplay : 1
@@ -136,9 +126,38 @@
 												});
 							}
 							
+							// async function createYTPlayer()
+							// {
+								// while(true)
+								// {
+									// await Sleep(500);
+									// if (parsedResults != null)
+										// break;
+								// }
+								// var currentVideoId = getVideoIdToPlayNext(parsedResults.data);
+								// ytplayer = new YT.Player('myytplayer', {
+													// width: 640,
+													// height: 480,
+													// //videoId: "8tPnX7OPo0Q",
+													// //videoId: "04F4xlWSFh0",
+													// videoId: "GlCmAC4MHek",
+													// //videoId: currentVideoId,
+													// playerVars: {
+													  // iv_load_policy: 3,  // hide annotations
+													  // autoplay : 1
+													// },
+													// events: {
+														// 'onReady': onPlayerReady,
+														// 'onStateChange': onytplayerStateChange
+													// }
+												// });
+							// }
+							
 							function onPlayerReady(event) 
 							{
 								event.target.playVideo();
+								event.target.pauseVideo();
+								waitForParsedResults();
 								// Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
 										// download: true,
 										// delimiter: ';',
@@ -151,6 +170,17 @@
 												// buildPlaylist(parsedResults.data);
 										// }
 									// });
+							}
+							
+							async function waitForParsedResults()
+							{
+								while(true)
+								{
+									await Sleep(500);
+									if (parsedResults != null)
+										break;
+								}
+								ytplayer.playVideo();
 							}
 							
 							// function playFirstVideo(parsedVideos)
