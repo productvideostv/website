@@ -125,10 +125,30 @@
 
 
 						<script type="text/javascript">
-							var tag = document.createElement('script');
-							tag.src = "https://www.youtube.com/iframe_api";
-							var firstScriptTag = document.getElementsByTagName('script')[0];
-							firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+							
+							var parsedResults;
+							
+							Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
+										download: true,
+										delimiter: ';',
+										header: true,
+										complete: function(results) 
+										{
+												parsedResults = results;
+												console.log(results);
+												buildPlaylist(parsedResults.data);
+												setUpYouTubePlayer();
+										}
+									});
+									
+							
+							function setUpYouTubePlayer()
+							{
+								var tag = document.createElement('script');
+								tag.src = "https://www.youtube.com/iframe_api";
+								var firstScriptTag = document.getElementsByTagName('script')[0];
+								firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+							}
 							
 							function getYouTubeVideoIdFromUrl(url)
 							{
@@ -207,9 +227,11 @@
 							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
+								var videoId = getVideoIdToPlayNext(parsedResults.data);
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
+													videoId: videoId,
 													playerVars: {
 													  iv_load_policy: 3  // hide annotations
 													},
@@ -218,35 +240,11 @@
 														'onStateChange': onytplayerStateChange
 													}
 												});
-								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
-										download: true,
-										delimiter: ';',
-										header: true,
-										complete: function(results) 
-										{
-												parsedResults = results;
-												console.log(results);
-												buildPlaylist(parsedResults.data);
-												playFirstVideo(parsedResults.data)
-										}
-									});
-							}
-							
-							var playerReady = false;
-							var played = false;
-							function playFirstVideo(parsedVideos)
-							{
-								if (played)
-									return;
-								played = true;
-								currentVideoId = getVideoIdToPlayNext(parsedVideos);
-								ytplayer.loadVideoById(currentVideoId);
-								
 							}
 							
 							function onPlayerReady(event) 
 							{
-								playerReady = true;
+								event.target.playVideo();
 							}
 							
 							
