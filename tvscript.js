@@ -1,6 +1,5 @@
 							var parsedResults;
 							
-							startPapaParse();
 							
 							async function startPapaParse()
 							{
