@@ -14,7 +14,8 @@
 							
 							while(true)
 							{
-								Sleep(1000) ;
+								Sleep(1000);
+								console.log(parsedResults);
 								if (parsedResults != null)
 									break;
 							}
