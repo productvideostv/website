@@ -209,11 +209,9 @@
 							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
-								var videoId = getVideoIdToPlayNext(parsedResults.data);
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
-													videoId: videoId,
 													playerVars: {
 													  iv_load_policy: 3  // hide annotations
 													},
