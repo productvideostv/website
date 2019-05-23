@@ -174,7 +174,7 @@
 							async function waitForParsedResults()
 							{
 								await Sleep(500);
-								event.target.pauseVideo();
+								ytplayer.pauseVideo();
 								while(true)
 								{
 									await Sleep(500);
