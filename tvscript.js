@@ -107,8 +107,7 @@
 													videoId: "GlCmAC4MHek",
 													//videoId: currentVideoId,
 													playerVars: {
-													  iv_load_policy: 3,  // hide annotations
-													  autoplay : 1
+													  iv_load_policy: 3  // hide annotations
 													},
 													events: {
 														'onReady': onPlayerReady,
