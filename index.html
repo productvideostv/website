@@ -118,7 +118,7 @@
 						<div class="videowrapper">
 							<div id="myytplayer"></div>
 						</div>
-						
+						<br/>
 						<div id="table_id"></div>
 						<div id="table_id_pager"></div>
 						<div id="table_id_search"></div>
@@ -205,6 +205,21 @@
 							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
+								ytplayer = new YT.Player('myytplayer', {
+													width: 640,
+													height: 480,
+													playerVars: {
+													  iv_load_policy: 3  // hide annotations
+													},
+													events: {
+														'onReady': onPlayerReady,
+														'onStateChange': onytplayerStateChange
+													}
+												});
+							}
+							
+							function onPlayerReady(event) 
+							{
 								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
 										download: true,
 										delimiter: ';',
@@ -214,25 +229,10 @@
 												console.log(results);
 												buildPlaylist(parsedResults.data);
 												currentVideoId = getVideoIdToPlayNext(parsedResults.data);
-												ytplayer = new YT.Player('myytplayer', {
-													width: 640,
-													height: 480,
-													videoId: currentVideoId,
-													playerVars: {
-													  iv_load_policy: 3  // hide annotations
-													},
-													events: {
-														'onReady': onPlayerReady,
-														'onStateChange': onytplayerStateChange
-													}
-												});
+												ytplayer.loadVideoById(currentVideoId);
 											}
 									})
-							}
-							
-							function onPlayerReady(event) 
-							{
-								event.target.playVideo();
+								//event.target.playVideo();
 							}
 							
 							function onytplayerStateChange(a)
