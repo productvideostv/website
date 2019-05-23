@@ -1,5 +1,6 @@
 							var parsedResults;
 							
+							startPapaParse();
 							
 							async function startPapaParse()
 							{
@@ -99,6 +100,8 @@
 							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
+								waitForParsedResults();
+								currentVideoId = getVideoIdToPlayNext(parsedResults.data);
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
@@ -172,7 +175,6 @@
 									if (parsedResults != null)
 										break;
 								}
-								ytplayer.playVideo();
 							}
 							
 							// function playFirstVideo(parsedVideos)
