@@ -146,7 +146,7 @@
 							
 							function onPlayerReady(event) 
 							{
-								// event.target.playVideo();
+								 event.target.playVideo();
 								// event.target.pauseVideo();
 								//waitForParsedResults();
 								// Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
