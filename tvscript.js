@@ -12,11 +12,11 @@
 										}
 									});
 									
-							var wait = ms => new Promise((r, j)=>setTimeout(r, ms))
+							var wait = ms => new Promise((r, j)=>setTimeout(r, ms));
 							
 							while(true)
 							{
-								await Sleep(1000);
+								await wait(1000);
 								console.log(parsedResults);
 								if (parsedResults != null)
 									break;
