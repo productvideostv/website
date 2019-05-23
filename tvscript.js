@@ -107,8 +107,8 @@
 													height: 480,
 													//videoId: "8tPnX7OPo0Q",
 													//videoId: "04F4xlWSFh0",
-													videoId: "GlCmAC4MHek",
-													//videoId: currentVideoId,
+													//videoId: "GlCmAC4MHek",
+													videoId: currentVideoId,
 													playerVars: {
 													  iv_load_policy: 3  // hide annotations
 													},
