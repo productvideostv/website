@@ -100,7 +100,29 @@
 							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
-								waitForParsedResults();
+								// currentVideoId = getVideoIdToPlayNext(parsedResults.data);
+								// ytplayer = new YT.Player('myytplayer', {
+													// width: 640,
+													// height: 480,
+													// //videoId: "8tPnX7OPo0Q",
+													// //videoId: "04F4xlWSFh0",
+													// //videoId: "GlCmAC4MHek",
+													// videoId: currentVideoId,
+													// playerVars: {
+													  // iv_load_policy: 3  // hide annotations
+													// },
+													// events: {
+														// 'onReady': onPlayerReady,
+														// 'onStateChange': onytplayerStateChange
+													// }
+												// });
+									createYTPlayer();
+							}
+							
+							
+							async function createYTPlayer()
+							{
+								await waitForParsedResults();
 								currentVideoId = getVideoIdToPlayNext(parsedResults.data);
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
@@ -110,7 +132,8 @@
 													//videoId: "GlCmAC4MHek",
 													videoId: currentVideoId,
 													playerVars: {
-													  iv_load_policy: 3  // hide annotations
+													  iv_load_policy: 3,  // hide annotations
+													  autoplay : 1
 													},
 													events: {
 														'onReady': onPlayerReady,
@@ -118,33 +141,6 @@
 													}
 												});
 							}
-							
-							// async function createYTPlayer()
-							// {
-								// while(true)
-								// {
-									// await Sleep(500);
-									// if (parsedResults != null)
-										// break;
-								// }
-								// var currentVideoId = getVideoIdToPlayNext(parsedResults.data);
-								// ytplayer = new YT.Player('myytplayer', {
-													// width: 640,
-													// height: 480,
-													// //videoId: "8tPnX7OPo0Q",
-													// //videoId: "04F4xlWSFh0",
-													// videoId: "GlCmAC4MHek",
-													// //videoId: currentVideoId,
-													// playerVars: {
-													  // iv_load_policy: 3,  // hide annotations
-													  // autoplay : 1
-													// },
-													// events: {
-														// 'onReady': onPlayerReady,
-														// 'onStateChange': onytplayerStateChange
-													// }
-												// });
-							// }
 							
 							function onPlayerReady(event) 
 							{
