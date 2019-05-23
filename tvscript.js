@@ -18,15 +18,6 @@
 									});
 							}
 							
-									
-							function setUpYouTubePlayer()
-							{
-								var tag = document.createElement('script');
-								tag.src = "https://www.youtube.com/iframe_api";
-								var firstScriptTag = document.getElementsByTagName('script')[0];
-								firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-							}
-							
 							function Sleep(ms) 
 							{
 							  return new Promise(resolve => setTimeout(resolve, ms));
@@ -158,7 +149,7 @@
 							{
 								// event.target.playVideo();
 								// event.target.pauseVideo();
-								waitForParsedResults();
+								//waitForParsedResults();
 								// Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
 										// download: true,
 										// delimiter: ';',
