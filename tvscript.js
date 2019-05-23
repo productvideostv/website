@@ -155,8 +155,8 @@
 							
 							function onPlayerReady(event) 
 							{
-								event.target.playVideo();
-								event.target.pauseVideo();
+								// event.target.playVideo();
+								// event.target.pauseVideo();
 								waitForParsedResults();
 								// Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
 										// download: true,
@@ -174,6 +174,8 @@
 							
 							async function waitForParsedResults()
 							{
+								await Sleep(500);
+								event.target.pauseVideo();
 								while(true)
 								{
 									await Sleep(500);
