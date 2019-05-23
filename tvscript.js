@@ -1,6 +1,6 @@
 							var parsedResults;
 							
-							function startPapaParse()
+							async function startPapaParse()
 							{
 								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", 
 									{
@@ -107,7 +107,6 @@
 							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
-								//createYTPlayer();
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
