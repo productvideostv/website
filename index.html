@@ -238,11 +238,6 @@
 							{
 								if (played)
 									return;
-								while(true)
-								{
-									if (playerReady)
-										break;
-								}
 								played = true;
 								currentVideoId = getVideoIdToPlayNext(parsedVideos);
 								ytplayer.loadVideoById(currentVideoId);
