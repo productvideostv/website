@@ -202,8 +202,8 @@
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
-													//videoId: "8tPnX7OPo0Q",
-													videoId: "04F4xlWSFh0",
+													videoId: "8tPnX7OPo0Q",
+													//videoId: "04F4xlWSFh0",
 													playerVars: {
 													  iv_load_policy: 3  // hide annotations
 													},
@@ -218,11 +218,24 @@
 							function onPlayerReady(event) 
 							{
 								event.target.playVideo();
+								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
+										download: true,
+										delimiter: ';',
+										header: true,
+										complete: function(results) 
+										{
+												parsedResults = results;
+												console.log(results);
+												playFirstVideo(parsedResults.data);
+												buildPlaylist(parsedResults.data);
+										}
+									});
 							}
 							
 							function playFirstVideo(parsedVideos)
 							{
 								currentVideoId = getVideoIdToPlayNext(parsedVideos);
+								ytplayer.stopVideo();
 								ytplayer.loadVideoById(currentVideoId);
 								ytplayer.playVideo();
 							}
