@@ -116,6 +116,7 @@
 														'onStateChange': onytplayerStateChange
 													}
 												});
+								startPapaParse();
 							}
 							
 							// async function createYTPlayer()
