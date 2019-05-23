@@ -1,5 +1,7 @@
 							var parsedResults;
 							
+							startPapaParse();
+							
 							async function startPapaParse()
 							{
 								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", 
