@@ -125,20 +125,6 @@
 
 
 						<script type="text/javascript">
-								
-							var parsedResults;
-							
-							Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
-										download: true,
-										delimiter: ';',
-										header: true,
-										complete: function(results) 
-										{
-												parsedResults = results;
-												console.log(results);
-												buildPlaylist(parsedResults.data);
-										}
-									});
 									
 							var tag = document.createElement('script');
 							tag.src = "https://www.youtube.com/iframe_api";
@@ -238,9 +224,32 @@
 												});
 							}
 							
+							var parsedResults;							
 							function onPlayerReady(event) 
 							{
-								event.target.playVideo();
+								//event.target.playVideo();
+								Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
+										download: true,
+										delimiter: ';',
+										header: true,
+										complete: function(results) 
+										{
+												parsedResults = results;
+												console.log(results);
+												buildPlaylist(parsedResults.data);
+												playFirstVideo(parsedResults.data);
+										}
+									});
+							}
+							
+							function playFirstVideo(parsedVideos)
+							{
+								if (played)
+									return;
+								played = true;
+								currentVideoId = getVideoIdToPlayNext(parsedVideos);
+								ytplayer.loadVideoById(currentVideoId);
+								
 							}
 							
 							
