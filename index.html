@@ -242,9 +242,6 @@
 							
 							function playFirstVideo(parsedVideos)
 							{
-								if (played)
-									return;
-								played = true;
 								currentVideoId = getVideoIdToPlayNext(parsedVideos);
 								ytplayer.loadVideoById(currentVideoId);
 								
