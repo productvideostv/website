@@ -89,7 +89,7 @@
 							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
-								var currentVideoId = getVideoIdToPlayNext(parsedVideos);
+								var currentVideoId = getVideoIdToPlayNext(parsedresults.data);
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
