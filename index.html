@@ -124,6 +124,19 @@
 						
 							setUpYouTubePlayer();
 							
+							Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", 
+									{
+										download: true,
+										delimiter: ';',
+										header: true,
+										complete: function(results) 
+										{
+												parsedResults = results;
+												console.log(results);
+												buildplaylist(parsedResults.data);
+										}
+									});
+							
 						</script>
 					</div>
 				</div>
