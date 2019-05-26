@@ -29,37 +29,80 @@
 								return videoId[1];
 							}
 							
-							var videoIndex = 0;
-							function getVideoIdToPlayNext(parsedVideos)
+							function getVideoIndex(parsedVideos, videoId)
 							{
-								if (videoIndex >= parsedVideos.length)
+								var videoIndex = 0;
+								while(videoIndex < parsedVideos.length)
 								{
-									return null;
+									var videoURL = parsedVideos[videoIndex]["VideoURL"];
+									var videoIdFromURL = getYouTubeVideoIdFromUrl(url);
+									if (videoIdFromURL == videoId)
+										return videoIndex;
+									videoIndex++;
+								}
+								return null;
+							}
+							
+							function getVideoIdToPlayNext(parsedVideos, currentVideoId)
+							{
+								var videoIndex = 0;
+								if (currentVideoId != null)
+								{
+									var videoIndex = getVideoIndex(parsedVideos, currentVideoId);
+									if (videoIndex == null)
+										return null;
+									++videoIndex;
 								}
 								var videoId;
 								while(videoIndex < parsedVideos.length)
 								{
-									var url = parsedVideos[videoIndex]["VideoURL"];
-									console.log(url);
-									videoId = getYouTubeVideoIdFromUrl(url);
-									console.log(videoId);	
-									if (localStorage.getItem(videoId) == null)
+									var videoURL = parsedVideos[videoIndex]["VideoURL"];
+									var timeWhenAdded = parsedVideos[videoIndex]["timeWhenAdded"];
+									if (!isVideoWatched(videoURL, timeWhenAdded))
 									{
+										videoId = getYouTubeVideoIdFromUrl(url);
 										break;
 									}
 									videoIndex++;
 								}
-								if (videoIndex >= parsedVideos.length)
-								{
-									return null;
-								}
 								return videoId;
 							}
 							
-							function storePlayedVideoId(videoId)
+							var localStorageKey = "WatchedProductVideos";
+							function storePlayedVideo(videoURL, timeWhenAdded)
 							{
-								localStorage.setItem(videoId, videoId);
-								videoIndex++;
+								var watchedVideoRecord = {videoURL : videoURL, timeWhenAdded : timeWhenAdded};
+								var watchedVideos = localStorage.getItem(localStorageKey);
+								if (watchedVideos == null)
+								{
+									watchedVideos = [watchedVideoRecord];
+									localStorage.setItem(localStorageKey, watchedVideos);
+									return;
+								}
+								watchedVideos.push(watchedVideoRecord);
+								localStorage.setItem(localStorageKey, watchedVideos);
+							}
+							
+							function storePlayedVideoId(parsedVideos, videoId)
+							{
+								var videoIndex = getVideoIndex(videoId, parsedVideos);
+								if (videoIndex == null)
+									return;
+								storePlayedVideo(parsedVideos[videoIndex]["videoURL"], parsedVideos[videoIndex]["timeWhenAdded"]);
+							}
+							
+							function isVideoWatched(videoURL, timeWhenAdded)
+							{
+								var watchedVideos = localStorage.getItem(localStorageKey);
+								for(var index = 0; index < watchedVideos.length; ++index)
+								{
+									if (watchedVideos[index]["videoURL"] == videoURL && 
+										watchedVideos[index]["timeWhenAdded"] == timeWhenAdded)
+										{
+											return true;
+										}
+								}
+								return false;
 							}
 							
 							var playlist;
@@ -69,7 +112,6 @@
 										titles : [
 											{ "title": "Title", "type" : "string" },
 											{ "title": "VideoURL", "type" : "string" },
-											{ "title": "Description", "type" : "string" },
 											{ "title": "TimeWhenAdded", "type" : "string" }
 										],
 										row_numbers : true,
@@ -90,14 +132,14 @@
 									for(var index = 0; index < parsedVideos.length; ++index)
 									{
 										var parsedVideo = parsedVideos[index];
-										var row = [parsedVideo["Title"], parsedVideo["VideoURL"], 
-													parsedVideo["Description"], parsedVideo["TimeWhenAdded"]];
+										var row = [parsedVideo["Title"], 
+											"<a href=\"" + parsedVideo["VideoURL"] + "\">" + parsedVideo["VideoURL"] + "</a>", 
+											parsedVideo["TimeWhenAdded"]];
 										playlist.addRow(row);
 									}
 							}
 
 							var ytplayer;
-							var currentVideoId;
 							function onYouTubeIframeAPIReady()
 							{
 								// currentVideoId = getVideoIdToPlayNext(parsedResults.data);
@@ -119,18 +161,18 @@
 									createYTPlayer();
 							}
 							
-							
+							var playingVideoId;
 							async function createYTPlayer()
 							{
 								await waitForParsedResults();
-								currentVideoId = getVideoIdToPlayNext(parsedResults.data);
+								playingVideoId = getVideoIdToPlayNext(parsedResults.data, playingVideoId);
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
 													//videoId: "8tPnX7OPo0Q",
 													//videoId: "04F4xlWSFh0",
 													//videoId: "GlCmAC4MHek",
-													videoId: currentVideoId,
+													videoId: playingVideoId,
 													playerVars: {
 													  iv_load_policy: 3,  // hide annotations
 													  autoplay : 1
@@ -171,24 +213,16 @@
 								}
 							}
 							
-							// function playFirstVideo(parsedVideos)
-							// {
-								// currentVideoId = getVideoIdToPlayNext(parsedVideos);
-								// ytplayer.stopVideo();
-								// ytplayer.loadVideoById(currentVideoId);
-								// ytplayer.playVideo();
-							// }
-							
 							
 							function onytplayerStateChange(a)
 							{
 								if(a.data==YT.PlayerState.ENDED)
 								{
-									storePlayedVideoId(currentVideoId);
-									var videoId = getVideoIdToPlayNext(parsedResults.data);
-									if(videoId != null) 
+									storePlayedVideoId(parsedResults.data, playingVideoId);
+									playingVideoId = getVideoIdToPlayNext(parsedResults.data, playingVideoId);
+									if(playingVideoId != null) 
 									{
-									   ytplayer.loadVideoById(videoId);
+									   ytplayer.loadVideoById(playingVideoId);
 									} 
 									else 
 									{ 
