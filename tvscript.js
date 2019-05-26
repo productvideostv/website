@@ -23,9 +23,9 @@
 							  return new Promise(resolve => setTimeout(resolve, ms));
 							}
 							
-							function getYouTubeVideoIdFromUrl(url)
+							function getYouTubeVideoIdFromUrl(youTubeVideoURL)
 							{
-								var videoId = url.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+								var videoId = youTubeVideoURL.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
 								return videoId[1];
 							}
 							
@@ -35,7 +35,7 @@
 								while(videoIndex < parsedVideos.length)
 								{
 									var videoURL = parsedVideos[videoIndex]["VideoURL"];
-									var videoIdFromURL = getYouTubeVideoIdFromUrl(url);
+									var videoIdFromURL = getYouTubeVideoIdFromUrl(videoURL);
 									if (videoIdFromURL == videoId)
 										return videoIndex;
 									videoIndex++;
@@ -60,7 +60,7 @@
 									var timeWhenAdded = parsedVideos[videoIndex]["timeWhenAdded"];
 									if (!isVideoWatched(videoURL, timeWhenAdded))
 									{
-										videoId = getYouTubeVideoIdFromUrl(url);
+										videoId = getYouTubeVideoIdFromUrl(videoURL);
 										break;
 									}
 									videoIndex++;
@@ -228,7 +228,7 @@
 									} 
 									else 
 									{ 
-										console.log("The youtube url is not valid.");
+										console.log("The youtube video ID is not valid.");
 										ytplayer.stopVideo();
 									}
 								}
