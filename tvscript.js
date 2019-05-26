@@ -113,8 +113,8 @@
 								playlist = new tTable( {
 										titles : [
 											{ "title": "Title", "type" : "string" },
-											{ "title": "VideoURL", "type" : "string" },
-											{ "title": "TimeWhenAdded", "type" : "string" }
+											{ "title": "URL", "type" : "string" },
+											{ "title": "Added", "type" : "string" }
 										],
 										row_numbers : true,
 //										data : parsedVideos,
