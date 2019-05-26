@@ -94,6 +94,8 @@
 							function isVideoWatched(videoURL, timeWhenAdded)
 							{
 								var watchedVideos = localStorage.getItem(localStorageKey);
+								if (watchedVideos == null)
+									return false;
 								for(var index = 0; index < watchedVideos.length; ++index)
 								{
 									if (watchedVideos[index]["videoURL"] == videoURL && 
