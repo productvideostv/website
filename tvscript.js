@@ -84,13 +84,6 @@
 								localStorage.setItem(localStorageKey, watchedVideos);
 							}
 							
-							function storePlayedVideo(videoToStore)
-							{
-								console.log("storePlayedVideo");
-								console.log(videoToStore);
-								storePlayedVideo(videoToStore.VideoURL, videoToStore.TimeWhenAdded);
-							}
-							
 							function isVideoWatched(videoURL, timeWhenAdded)
 							{
 								var watchedVideos = localStorage.getItem(localStorageKey);
@@ -241,7 +234,7 @@
 							{
 								if(a.data==YT.PlayerState.ENDED)
 								{
-									storePlayedVideo(playingVideo);
+									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
 									markAsPlayedInPlaylist(sortedParsedVideos, playingVideo);
 									playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
 									
