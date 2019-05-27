@@ -93,6 +93,7 @@
 											{ "title": "TimeWhenAdded", "type" : "string" }
 										],
 										hidden_cols : [4],
+										page_size : 50,
 										row_numbers : true,
 										goto : false, 
 										hover_cols : false, 
