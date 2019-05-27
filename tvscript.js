@@ -156,9 +156,11 @@
 							
 							function markAsPlayingInPlaylist(videoToMark)
 							{
+								console.log("markAsPlayingInPlaylist");
 								var videoIndex = getVideoIndex(videoToMark);
 								if (videoIndex == null)
 									return;
+								console.log("videoIndex");
 								var strongTitle = "<strong>" + videoToMark["Title"] + "</strong>";
 								var strongVideoURL = "<strong>" + "<a href=\"" + videoToMark["VideoURL"] + "\">" +videoToMark["VideoURL"] + "</a></strong>";
 								var strongTimeWhenAdded = "<strong>" + videoToMark["TimeWhenAdded"].toLocaleDateString() + "</strong>";
