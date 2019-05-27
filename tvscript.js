@@ -164,6 +164,7 @@
 								var strongTimeWhenAdded = "<strong>" + videoToMark["TimeWhenAdded"].toLocaleDateString() + "</strong>";
 								var updatedRow = {"1" : strongTitle, "2" : strongVideoURL, "3" : strongTimeWhenAdded};
 								var displayedRow = playlist.data[videoIndex];
+								console.log(displayedRow);
 								var rowToUpdate = {"1" : displayedRow[0], "2" : displayedRow[1], "3" : displayedRow[2]};
 								playlist.updateRow(updatedRow, rowToUpdate);
 							}
