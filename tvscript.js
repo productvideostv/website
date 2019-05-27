@@ -85,8 +85,10 @@
 							}
 							
 							function storePlayedVideo(videoToStore)
-							{								
-								storePlayedVideo(videoToStore["VideoURL"], videoToStore["TimeWhenAdded"]);
+							{
+								clonsole.log("storePlayedVideo");
+								clonsole.log(videoToStore);
+								storePlayedVideo(videoToStore.VideoURL, videoToStore.TimeWhenAdded);
 							}
 							
 							function isVideoWatched(videoURL, timeWhenAdded)
