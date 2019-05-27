@@ -181,7 +181,7 @@
 								await waitForParsedResults();
 								
 								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideoId);
-								markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
+								//markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
 								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
