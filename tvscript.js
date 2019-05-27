@@ -142,7 +142,6 @@
 							function markAsPlayingInPlaylist(allVideos, videoToMark)
 							{
 								var videoToMarkDateString = videoToMark["TimeWhenAdded"].toString();
-								console.log(videoToMarkDateString);
 								var title = "<strong>" + videoToMark["Title"] + "</strong>";
 								var videoURL = "<strong>" + "<a href=\"" + videoToMark["VideoURL"] + "\">" +videoToMark["VideoURL"] + "</a></strong>";
 								var timeWhenAdded = "<strong>" + videoToMark["TimeWhenAdded"].toLocaleDateString() + "</strong>";
