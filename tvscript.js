@@ -140,31 +140,25 @@
 							
 							function markAsPlayingInPlaylist(allVideos, videoToMark)
 							{
-								var videoIndex = getVideoIndex(allVideos, videoToMark);
-								if (videoIndex == null)
-									return;
-								var strongTitle = "<strong>" + videoToMark["Title"] + "</strong>";
-								var strongVideoURL = "<strong>" + "<a href=\"" + videoToMark["VideoURL"] + "\">" +videoToMark["VideoURL"] + "</a></strong>";
-								var strongTimeWhenAdded = "<strong>" + videoToMark["TimeWhenAdded"].toLocaleDateString() + "</strong>";
-								var updatedRow = {"1" : strongTitle, "2" : strongVideoURL, "3" : strongTimeWhenAdded};
-								var displayedRow = playlist.data[videoIndex];
-								var rowToUpdate = {"1" : displayedRow[0], "2" : displayedRow[1], "3" : displayedRow[2]};
+								var videoToMarkDateString = videoToMark["TimeWhenAdded"].toString();
+								var title = "<strong>" + videoToMark["Title"] + "</strong>";
+								var videoURL = "<strong>" + "<a href=\"" + videoToMark["VideoURL"] + "\">" +videoToMark["VideoURL"] + "</a></strong>";
+								var timeWhenAdded = "<strong>" + videoToMark["TimeWhenAdded"].toLocaleDateString() + "</strong>";
+								var updatedRow = {"1" : title, "2" : videoURL, "3" : timeWhenAdded, "4" : videoToMarkDateString};
+								var rowToUpdate = {"4" : videoToMarkDateString};
 								playlist.updateRow(updatedRow, rowToUpdate);
 							}
 							
 							function markAsPlayedInPlaylist(allVideos, videoToMark)
 							{
-								var videoIndex = getVideoIndex(allVideos, videoToMark);
-								if (videoIndex == null)
-									return;
-								var displayedRow = playlist.data[videoIndex];
-								var fontOpenTag = "<I>";
-								var fontCloseTag = "</I>";
-								var strongTitle = fontOpenTag + videoToMark["Title"] + fontCloseTag;
-								var strongVideoURL = fontOpenTag + "<a href=\"" + videoToMark["VideoURL"] + "\">" + videoToMark["VideoURL"] + "</a>" + fontCloseTag;
-								var strongTimeWhenAdded = fontOpenTag + videoToMark["TimeWhenAdded"].toLocaleDateString() + fontCloseTag;
-								var updatedRow = {"1" : strongTitle, "2" : strongVideoURL, "3" : strongTimeWhenAdded};
-								var rowToUpdate = {"1" : displayedRow[0], "2" : displayedRow[1], "3" : displayedRow[2]};
+								var videoToMarkDateString = videoToMark["TimeWhenAdded"].toString();
+								var openTag = "<I>";
+								var closeTag = "</I>";
+								var title = openTag + videoToMark["Title"] + closeTag;
+								var videoURL = openTag + "<a href=\"" + videoToMark["VideoURL"] + "\">" + videoToMark["VideoURL"] + "</a>" + closeTag;
+								var timeWhenAdded = openTag + videoToMark["TimeWhenAdded"].toLocaleDateString() + closeTag;
+								var updatedRow = {"1" : title, "2" : videoURL, "3" : timeWhenAdded, "4" : videoToMarkDateString};
+								var rowToUpdate = {"4" : videoToMarkDateString};
 								playlist.updateRow(updatedRow, rowToUpdate);
 							}
 
