@@ -1,4 +1,5 @@
 							var parsedResults;
+							var sortedParsedVideos;
 							
 							startPapaParse();
 							
@@ -12,8 +13,8 @@
 										complete: function(results) 
 										{
 												parsedResults = results;
-												console.log(results);
-												buildPlaylist(parsedResults.data);
+												sortedParsedVideos = sortParsedVideos(parsedResults.data);
+												buildPlaylist(sortedParsedVideos);
 										}
 									});
 							}
@@ -160,12 +161,10 @@
 							}													
 							
 							var playingVideo;
-							var sortedParsedVideos;
 							async function createYTPlayer()
 							{
 								await waitForParsedResults();
 								
-								sortedParsedVideos = sortParsedVideos(parsedResults.data);
 								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideoId);
 								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
