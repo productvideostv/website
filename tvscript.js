@@ -153,6 +153,20 @@
 								
 								return sortedVideos;
 							}
+							
+							function markAsPlayingInPlaylist(videoToMark)
+							{
+								var videoIndex = getVideoIndex(videoToMark);
+								if (videoIndex == null)
+									return;
+								var strongTitle = "<strong>" + videoToMark["Title"] + "</strong>";
+								var strongVideoURL = "<strong>" + "<a href=\"" + videoToMark["VideoURL"] + "\">" +videoToMark["VideoURL"] + "</a></strong>";
+								var strongTimeWhenAdded = "<strong>" + videoToMark["TimeWhenAdded"].toLocaleDateString() + "</strong>";
+								var updatedRow = {"1" : strongTitle, "2" : strongVideoURL, "3" : strongTimeWhenAdded};
+								var displayedRow = playlist.data[videoIndex];
+								var rowToUpdate = {"1" : displayedRow[0], "2" : displayedRow[1], "3" : displayedRow[2]};
+								playlist.updateRow(updatedRow, rowToUpdate);
+							}
 
 							var ytplayer;
 							function onYouTubeIframeAPIReady()
@@ -166,6 +180,7 @@
 								await waitForParsedResults();
 								
 								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideoId);
+								markAsPlayingInPlaylist(playingVideo);
 								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
