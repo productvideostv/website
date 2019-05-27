@@ -89,8 +89,10 @@
 										titles : [
 											{ "title": "Title", "type" : "string" },
 											{ "title": "URL", "type" : "string" },
-											{ "title": "Added", "type" : "string" }
+											{ "title": "Added", "type" : "string" },
+											{ "title": "TimeWhenAdded", "type" : "string" }
 										],
+										//hidden_cols : ["4"]
 										row_numbers : true,
 										goto : false, 
 										hover_cols : false, 
@@ -110,15 +112,11 @@
 										var singleVideo = allVideos[index];
 										if (isVideoWatched(singleVideo.VideoURL, singleVideo.TimeWhenAdded))
 										{
-											console.log("singleVideo continue");
-											console.log(singleVideo);
 											continue;
 										}
-										console.log("singleVideo after continue");
-										console.log(singleVideo);
-										var timeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
+										var formattedTimeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
 										var row = [singleVideo["Title"], 
-											"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", timeWhenAdded];
+											"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, singleVideo["TimeWhenAdded"]];
 										playlist.addRow(row);
 									}
 							}
@@ -158,13 +156,13 @@
 								var videoIndex = getVideoIndex(allVideos, videoToMark);
 								if (videoIndex == null)
 									return;
+								var displayedRow = playlist.data[videoIndex];
 								var fontOpenTag = "<I>";
 								var fontCloseTag = "</I>";
 								var strongTitle = fontOpenTag + videoToMark["Title"] + fontCloseTag;
 								var strongVideoURL = fontOpenTag + "<a href=\"" + videoToMark["VideoURL"] + "\">" + videoToMark["VideoURL"] + "</a>" + fontCloseTag;
 								var strongTimeWhenAdded = fontOpenTag + videoToMark["TimeWhenAdded"].toLocaleDateString() + fontCloseTag;
 								var updatedRow = {"1" : strongTitle, "2" : strongVideoURL, "3" : strongTimeWhenAdded};
-								var displayedRow = playlist.data[videoIndex];
 								var rowToUpdate = {"1" : displayedRow[0], "2" : displayedRow[1], "3" : displayedRow[2]};
 								playlist.updateRow(updatedRow, rowToUpdate);
 							}
@@ -181,7 +179,7 @@
 								await waitForParsedResults();
 								
 								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideoId);
-								//markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
+								markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
 								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
