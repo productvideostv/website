@@ -1,6 +1,7 @@
 							var parsedResults;
 							var sortedParsedVideos;
 							
+							localStorage.clear();
 							startPapaParse();
 							
 							async function startPapaParse()
@@ -78,9 +79,7 @@
 								console.log(watchedVideos);
 								if (watchedVideos == null)
 								{
-									watchedVideos = [watchedVideoRecord];
-									localStorage.setItem(localStorageKey, watchedVideos);
-									return;
+									watchedVideos = new Array();
 								}
 								watchedVideos.push(watchedVideoRecord);
 								localStorage.setItem(localStorageKey, watchedVideos);
