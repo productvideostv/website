@@ -154,10 +154,10 @@
 								return sortedVideos;
 							}
 							
-							function markAsPlayingInPlaylist(videoToMark)
+							function markAsPlayingInPlaylist(allVideos, videoToMark)
 							{
 								console.log("markAsPlayingInPlaylist");
-								var videoIndex = getVideoIndex(videoToMark);
+								var videoIndex = getVideoIndex(allVideos, videoToMark);
 								if (videoIndex == null)
 									return;
 								console.log("videoIndex");
@@ -183,7 +183,7 @@
 								await waitForParsedResults();
 								
 								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideoId);
-								markAsPlayingInPlaylist(playingVideo);
+								markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
 								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
