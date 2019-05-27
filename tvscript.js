@@ -105,7 +105,7 @@
 							}
 							
 							var playlist;
-							function buildPlaylist(parsedVideos)
+							function buildPlaylist(allVideos)
 							{
 								playlist = new tTable( {
 										titles : [
@@ -114,7 +114,6 @@
 											{ "title": "Added", "type" : "string" }
 										],
 										row_numbers : true,
-//										data : parsedVideos,
 										goto : false, 
 										hover_cols : false, 
 										nav_arrows : false, 
@@ -128,12 +127,12 @@
 										pager : "#table_id_pager"
 									} );
 									
-									for(var index = 0; index < parsedVideos.length; ++index)
+									for(var index = 0; index < allVideos.length; ++index)
 									{
-										var parsedVideo = parsedVideos[index];
-										var row = [parsedVideo["Title"], 
-											"<a href=\"" + parsedVideo["VideoURL"] + "\">" + parsedVideo["VideoURL"] + "</a>", 
-											parsedVideo["TimeWhenAdded"].toLocaleDateString()];
+										var singleVideo = allVideos[index];
+										var timeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
+										var row = [singleVideo["Title"], 
+											"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", timeWhenAdded];
 										playlist.addRow(row);
 									}
 							}
@@ -165,6 +164,7 @@
 							async function createYTPlayer()
 							{
 								await waitForParsedResults();
+								
 								sortedParsedVideos = sortParsedVideos(parsedResults.data);
 								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideoId);
 								
@@ -190,20 +190,6 @@
 							function onPlayerReady(event) 
 							{
 								 event.target.playVideo();
-								// event.target.pauseVideo();
-								//waitForParsedResults();
-								// Papa.parse("https://productvideostv.github.io/website/ProductVideosPlaylist.csv", {
-										// download: true,
-										// delimiter: ';',
-										// header: true,
-										// complete: function(results) 
-										// {
-												// parsedResults = results;
-												// console.log(results);
-												// playFirstVideo(parsedResults.data);
-												// buildPlaylist(parsedResults.data);
-										// }
-									// });
 							}
 							
 							async function waitForParsedResults()
