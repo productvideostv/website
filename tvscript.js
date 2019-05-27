@@ -107,6 +107,8 @@
 									for(var index = 0; index < allVideos.length; ++index)
 									{
 										var singleVideo = allVideos[index];
+										if (isVideoWatched(singleVideo.VideoURL, singleVideo.TimeWhenAdded))
+											continue;
 										var timeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
 										var row = [singleVideo["Title"], 
 											"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", timeWhenAdded];
