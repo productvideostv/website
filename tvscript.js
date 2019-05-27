@@ -72,7 +72,8 @@
 							
 							function storePlayedVideo(videoURL, timeWhenAdded)
 							{
-								localStorage.setItem(timeWhenAdded, videoURL);
+								if (localStorage.getItem(timeWhenAdded) == null)
+									localStorage.setItem(timeWhenAdded, videoURL);
 							}
 							
 							function isVideoWatched(videoURL, timeWhenAdded)
@@ -108,7 +109,9 @@
 									{
 										var singleVideo = allVideos[index];
 										if (isVideoWatched(singleVideo.VideoURL, singleVideo.TimeWhenAdded))
+										{
 											continue;
+										}
 										var timeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
 										var row = [singleVideo["Title"], 
 											"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", timeWhenAdded];
