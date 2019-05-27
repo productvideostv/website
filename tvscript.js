@@ -29,43 +29,43 @@
 								return videoId[1];
 							}
 							
-							function getVideoIndex(parsedVideos, videoId)
+							function getVideoIndex(allVideos, video)
 							{
 								var videoIndex = 0;
-								while(videoIndex < parsedVideos.length)
+								while(videoIndex < allVideos.length)
 								{
-									var videoURL = parsedVideos[videoIndex]["VideoURL"];
-									var videoIdFromURL = getYouTubeVideoIdFromUrl(videoURL);
-									if (videoIdFromURL == videoId)
+									var videoURL = allVideos[videoIndex]["VideoURL"];
+									var timeWhenAdded = allVideos[videoIndex]["TimeWhenAdded"];
+									if (videoURL == video["VideoURL"] && timeWhenAdded == video["TimeWhenAdded"])
 										return videoIndex;
 									videoIndex++;
 								}
 								return null;
 							}
 							
-							function getVideoIdToPlayNext(parsedVideos, currentVideoId)
+							function getVideoToPlayNext(allVideos, currentVideo)
 							{
 								var videoIndex = 0;
-								if (currentVideoId != null)
+								if (currentVideo != null)
 								{
-									var videoIndex = getVideoIndex(parsedVideos, currentVideoId);
+									var videoIndex = getVideoIndex(allVideos, currentVideo);
 									if (videoIndex == null)
 										return null;
 									++videoIndex;
 								}
-								var videoId;
-								while(videoIndex < parsedVideos.length)
+								var nextVideo;
+								while(videoIndex < allVideos.length)
 								{
-									var videoURL = parsedVideos[videoIndex]["VideoURL"];
-									var timeWhenAdded = parsedVideos[videoIndex]["timeWhenAdded"];
+									var videoURL = allVideos[videoIndex]["VideoURL"];
+									var timeWhenAdded = allVideos[videoIndex]["TimeWhenAdded"];
 									if (!isVideoWatched(videoURL, timeWhenAdded))
 									{
-										videoId = getYouTubeVideoIdFromUrl(videoURL);
+										nextVideo = allVideos[videoIndex];
 										break;
 									}
 									videoIndex++;
 								}
-								return videoId;
+								return nextVideo;
 							}
 							
 							var localStorageKey = "WatchedProductVideos";
@@ -83,12 +83,9 @@
 								localStorage.setItem(localStorageKey, watchedVideos);
 							}
 							
-							function storePlayedVideoId(parsedVideos, videoId)
-							{
-								var videoIndex = getVideoIndex(videoId, parsedVideos);
-								if (videoIndex == null)
-									return;
-								storePlayedVideo(parsedVideos[videoIndex]["videoURL"], parsedVideos[videoIndex]["timeWhenAdded"]);
+							function storePlayedVideo(videoToStore)
+							{								
+								storePlayedVideo(videoToStore["VideoURL"], videoToStore["TimeWhenAdded"]);
 							}
 							
 							function isVideoWatched(videoURL, timeWhenAdded)
@@ -98,8 +95,8 @@
 									return false;
 								for(var index = 0; index < watchedVideos.length; ++index)
 								{
-									if (watchedVideos[index]["videoURL"] == videoURL && 
-										watchedVideos[index]["timeWhenAdded"] == timeWhenAdded)
+									if (watchedVideos[index]["VideoURL"] == videoURL && 
+										watchedVideos[index]["TimeWhenAdded"] == timeWhenAdded)
 										{
 											return true;
 										}
@@ -136,31 +133,9 @@
 										var parsedVideo = parsedVideos[index];
 										var row = [parsedVideo["Title"], 
 											"<a href=\"" + parsedVideo["VideoURL"] + "\">" + parsedVideo["VideoURL"] + "</a>", 
-											parsedVideo["TimeWhenAdded"]];
+											parsedVideo["TimeWhenAdded"].toLocaleDateString()];
 										playlist.addRow(row);
 									}
-							}
-
-							var ytplayer;
-							function onYouTubeIframeAPIReady()
-							{
-								// currentVideoId = getVideoIdToPlayNext(parsedResults.data);
-								// ytplayer = new YT.Player('myytplayer', {
-													// width: 640,
-													// height: 480,
-													// //videoId: "8tPnX7OPo0Q",
-													// //videoId: "04F4xlWSFh0",
-													// //videoId: "GlCmAC4MHek",
-													// videoId: currentVideoId,
-													// playerVars: {
-													  // iv_load_policy: 3  // hide annotations
-													// },
-													// events: {
-														// 'onReady': onPlayerReady,
-														// 'onStateChange': onytplayerStateChange
-													// }
-												// });
-									createYTPlayer();
 							}
 							
 							function sortParsedVideos(parsedVideos)
@@ -173,27 +148,27 @@
 									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo[	"VideoURL"], TimeWhenAdded : timeWhenAdded};
 									sortedVideos.push(videoWithDate);
 								}
+								
 								sortedVideos.sort((a,b) => (a.TimeWhenAdded > b.TimeWhenAdded) ? -1 : ((b.TimeWhenAdded > a.TimeWhenAdded) ? 1 : 0));
 								
-								var videosWithFormattedDate = [];
-								for(var jndex = 0; jndex < sortedVideos.length; ++jndex)
-								{
-									var sortedVideo = sortedVideos[jndex];
-									var videoWithFormattedDate = {Title : sortedVideo["Title"], VideoURL : sortedVideo["VideoURL"], TimeWhenAdded : sortedVideo["TimeWhenAdded"].toLocaleDateString()};
-									console.log(videoWithFormattedDate);
-									videosWithFormattedDate.push(videoWithFormattedDate);
-								}
-								
-								return videosWithFormattedDate;
+								return sortedVideos;
 							}
+
+							var ytplayer;
+							function onYouTubeIframeAPIReady()
+							{								
+									createYTPlayer();
+							}													
 							
-							var playingVideoId;
-							var sortedFormattedVideos;
+							var playingVideo;
+							var sortedParsedVideos;
 							async function createYTPlayer()
 							{
 								await waitForParsedResults();
-								sortedFormattedVideos = sortParsedVideos(parsedResults.data);
-								playingVideoId = getVideoIdToPlayNext(parsedResults.data, playingVideoId);
+								sortedParsedVideos = sortParsedVideos(parsedResults.data);
+								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideoId);
+								
+								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
 													height: 480,
@@ -246,8 +221,10 @@
 							{
 								if(a.data==YT.PlayerState.ENDED)
 								{
-									storePlayedVideoId(parsedResults.data, playingVideoId);
-									playingVideoId = getVideoIdToPlayNext(parsedResults.data, playingVideoId);
+									storePlayedVideo(playingVideo);
+									playingVideo = getVideoToPlayNext(parsedResults.data, playingVideoId);
+									
+									var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 									if(playingVideoId != null) 
 									{
 									   ytplayer.loadVideoById(playingVideoId);
