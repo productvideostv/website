@@ -104,14 +104,18 @@
 										container : "#table_id",
 										pager : "#table_id_pager"
 									} );
-									
+																		
 									for(var index = 0; index < allVideos.length; ++index)
 									{
 										var singleVideo = allVideos[index];
 										if (isVideoWatched(singleVideo.VideoURL, singleVideo.TimeWhenAdded))
 										{
+											console.log("singleVideo continue");
+											console.log(singleVideo);
 											continue;
 										}
+										console.log("singleVideo after continue");
+										console.log(singleVideo);
 										var timeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
 										var row = [singleVideo["Title"], 
 											"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", timeWhenAdded];
