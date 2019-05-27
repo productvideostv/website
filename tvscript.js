@@ -92,7 +92,7 @@
 											{ "title": "Added", "type" : "string" },
 											{ "title": "TimeWhenAdded", "type" : "string" }
 										],
-										//hidden_cols : ["4"]
+										//hidden_cols : ["4"],
 										row_numbers : true,
 										goto : false, 
 										hover_cols : false, 
@@ -114,9 +114,10 @@
 										{
 											continue;
 										}
+										var timeWhenAdded = singleVideo["TimeWhenAdded"].toString();
 										var formattedTimeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
 										var row = [singleVideo["Title"], 
-											"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, singleVideo["TimeWhenAdded"]];
+											"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded];
 										playlist.addRow(row);
 									}
 							}
