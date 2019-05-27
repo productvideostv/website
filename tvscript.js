@@ -169,8 +169,8 @@
 								var videoIndex = getVideoIndex(allVideos, videoToMark);
 								if (videoIndex == null)
 									return;
-								var fontOpenTag = "<font color=\"#CCCCCC\">";
-								var fontCloseTag = "</font>";
+								var fontOpenTag = "<I>";
+								var fontCloseTag = "</I>";
 								var strongTitle = fontOpenTag + videoToMark["Title"] + fontCloseTag;
 								var strongVideoURL = fontOpenTag + "<a href=\"" + videoToMark["VideoURL"] + "\">" + videoToMark["VideoURL"] + "</a>" + fontCloseTag;
 								var strongTimeWhenAdded = fontOpenTag + videoToMark["TimeWhenAdded"].toLocaleDateString() + fontCloseTag;
@@ -237,6 +237,7 @@
 									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
 									markAsPlayedInPlaylist(sortedParsedVideos, playingVideo);
 									playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
+									markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
 									
 									var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 									if(playingVideoId != null) 
