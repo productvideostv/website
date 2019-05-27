@@ -92,7 +92,7 @@
 											{ "title": "Added", "type" : "string" },
 											{ "title": "TimeWhenAdded", "type" : "string" }
 										],
-										//hidden_cols : ["4"],
+										hidden_cols : ["4"],
 										row_numbers : true,
 										goto : false, 
 										hover_cols : false, 
