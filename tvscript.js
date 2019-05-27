@@ -74,6 +74,8 @@
 							{
 								var watchedVideoRecord = {videoURL : videoURL, timeWhenAdded : timeWhenAdded};
 								var watchedVideos = localStorage.getItem(localStorageKey);
+								console.log("storePlayedVideo");
+								console.log(watchedVideos);
 								if (watchedVideos == null)
 								{
 									watchedVideos = [watchedVideoRecord];
@@ -87,6 +89,8 @@
 							function isVideoWatched(videoURL, timeWhenAdded)
 							{
 								var watchedVideos = localStorage.getItem(localStorageKey);
+								console.log("isVideoWatched");
+								console.log(watchedVideos);
 								if (watchedVideos == null)
 									return false;
 								for(var index = 0; index < watchedVideos.length; ++index)
