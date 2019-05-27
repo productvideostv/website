@@ -86,8 +86,8 @@
 							
 							function storePlayedVideo(videoToStore)
 							{
-								clonsole.log("storePlayedVideo");
-								clonsole.log(videoToStore);
+								console.log("storePlayedVideo");
+								console.log(videoToStore);
 								storePlayedVideo(videoToStore.VideoURL, videoToStore.TimeWhenAdded);
 							}
 							
