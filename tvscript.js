@@ -1,7 +1,7 @@
 							var parsedResults;
 							var sortedParsedVideos;
 							
-							localStorage.clear();
+							//localStorage.clear();
 							startPapaParse();
 							
 							async function startPapaParse()
