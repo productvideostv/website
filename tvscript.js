@@ -70,38 +70,15 @@
 								return nextVideo;
 							}
 							
-							var localStorageKey = "WatchedProductVideos";
 							function storePlayedVideo(videoURL, timeWhenAdded)
 							{
-								var watchedVideoRecord = {videoURL : videoURL, timeWhenAdded : timeWhenAdded};
-								var watchedVideos = localStorage.getItem(localStorageKey);
-								console.log("storePlayedVideo");
-								console.log(watchedVideos);
-								if (watchedVideos == null)
-								{
-									watchedVideos = new Array();
-								}
-								watchedVideos.push(watchedVideoRecord);
-								localStorage.setItem(localStorageKey, watchedVideos);
+								localStorage.setItem(timeWhenAdded, videoURL);
 							}
 							
 							function isVideoWatched(videoURL, timeWhenAdded)
 							{
-								var watchedVideos = localStorage.getItem(localStorageKey);
-								console.log("isVideoWatched");
-								console.log(watchedVideos);
-								if (watchedVideos == null)
-									return false;
-								console.log("watchedVideos not null");
-								for(var index = 0; index < watchedVideos.length; ++index)
-								{
-									if (watchedVideos[index]["VideoURL"] == videoURL && 
-										watchedVideos[index]["TimeWhenAdded"] == timeWhenAdded)
-										{
-											return true;
-										}
-								}
-								return false;
+								var watchedVideoURL = localStorage.getItem(timeWhenAdded);
+								return watchedVideoURL == videoURL;
 							}
 							
 							var playlist;
