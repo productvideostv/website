@@ -163,10 +163,36 @@
 									createYTPlayer();
 							}
 							
+							function sortParsedVideos(parsedVideos)
+							{
+								var sortedVideos = [];
+								for(var index = 0; index < parsedVideos.length; ++index)
+								{
+									var parsedVideo = parsedVideos[index];
+									var timeWhenAdded = moment(parsedVideo["TimeWhenAdded"]).toDate();
+									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo[	"VideoURL"], TimeWhenAdded : timeWhenAdded};
+									sortedVideos.push(videoWithDate);
+								}
+								sortedVideos.sort((a,b) => (a.TimeWhenAdded > b.TimeWhenAdded) ? -1 : ((b.TimeWhenAdded > a.TimeWhenAdded) ? 1 : 0));
+								
+								var videosWithFormattedDate = [];
+								for(var jndex = 0; jndex < sortedVideos.length; ++jndex)
+								{
+									var sortedVideo = sortedVideos[jndex];
+									var videoWithFormattedDate = {Title : sortedVideo["Title"], VideoURL : sortedVideo["VideoURL"], TimeWhenAdded : sortedVideo["TimeWhenAdded"].toLocaleDateString()};
+									console.log(videoWithFormattedDate);
+									videosWithFormattedDate.push(videoWithFormattedDate);
+								}
+								
+								return videosWithFormattedDate;
+							}
+							
 							var playingVideoId;
+							var sortedFormattedVideos;
 							async function createYTPlayer()
 							{
 								await waitForParsedResults();
+								sortedFormattedVideos = sortParsedVideos(parsedResults.data);
 								playingVideoId = getVideoIdToPlayNext(parsedResults.data, playingVideoId);
 								ytplayer = new YT.Player('myytplayer', {
 													width: 640,
@@ -209,7 +235,7 @@
 							{
 								while(true)
 								{
-									await Sleep(500);
+									await Sleep(100);
 									if (parsedResults != null)
 										break;
 								}
