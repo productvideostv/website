@@ -156,14 +156,29 @@
 							
 							function markAsPlayingInPlaylist(allVideos, videoToMark)
 							{
-								console.log("markAsPlayingInPlaylist");
 								var videoIndex = getVideoIndex(allVideos, videoToMark);
 								if (videoIndex == null)
 									return;
-								console.log("videoIndex");
 								var strongTitle = "<strong>" + videoToMark["Title"] + "</strong>";
 								var strongVideoURL = "<strong>" + "<a href=\"" + videoToMark["VideoURL"] + "\">" +videoToMark["VideoURL"] + "</a></strong>";
 								var strongTimeWhenAdded = "<strong>" + videoToMark["TimeWhenAdded"].toLocaleDateString() + "</strong>";
+								var updatedRow = {"1" : strongTitle, "2" : strongVideoURL, "3" : strongTimeWhenAdded};
+								var displayedRow = playlist.data[videoIndex];
+								console.log(displayedRow);
+								var rowToUpdate = {"1" : displayedRow[0], "2" : displayedRow[1], "3" : displayedRow[2]};
+								playlist.updateRow(updatedRow, rowToUpdate);
+							}
+							
+							function markAsPlayedInPlaylist(allVideos, videoToMark)
+							{
+								var videoIndex = getVideoIndex(allVideos, videoToMark);
+								if (videoIndex == null)
+									return;
+								var fontOpenTag = "<font color=\"#CCCCCC\">";
+								var fontCloseTag = "</font>";
+								var strongTitle = fontOpenTag + videoToMark["Title"] + fontCloseTag;
+								var strongVideoURL = fontOpenTag + "<a href=\"" + videoToMark["VideoURL"] + "\">" + videoToMark["VideoURL"] + "</a>" + fontCloseTag;
+								var strongTimeWhenAdded = fontOpenTag + videoToMark["TimeWhenAdded"].toLocaleDateString() + fontCloseTag;
 								var updatedRow = {"1" : strongTitle, "2" : strongVideoURL, "3" : strongTimeWhenAdded};
 								var displayedRow = playlist.data[videoIndex];
 								console.log(displayedRow);
@@ -225,6 +240,7 @@
 								if(a.data==YT.PlayerState.ENDED)
 								{
 									storePlayedVideo(playingVideo);
+									markAsPlayedInPlaylist(sortedParsedVideos, playingVideo);
 									playingVideo = getVideoToPlayNext(parsedResults.data, playingVideoId);
 									
 									var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
