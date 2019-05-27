@@ -1,6 +1,7 @@
 							var parsedResults;
 							var sortedParsedVideos;
 							
+							localStorage.clear();
 							startPapaParse();
 							
 							async function startPapaParse()
@@ -93,6 +94,7 @@
 								console.log(watchedVideos);
 								if (watchedVideos == null)
 									return false;
+								console.log("watchedVideos not null");
 								for(var index = 0; index < watchedVideos.length; ++index)
 								{
 									if (watchedVideos[index]["VideoURL"] == videoURL && 
@@ -163,7 +165,6 @@
 								var strongTimeWhenAdded = "<strong>" + videoToMark["TimeWhenAdded"].toLocaleDateString() + "</strong>";
 								var updatedRow = {"1" : strongTitle, "2" : strongVideoURL, "3" : strongTimeWhenAdded};
 								var displayedRow = playlist.data[videoIndex];
-								console.log(displayedRow);
 								var rowToUpdate = {"1" : displayedRow[0], "2" : displayedRow[1], "3" : displayedRow[2]};
 								playlist.updateRow(updatedRow, rowToUpdate);
 							}
@@ -180,7 +181,6 @@
 								var strongTimeWhenAdded = fontOpenTag + videoToMark["TimeWhenAdded"].toLocaleDateString() + fontCloseTag;
 								var updatedRow = {"1" : strongTitle, "2" : strongVideoURL, "3" : strongTimeWhenAdded};
 								var displayedRow = playlist.data[videoIndex];
-								console.log(displayedRow);
 								var rowToUpdate = {"1" : displayedRow[0], "2" : displayedRow[1], "3" : displayedRow[2]};
 								playlist.updateRow(updatedRow, rowToUpdate);
 							}
