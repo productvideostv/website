@@ -185,11 +185,11 @@
 								if (checkboxElem.checked) 
 								{
 									clearPlaylist();
-									fillPlaylist(allVideos, true);
+									fillPlaylist(sortedParsedVideos, true);
 									return;
 								} 								
 								clearPlaylist();
-								fillPlaylist(allVideos, false);
+								fillPlaylist(sortedParsedVideos, false);
 							}
 							
 							function markAsPlayingInPlaylist(allVideos, videoToMark)
