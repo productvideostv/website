@@ -26,6 +26,23 @@
 							  return new Promise(resolve => setTimeout(resolve, ms));
 							}
 							
+							const isToday = (someDate) => {
+							  const today = new Date()
+							  return someDate.getDate() == today.getDate() &&
+								someDate.getMonth() == today.getMonth() &&
+								someDate.getFullYear() == today.getFullYear()
+							}
+							
+							function isYesterday(someDate)
+							{
+							  var yesterday = new Date();
+							  yesterday.setDate(yesterday.getDate() - 1);
+							  return someDate.getDate() == yesterday.getDate() &&
+								someDate.getMonth() == yesterday.getMonth() &&
+								someDate.getFullYear() == yesterday.getFullYear();
+							}
+
+							
 							function getYouTubeVideoIdFromUrl(youTubeVideoURL)
 							{
 								var videoId = youTubeVideoURL.match(				/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
@@ -123,6 +140,10 @@
 									}
 									var timeWhenAdded = singleVideo["TimeWhenAdded"].toString();
 									var formattedTimeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
+									if (isToday(singleVideo["TimeWhenAdded"]))
+										formattedTimeWhenAdded = "Today";
+									if (isYesterday(singleVideo["TimeWhenAdded"]))
+										formattedTimeWhenAdded = "Yesterday";
 									var row = [singleVideo["Title"], 
 										"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded];
 									playlist.addRow(row);
