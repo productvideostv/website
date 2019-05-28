@@ -220,7 +220,7 @@
 								hideWatchedVideos();
 							}
 							
-							async function showWatchedVideos(allVideos)
+							function showWatchedVideos(allVideos)
 							{
 								for(var index = 0; index < allVideos.length; ++index)
 								{
@@ -232,16 +232,17 @@
 									}
 									var row = composeTableRow(singleVideo, index, isWatched);
 									playlist.addRow(row);
+									markAsPlayedInPlaylist(singleVideo);
 								}
 							}
 							
-							async function hideWatchedVideos()
+							function hideWatchedVideos()
 							{
 								var delRow = {"6" : 1};
 								playlist.delRow(delRow);
 							}
 							
-							function markAsPlayingInPlaylist(allVideos, videoToMark)
+							function markAsPlayingInPlaylist(videoToMark)
 							{
 								var videoToMarkDateString = videoToMark["TimeWhenAdded"].toString();
 								var title = "<strong>" + videoToMark["Title"] + "</strong>";
@@ -252,7 +253,7 @@
 								playlist.updateRow(updatedRow, rowToUpdate);
 							}
 							
-							function markAsPlayedInPlaylist(allVideos, videoToMark)
+							function markAsPlayedInPlaylist(videoToMark)
 							{
 								var videoToMarkDateString = videoToMark["TimeWhenAdded"].toString();
 								var openTag = "<I>";
@@ -277,7 +278,7 @@
 								await waitForParsedResults();
 								
 								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideoId);
-								markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
+								markAsPlayingInPlaylist(playingVideo);
 								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
@@ -319,7 +320,7 @@
 								if(a.data==YT.PlayerState.ENDED)
 								{
 									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
-									markAsPlayedInPlaylist(sortedParsedVideos, playingVideo);
+									markAsPlayedInPlaylist(playingVideo);
 									playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
 									markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
 									
