@@ -1049,6 +1049,34 @@
 		self.goto( self.get( 'page' ) );
 		return self;
 	};
+	
+	/**
+	 * Method for adding row to the table
+	 * @param {array} rows - array with array of rows.
+	 * It will be concatenated with table data array and table will be automatically updated
+	 * @returns {*}
+	 */
+	t_proto.addRows = function ( rows )
+	{
+		var self = this,
+			ajax = self.get( 'ajax' ),
+			ajax_per_page = ajax && typeof ajax.url === "function",
+			data;
+
+		if ( ajax_per_page ) {
+			console.error( 'Error while adding row to ajax per page driven table' );
+			return self;
+		}
+
+		data = self.get( 'data' );
+		for (int index = 0; index < rows.length; ++index)
+		{
+			data.push( rows[index] );
+		}
+
+		self.goto( self.get( 'page' ) );
+		return self;
+	};
 
 	/**
 	 * Method for updating row(s) data
