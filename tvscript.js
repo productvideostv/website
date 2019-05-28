@@ -166,6 +166,15 @@
 								}
 							}
 							
+							function clearPlaylist()
+							{								
+								while(playlist.data.length > 0)
+								{
+									var delRow = {"1" : playlist.data[0][0], "2" : playlist.data[0][1], "3" : playlist.data[0][2], "4" : playlist.data[0][3]};
+									playlist.delRow(delRow);
+								}
+							}
+							
 							function showTotalVideos(allVideos)
 							{
 								$("#videostotal").text(allVideos.length + " total videos");
@@ -175,11 +184,12 @@
 							{
 								if (checkboxElem.checked) 
 								{
-									alert("checked")
+									clearPlaylist();
+									fillPlaylist(allVideos, true);
 									return;
-								} 
-								
-								alert("notchecked")
+								} 								
+								clearPlaylist();
+								fillPlaylist(allVideos, false);
 							}
 							
 							function markAsPlayingInPlaylist(allVideos, videoToMark)
