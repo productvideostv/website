@@ -322,8 +322,7 @@
 									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
 									markAsPlayedInPlaylist(playingVideo);
 									playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
-									console.log(playingVideo);
-									markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
+									markAsPlayingInPlaylist(playingVideo);
 									
 									var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 									if(playingVideoId != null) 
