@@ -311,7 +311,8 @@
 													},
 													events: {
 														'onReady': onPlayerReady,
-														'onStateChange': onytplayerStateChange
+														'onStateChange': onPlayerStateChange,
+														'onError': onPlayerError
 													}
 												});
 							}
@@ -332,24 +333,34 @@
 							}
 							
 							
-							function onytplayerStateChange(a)
+							function onPlayerStateChange(a)
 							{
 								if(a.data==YT.PlayerState.ENDED)
 								{
-									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
-									markAsPlayedInPlaylist(sortedParsedVideos, playingVideo);
-									playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
-									markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
-									
-									var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
-									if(playingVideoId != null) 
-									{
-									   ytplayer.loadVideoById(playingVideoId);
-									} 
-									else 
-									{ 
-										console.log("The youtube video ID is not valid.");
-										ytplayer.stopVideo();
-									}
+									playNextVideo();
 								}
+							}
+							
+							function playNextVideo()
+							{
+								storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
+								markAsPlayedInPlaylist(sortedParsedVideos, playingVideo);
+								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
+								markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
+								
+								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
+								if(playingVideoId != null) 
+								{
+								   ytplayer.loadVideoById(playingVideoId);
+								} 
+								else 
+								{ 
+									console.log("The youtube video ID is not valid.");
+									ytplayer.stopVideo();
+								}
+							}
+							
+							function onPlayerError(a)
+							{
+								playNextVideo();
 							}
