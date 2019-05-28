@@ -277,7 +277,7 @@
 							{
 								await waitForParsedResults();
 								
-								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideoId);
+								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
 								markAsPlayingInPlaylist(playingVideo);
 								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
@@ -322,6 +322,7 @@
 									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
 									markAsPlayedInPlaylist(playingVideo);
 									playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
+									console.log(playingVideo);
 									markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
 									
 									var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
