@@ -17,6 +17,7 @@
 												sortedParsedVideos = sortParsedVideos(parsedResults.data);
 												showTotalVideos(sortedParsedVideos);
 												buildPlaylist(sortedParsedVideos);
+												showHideWatchedCheckBox(sortedParsedVideos);
 										}
 									});
 							}
@@ -42,7 +43,7 @@
 								$("#videostotal").text(allVideos.length + " total videos");
 							}
 							
-							function showHideWatchedCheckbox(allVideos)
+							function showHideWatchedCheckBox(allVideos)
 							{
 								$("#showwatchedvideos").prop("checked", false);
 								$('#showwatchedvideos').change(showHideWatchedVideos);
