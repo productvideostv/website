@@ -157,7 +157,7 @@
 											{ "title": "Title", "type" : "string" },
 											{ "title": "URL", "type" : "string" },
 											{ "title": "Added", "type" : "string" },
-											{ "title": "TimeWhenAdded", "type" : "string" }
+											{ "title": "TimeWhenAdded", "type" : "string" },
 											{ "title": "Index", "type" : "number" }
 										],
 										data : playlistData,
