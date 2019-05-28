@@ -49,7 +49,7 @@
 								$('#showwatchedvideos').change(showHideWatchedVideos);
 								if (anyWatchedVideos(allVideos))
 								{
-									$("#showwatchedvideos").show();
+									$("#watchedvideosform").show();
 								}
 								
 							}
@@ -58,13 +58,13 @@
 							{
 								for(var index = 0; index < allVideos.length; ++index)
 								{
-									var videoURL = allVideos[videoIndex]["VideoURL"];
-									var timeWhenAdded = allVideos[videoIndex]["TimeWhenAdded"];
+									var videoURL = allVideos[index]["VideoURL"];
+									var timeWhenAdded = allVideos[index]["TimeWhenAdded"];
 									if (isVideoWatched(videoURL, timeWhenAdded))
 									{
 										return true;
 									}
-									videoIndex++;
+									index++;
 								}
 								return false;
 							}
