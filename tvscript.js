@@ -230,6 +230,11 @@
 									{
 										continue;
 									}
+									
+									var videoDateString = singleVideo["TimeWhenAdded"].toString();
+									var delRow = {"4" : videoDateString};
+									playlist.delRow(delRow);
+									
 									var row = composeTableRow(singleVideo, index, isWatched);
 									row[0] = "<I>" + row[0] + "</I>";
 									row[1] = "<I>" + row[1] + "</I>";
