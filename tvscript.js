@@ -107,20 +107,25 @@
 										container : "#table_id",
 										pager : "#table_id_pager"
 									} );
-																		
-									for(var index = 0; index < allVideos.length; ++index)
+									
+									fillPlaylist(allVideos, false);
+							}
+							
+							function fillPlaylist(allVideos, fillWatchedVideos)
+							{
+								for(var index = 0; index < allVideos.length; ++index)
+								{
+									var singleVideo = allVideos[index];
+									if (!fillWatchedVideos && isVideoWatched(singleVideo.VideoURL, singleVideo.TimeWhenAdded))
 									{
-										var singleVideo = allVideos[index];
-										if (isVideoWatched(singleVideo.VideoURL, singleVideo.TimeWhenAdded))
-										{
-											continue;
-										}
-										var timeWhenAdded = singleVideo["TimeWhenAdded"].toString();
-										var formattedTimeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
-										var row = [singleVideo["Title"], 
-											"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded];
-										playlist.addRow(row);
+										continue;
 									}
+									var timeWhenAdded = singleVideo["TimeWhenAdded"].toString();
+									var formattedTimeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
+									var row = [singleVideo["Title"], 
+										"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded];
+									playlist.addRow(row);
+								}
 							}
 							
 							function sortParsedVideos(parsedVideos)
