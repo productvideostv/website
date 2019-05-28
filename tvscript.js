@@ -159,9 +159,10 @@
 											{ "title": "Added", "type" : "string" },
 											{ "title": "TimeWhenAdded", "type" : "string" },
 											{ "title": "Index", "type" : "number" }
+											{ "title": "isWatched", "type" : "number" }
 										],
 										data : playlistData,
-										hidden_cols : [4, 5],
+										hidden_cols : [4, 5, 6],
 										page_size : 50,
 										row_numbers : true,
 										goto : false, 
@@ -185,22 +186,28 @@
 								for(var index = 0; index < allVideos.length; ++index)
 								{
 									var singleVideo = allVideos[index];
-									if (!fillWatchedVideos && isVideoWatched(singleVideo.VideoURL, singleVideo.TimeWhenAdded))
+									var isWatched = isVideoWatched(singleVideo.VideoURL, singleVideo.TimeWhenAdded);
+									if (!fillWatchedVideos && isWatched)
 									{
 										continue;
 									}
-									var timeWhenAdded = singleVideo["TimeWhenAdded"].toString();
-									var formattedTimeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
-									if (isToday(singleVideo["TimeWhenAdded"]))
-										formattedTimeWhenAdded = "Today";
-									if (isYesterday(singleVideo["TimeWhenAdded"]))
-										formattedTimeWhenAdded = "Yesterday";
-									var row = [singleVideo["Title"], 
-										"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded, index];
-									//playlist.addRow(row);
+									var row = composeTableRow(singleVideo, isWatched);
 									rows.push(row);
 								}
 								return rows;
+							}
+							
+							function composeTableRow(singleVideo, isWatched)
+							{
+								var timeWhenAdded = singleVideo["TimeWhenAdded"].toString();
+								var formattedTimeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
+								if (isToday(singleVideo["TimeWhenAdded"]))
+									formattedTimeWhenAdded = "Today";
+								if (isYesterday(singleVideo["TimeWhenAdded"]))
+									formattedTimeWhenAdded = "Yesterday";
+								var row = [singleVideo["Title"], 
+									"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded, index, isWatched ? 1 : 0];
+								return row;
 							}
 							
 							// async function clearPlaylist()
@@ -217,23 +224,32 @@
 							{
 								if (checkboxElem.checked) 
 								{
-									//showWatchedVideos();
+									showWatchedVideos();
 									return;
 								} 								
-								//hideWatchedVideos();
+								hideWatchedVideos();
 							}
 							
-							// async function showWatchedVideos()
-							// {
-								// await clearPlaylist();
-								// await fillPlaylist(sortedParsedVideos, true);
-							// }
+							async function showWatchedVideos(allVideos)
+							{
+								for(var index = 0; index < allVideos.length; ++index)
+								{
+									var singleVideo = allVideos[index];
+									var isWatched = isVideoWatched(singleVideo.VideoURL, singleVideo.TimeWhenAdded);
+									if (!isWatched)
+									{
+										continue;
+									}
+									var row = composeTableRow(singleVideo, isWatched);
+									playlist.addRow(row);
+								}
+							}
 							
-							// async function hideWatchedVideos()
-							// {
-								// await clearPlaylist();
-								// await fillPlaylist(sortedParsedVideos, false);
-							// }
+							async function hideWatchedVideos()
+							{
+								var delRow = {"6" : 1};
+								playlist.delRow(delRow);
+							}
 							
 							function markAsPlayingInPlaylist(allVideos, videoToMark)
 							{
