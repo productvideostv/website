@@ -210,21 +210,11 @@
 								return row;
 							}
 							
-							// async function clearPlaylist()
-							// {								
-								// while(playlist.data.length > 0)
-								// {
-									// console.log(playlist.data[0]);
-									// var delRow = {"1" : playlist.data[0][0], "2" : playlist.data[0][1], "3" : playlist.data[0][2], "4" : playlist.data[0][3]};
-									// playlist.delRow(delRow);
-								// }
-							// }
-							
 							function showHideWatchedVideos(checkboxElem) 
 							{
 								if (checkboxElem.checked) 
 								{
-									showWatchedVideos();
+									showWatchedVideos(sortedParsedVideos);
 									return;
 								} 								
 								hideWatchedVideos();
