@@ -37,6 +37,37 @@
 								return sortedVideos;
 							}
 							
+							function showTotalVideos(allVideos)
+							{
+								$("#videostotal").text(allVideos.length + " total videos");
+							}
+							
+							function showHideWatchedCheckbox(allVideos)
+							{
+								$("#showwatchedvideos").prop("checked", false);
+								$('#showwatchedvideos').change(showHideWatchedVideos);
+								if (anyWatchedVideos(allVideos))
+								{
+									$("#showwatchedvideos").show();
+								}
+								
+							}
+							
+							function anyWatchedVideos(allVideos)
+							{
+								for(var index = 0; index < allVideos.length; ++index)
+								{
+									var videoURL = allVideos[videoIndex]["VideoURL"];
+									var timeWhenAdded = allVideos[videoIndex]["TimeWhenAdded"];
+									if (isVideoWatched(videoURL, timeWhenAdded))
+									{
+										return true;
+									}
+									videoIndex++;
+								}
+								return false;
+							}
+							
 							function Sleep(ms) 
 							{
 							  return new Promise(resolve => setTimeout(resolve, ms));
@@ -145,7 +176,7 @@
 									fillPlaylist(allVideos, false);
 							}
 							
-							function fillPlaylist(allVideos, fillWatchedVideos)
+							async function fillPlaylist(allVideos, fillWatchedVideos)
 							{
 								for(var index = 0; index < allVideos.length; ++index)
 								{
@@ -166,7 +197,7 @@
 								}
 							}
 							
-							function clearPlaylist()
+							async function clearPlaylist()
 							{								
 								while(playlist.data.length > 0)
 								{
@@ -175,21 +206,26 @@
 								}
 							}
 							
-							function showTotalVideos(allVideos)
-							{
-								$("#videostotal").text(allVideos.length + " total videos");
-							}
-							
-							function showWatchedVideos(checkboxElem) 
+							function showHideWatchedVideos(checkboxElem) 
 							{
 								if (checkboxElem.checked) 
 								{
-									clearPlaylist();
-									fillPlaylist(sortedParsedVideos, true);
+									showWatchedVideos();
 									return;
 								} 								
-								clearPlaylist();
-								fillPlaylist(sortedParsedVideos, false);
+								hideWatchedVideos();
+							}
+							
+							async function showWatchedVideos()
+							{
+								await clearPlaylist();
+								await fillPlaylist(sortedParsedVideos, true);
+							}
+							
+							async function hideWatchedVideos()
+							{
+								await clearPlaylist();
+								await fillPlaylist(sortedParsedVideos, false);
 							}
 							
 							function markAsPlayingInPlaylist(allVideos, videoToMark)
