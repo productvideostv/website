@@ -191,13 +191,13 @@
 									{
 										continue;
 									}
-									var row = composeTableRow(singleVideo, isWatched);
+									var row = composeTableRow(singleVideo, index, isWatched);
 									rows.push(row);
 								}
 								return rows;
 							}
 							
-							function composeTableRow(singleVideo, isWatched)
+							function composeTableRow(singleVideo, videoIndex, isWatched)
 							{
 								var timeWhenAdded = singleVideo["TimeWhenAdded"].toString();
 								var formattedTimeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
@@ -206,7 +206,7 @@
 								if (isYesterday(singleVideo["TimeWhenAdded"]))
 									formattedTimeWhenAdded = "Yesterday";
 								var row = [singleVideo["Title"], 
-									"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded, index, isWatched ? 1 : 0];
+									"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded, videoIndex, isWatched ? 1 : 0];
 								return row;
 							}
 							
@@ -230,7 +230,7 @@
 									{
 										continue;
 									}
-									var row = composeTableRow(singleVideo, isWatched);
+									var row = composeTableRow(singleVideo, index, isWatched);
 									playlist.addRow(row);
 								}
 							}
