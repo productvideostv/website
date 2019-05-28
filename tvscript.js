@@ -21,6 +21,22 @@
 									});
 							}
 							
+							function sortParsedVideos(parsedVideos)
+							{
+								var sortedVideos = [];
+								for(var index = 0; index < parsedVideos.length; ++index)
+								{
+									var parsedVideo = parsedVideos[index];
+									var timeWhenAdded = moment(parsedVideo["TimeWhenAdded"]).toDate();
+									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo[	"VideoURL"], TimeWhenAdded : timeWhenAdded};
+									sortedVideos.push(videoWithDate);
+								}
+								
+								sortedVideos.sort((a,b) => (a.TimeWhenAdded > b.TimeWhenAdded) ? -1 : ((b.TimeWhenAdded > a.TimeWhenAdded) ? 1 : 0));
+								
+								return sortedVideos;
+							}
+							
 							function Sleep(ms) 
 							{
 							  return new Promise(resolve => setTimeout(resolve, ms));
@@ -155,20 +171,15 @@
 								$("#videostotal").text(allVideos.length + " total videos");
 							}
 							
-							function sortParsedVideos(parsedVideos)
+							function showWatchedVideos(checkboxElem) 
 							{
-								var sortedVideos = [];
-								for(var index = 0; index < parsedVideos.length; ++index)
+								if (checkboxElem.checked) 
 								{
-									var parsedVideo = parsedVideos[index];
-									var timeWhenAdded = moment(parsedVideo["TimeWhenAdded"]).toDate();
-									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo[	"VideoURL"], TimeWhenAdded : timeWhenAdded};
-									sortedVideos.push(videoWithDate);
-								}
+									alert("checked")
+									return;
+								} 
 								
-								sortedVideos.sort((a,b) => (a.TimeWhenAdded > b.TimeWhenAdded) ? -1 : ((b.TimeWhenAdded > a.TimeWhenAdded) ? 1 : 0));
-								
-								return sortedVideos;
+								alert("notchecked")
 							}
 							
 							function markAsPlayingInPlaylist(allVideos, videoToMark)

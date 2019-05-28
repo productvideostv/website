@@ -125,11 +125,16 @@
 						</script>
 						
 						<br/>
+						<div align="right"><strong>Bold - watching now.</strong> <I>Italic - watched video.</I></div>
 						<table style="width: 100%;" >
 						<tbody>
 						<tr>
 						<td width="50%"><div id="table_id_search"></div></td>
-						<td width="50%" align="right"><strong>Bold - watching now.</strong> <I>Italic - watched video.</I></td>
+						<td width="50%" align="right">
+							<form id="myform">
+								<input type="checkbox" name="checkfield" id="g01-01"  onchange="showWatchedVideos(this)"/>Show previously watched videos
+							</form>
+						</td>
 						</tr>
 						</tbody>
 						</table>
