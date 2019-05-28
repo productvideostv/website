@@ -222,7 +222,7 @@
 							
 							function showWatchedVideos(allVideos)
 							{
-								var rows = new Array();
+								//var rows = new Array();
 								for(var index = 0; index < allVideos.length; ++index)
 								{
 									var singleVideo = allVideos[index];
@@ -240,9 +240,11 @@
 									row[0] = "<I>" + row[0] + "</I>";
 									row[1] = "<I>" + row[1] + "</I>";
 									row[2] = "<I>" + row[2] + "</I>";
-									rows.push(row);
+									//rows.push(row);
+									playlist.data.push(row);
 								}
-								playlist.addRows(rows);
+								playlist.goto(playlist.page);
+								//playlist.addRows(rows);
 							}
 							
 							function hideWatchedVideos()
