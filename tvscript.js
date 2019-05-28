@@ -210,13 +210,13 @@
 								return row;
 							}
 							
-							function showHideWatchedVideos(checkboxElem) 
+							function showHideWatchedVideos() 
 							{
-								if (checkboxElem.checked) 
+								if($(this).is(":checked")) 
 								{
 									showWatchedVideos(sortedParsedVideos);
 									return;
-								} 								
+								}
 								hideWatchedVideos();
 							}
 							
