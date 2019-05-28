@@ -247,7 +247,7 @@
 								var title = "<strong>" + videoToMark["Title"] + "</strong>";
 								var videoURL = "<strong>" + "<a href=\"" + videoToMark["VideoURL"] + "\">" +videoToMark["VideoURL"] + "</a></strong>";
 								var timeWhenAdded = "<strong>" + videoToMark["TimeWhenAdded"].toLocaleDateString() + "</strong>";
-								var updatedRow = {"1" : title, "2" : videoURL, "3" : timeWhenAdded, "4" : videoToMarkDateString};
+								var updatedRow = {"1" : title, "2" : videoURL, "3" : timeWhenAdded};
 								var rowToUpdate = {"4" : videoToMarkDateString};
 								playlist.updateRow(updatedRow, rowToUpdate);
 							}
@@ -260,7 +260,7 @@
 								var title = openTag + videoToMark["Title"] + closeTag;
 								var videoURL = openTag + "<a href=\"" + videoToMark["VideoURL"] + "\">" + videoToMark["VideoURL"] + "</a>" + closeTag;
 								var timeWhenAdded = openTag + videoToMark["TimeWhenAdded"].toLocaleDateString() + closeTag;
-								var updatedRow = {"1" : title, "2" : videoURL, "3" : timeWhenAdded, "4" : videoToMarkDateString};
+								var updatedRow = {"1" : title, "2" : videoURL, "3" : timeWhenAdded, "6" : 1};
 								var rowToUpdate = {"4" : videoToMarkDateString};
 								playlist.updateRow(updatedRow, rowToUpdate);
 							}
