@@ -15,6 +15,7 @@
 										{
 												parsedResults = results;
 												sortedParsedVideos = sortParsedVideos(parsedResults.data);
+												showTotalVideos(sortedParsedVideos);
 												buildPlaylist(sortedParsedVideos);
 										}
 									});
@@ -126,6 +127,11 @@
 										"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded];
 									playlist.addRow(row);
 								}
+							}
+							
+							function showTotalVideos(allVideos)
+							{
+								$("#videostotal").text(allVideos.length + " total videos");
 							}
 							
 							function sortParsedVideos(parsedVideos)
