@@ -235,7 +235,6 @@
 									row[1] = "<I>" + row[1] + "</I>";
 									row[2] = "<I>" + row[2] + "</I>";
 									playlist.addRow(row);
-									//markAsPlayedInPlaylist(singleVideo);
 								}
 							}
 							
@@ -245,28 +244,34 @@
 								playlist.delRow(delRow);
 							}
 							
-							function markAsPlayingInPlaylist(videoToMark)
+							function markAsPlayingInPlaylist(allVideos, videoToMark)
 							{
+								var videoIndex = getVideoIndex(allVideos, videoToMark);
 								var videoToMarkDateString = videoToMark["TimeWhenAdded"].toString();
-								var title = "<strong>" + videoToMark["Title"] + "</strong>";
-								var videoURL = "<strong>" + "<a href=\"" + videoToMark["VideoURL"] + "\">" +videoToMark["VideoURL"] + "</a></strong>";
-								var timeWhenAdded = "<strong>" + videoToMark["TimeWhenAdded"].toLocaleDateString() + "</strong>";
-								var updatedRow = {"1" : title, "2" : videoURL, "3" : timeWhenAdded};
-								var rowToUpdate = {"4" : videoToMarkDateString};
-								playlist.updateRow(updatedRow, rowToUpdate);
+								
+								var delRow = {"4" : videoToMarkDateString};
+								playlist.delRow(delRow);
+								
+								var row = composeTableRow(videoToMark, videoIndex, false);
+								row[0] = "<strong>" + row[0] + "</strong>";
+								row[1] = "<strong>" + row[1] + "</strong>";
+								row[2] = "<strong>" + row[2] + "</strong>";
+								playlist.addRow(row);
 							}
 							
-							function markAsPlayedInPlaylist(videoToMark)
+							function markAsPlayedInPlaylist(allVideos, videoToMark)
 							{
+								var videoIndex = getVideoIndex(allVideos, videoToMark);
 								var videoToMarkDateString = videoToMark["TimeWhenAdded"].toString();
-								var openTag = "<I>";
-								var closeTag = "</I>";
-								var title = openTag + videoToMark["Title"] + closeTag;
-								var videoURL = openTag + "<a href=\"" + videoToMark["VideoURL"] + "\">" + videoToMark["VideoURL"] + "</a>" + closeTag;
-								var timeWhenAdded = openTag + videoToMark["TimeWhenAdded"].toLocaleDateString() + closeTag;
-								var updatedRow = {"1" : title, "2" : videoURL, "3" : timeWhenAdded, "6" : 1};
-								var rowToUpdate = {"4" : videoToMarkDateString};
-								playlist.updateRow(updatedRow, rowToUpdate);
+								
+								var delRow = {"4" : videoToMarkDateString};
+								playlist.delRow(delRow);
+								
+								var row = composeTableRow(videoToMark, videoIndex, true);
+								row[0] = "<I>" + row[0] + "</I>";
+								row[1] = "<I>" + row[1] + "</I>";
+								row[2] = "<I>" + row[2] + "</I>";
+								playlist.addRow(row);
 							}
 
 							var ytplayer;
@@ -281,7 +286,7 @@
 								await waitForParsedResults();
 								
 								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
-								markAsPlayingInPlaylist(playingVideo);
+								markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
 								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
@@ -323,9 +328,9 @@
 								if(a.data==YT.PlayerState.ENDED)
 								{
 									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
-									markAsPlayedInPlaylist(playingVideo);
+									markAsPlayedInPlaylist(sortedParsedVideos, playingVideo);
 									playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
-									markAsPlayingInPlaylist(playingVideo);
+									markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
 									
 									var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 									if(playingVideoId != null) 
