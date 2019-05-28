@@ -231,8 +231,11 @@
 										continue;
 									}
 									var row = composeTableRow(singleVideo, index, isWatched);
+									row[0] = "<I>" + row[0] + "</I>";
+									row[1] = "<I>" + row[1] + "</I>";
+									row[2] = "<I>" + row[2] + "</I>";
 									playlist.addRow(row);
-									markAsPlayedInPlaylist(singleVideo);
+									//markAsPlayedInPlaylist(singleVideo);
 								}
 							}
 							
