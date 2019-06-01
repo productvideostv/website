@@ -39,18 +39,16 @@
 								return sortedVideos;
 							}
 							
-							function showTotalVideos(allVideos)
+							function calculateLasting(videos)
 							{
 								var totalSeconds = 0;
 								var totalMinutes = 0;
-								for(var index = 0; index < allVideos.length; ++index)
+								for(var index = 0; index < videos.length; ++index)
 								{
-									var duration = allVideos[index]["Duration"];
-									console.log("Duration: " + duration);
+									var duration = videos[index]["Duration"];
 									if (duration == null)
 										continue;
 									var minsec = duration.split(":");
-									console.log(minsec);
 									if (minsec.length != 2)
 										continue;
 									var seconds = parseInt(minsec[1]);
@@ -60,12 +58,8 @@
 								}
 								if (totalMinutes == 0 && totalSeconds == 0)
 								{
-									$("#videostotal").text(allVideos.length + " total videos");
-									return;
+									return "";
 								}
-								
-								console.log(totalSeconds);
-								console.log(totalMinutes);
 								
 								var minutesToAdd = Math.floor(totalSeconds / 60); 
 								totalMinutes += minutesToAdd;
@@ -73,14 +67,22 @@
 								var totalHours = Math.floor(totalMinutes / 60);
 								totalMinutes -= totalHours * 60;
 								
-								console.log(totalSeconds);
-								console.log(totalMinutes);
-								
-								var lasting = totalMinutes + " min. " + totalSeconds + " sec. ";
+								var lasting = " " + totalMinutes + " min. " + totalSeconds + " sec. ";
 								if (totalHours != 0)
-									lasting = totalHours + " hr. " + lasting;
-								
-								$("#videostotal").text(allVideos.length + " total videos lasting " + lasting);
+									lasting = totalHours + " hr." + lasting;
+									
+								return lasting;
+							}
+							
+							function showTotalVideos(allVideos)
+							{
+								var lasting = calculateLasting(allVideos);
+								if (lasting == "")
+								{
+									$("#videostotal").text(allVideos.length + " total videos");
+									return;
+								}								
+								$("#videostotal").text(allVideos.length + " total videos lasting" + lasting);
 							}
 							
 							function showHideWatchedCheckBox(allVideos)
