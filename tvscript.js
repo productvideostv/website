@@ -41,7 +41,7 @@
 							
 							function showTotalVideos(allVideos)
 							{
-								int totalSeconds, totalMinutes;
+								var totalSeconds, totalMinutes;
 								for(var index = 0; index < allVideos.length; ++index)
 								{
 									var duration = allVideos[index]["Duration"];
