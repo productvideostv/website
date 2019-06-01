@@ -61,11 +61,17 @@
 									return;
 								}
 								
+								console.log(totalSeconds);
+								console.log(totalMinutes);
+								
 								var minutesToAdd = totalSeconds % 60; 
 								totalMinutes += minutesToAdd;
 								totalSeconds -= minutesToAdd * 60;
 								var totalHours = totalMinutes % 60;
 								totalMinutes -= totalHours * 60;
+								
+								console.log(totalSeconds);
+								console.log(totalMinutes);
 								
 								var lasting = totalMinutes + " min. " + totalSeconds + " sec. ";
 								if (totalHours != 0)
