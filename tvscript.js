@@ -64,7 +64,7 @@
 								var minutesToAdd = totalSeconds % 60; 
 								totalMinutes += minutesToAdd;
 								totalSeconds -= minutesToAdd * 60;
-								int totalHours = totalMinutes % 60;
+								var totalHours = totalMinutes % 60;
 								totalMinutes -= totalHours * 60;
 								
 								var lasting = totalMinutes + " min. " + totalSeconds + " sec. ";
