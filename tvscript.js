@@ -89,7 +89,7 @@
 							function showTodayVideos(allVideos)
 							{
 								var todayVideos = [];
-								for(var index = 0; index < videos.length; ++index)
+								for(var index = 0; index < allVideos.length; ++index)
 								{
 									if (isToday(allVideos[index]["TimeWhenAdded"]))
 									{
