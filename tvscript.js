@@ -16,6 +16,7 @@
 												parsedResults = results;
 												sortedParsedVideos = sortParsedVideos(parsedResults.data);
 												showTotalVideos(sortedParsedVideos);
+												showTodayVideos(sortedParsedVideos);
 												buildPlaylist(sortedParsedVideos);
 												showHideWatchedCheckBox(sortedParsedVideos);
 										}
@@ -83,6 +84,25 @@
 									return;
 								}								
 								$("#videostotal").text(allVideos.length + " total videos lasting" + lasting);
+							}
+							
+							function showTodayVideos(allVideos)
+							{
+								var todayVideos = [];
+								for(var index = 0; index < videos.length; ++index)
+								{
+									if (isToday(allVideos[index]["TimeWhenAdded"]))
+									{
+										todayVideos.push(allVideos[index]);
+									}
+								}
+								var lasting = calculateLasting(todayVideos);
+								if (lasting == "")
+								{
+									return;
+								}								
+								$("#videostoday").text(todayVideos.length + " videos added today lasting" + lasting);
+								$("#videostoday").show();
 							}
 							
 							function showHideWatchedCheckBox(allVideos)
