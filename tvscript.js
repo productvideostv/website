@@ -29,7 +29,8 @@
 								{
 									var parsedVideo = parsedVideos[index];
 									var timeWhenAdded = moment(parsedVideo["TimeWhenAdded"]).toDate();
-									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo[	"VideoURL"], TimeWhenAdded : timeWhenAdded};
+									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo["VideoURL"], TimeWhenAdded : timeWhenAdded, Description : parsedVideo["Description"], 
+									Duration : parsedVideo["Duration"]};									
 									sortedVideos.push(videoWithDate);
 								}
 								
@@ -159,7 +160,8 @@
 											{ "title": "Added", "type" : "string" },
 											{ "title": "TimeWhenAdded", "type" : "string" },
 											{ "title": "Index", "type" : "number" },
-											{ "title": "isWatched", "type" : "number" }
+											{ "title": "isWatched", "type" : "number" },
+											{ "title": "Duration (mm:ss)", "type" : "string" }
 										],
 										data : playlistData,
 										hidden_cols : [4, 5, 6],
@@ -206,7 +208,8 @@
 								if (isYesterday(singleVideo["TimeWhenAdded"]))
 									formattedTimeWhenAdded = "Yesterday";
 								var row = [singleVideo["Title"], 
-									"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded, videoIndex, isWatched ? 1 : 0];
+									"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded, videoIndex, isWatched ? 1 : 0, 
+									singleVideo["Duration"]];
 								return row;
 							}
 							
