@@ -217,7 +217,6 @@
 								playlist = new tTable( {
 										titles : [
 											{ "title": "Title", "type" : "string" },
-											//{ "title": "URL", "type" : "string" },
 											{ "title": "Added", "type" : "string" },
 											{ "title": "TimeWhenAdded", "type" : "string" },
 											{ "title": "Index", "type" : "number" },
@@ -225,16 +224,13 @@
 											{ "title": "Duration (mm:ss)", "type" : "string" }
 										],
 										data : playlistData,
-										//hidden_cols : [4, 5, 6],
 										hidden_cols : [3, 4, 5],
 										page_size : 50,
 										row_numbers : true,
 										goto : false, 
 										hover_cols : false, 
 										nav_arrows : false, 
-										//sorting : [5],
 										sorting : [4],
-										//sort_by : 5,
 										sort_by : 4,
 										search : true,
 										search_auto : true,
@@ -289,7 +285,6 @@
 							
 							function showWatchedVideos(allVideos)
 							{
-								//var rows = new Array();
 								for(var index = 0; index < allVideos.length; ++index)
 								{
 									var singleVideo = allVideos[index];
@@ -300,14 +295,14 @@
 									}
 									
 									var videoDateString = singleVideo["TimeWhenAdded"].toString();
-									var delRow = {"4" : videoDateString};
+									var delRow = {"3" : videoDateString};
 									playlist.delRow(delRow);
 									
 									var row = composeTableRow(singleVideo, index, isWatched);
 									row[0] = "<I>" + row[0] + "</I>";
 									row[1] = "<I>" + row[1] + "</I>";
 									row[2] = "<I>" + row[2] + "</I>";
-									//rows.push(row);
+									row[5] = "<I>" + row[5] + "</I>";
 									playlist.data.push(row);
 								}
 								playlist.goto(playlist.page);
@@ -316,7 +311,7 @@
 							
 							function hideWatchedVideos()
 							{
-								var delRow = {"6" : 1};
+								var delRow = {"5" : 1};
 								playlist.delRow(delRow);
 							}
 							
@@ -325,13 +320,14 @@
 								var videoIndex = getVideoIndex(allVideos, videoToMark);
 								var videoToMarkDateString = videoToMark["TimeWhenAdded"].toString();
 								
-								var delRow = {"4" : videoToMarkDateString};
+								var delRow = {"3" : videoToMarkDateString};
 								playlist.delRow(delRow);
 								
 								var row = composeTableRow(videoToMark, videoIndex, false);
 								row[0] = "<strong>" + row[0] + "</strong>";
 								row[1] = "<strong>" + row[1] + "</strong>";
 								row[2] = "<strong>" + row[2] + "</strong>";
+								row[5] = "<strong>" + row[5] + "</strong>";
 								playlist.addRow(row);
 							}
 							
@@ -340,13 +336,14 @@
 								var videoIndex = getVideoIndex(allVideos, videoToMark);
 								var videoToMarkDateString = videoToMark["TimeWhenAdded"].toString();
 								
-								var delRow = {"4" : videoToMarkDateString};
+								var delRow = {"3" : videoToMarkDateString};
 								playlist.delRow(delRow);
 								
 								var row = composeTableRow(videoToMark, videoIndex, true);
 								row[0] = "<I>" + row[0] + "</I>";
 								row[1] = "<I>" + row[1] + "</I>";
 								row[2] = "<I>" + row[2] + "</I>";
+								row[5] = "<I>" + row[5] + "</I>";
 								playlist.addRow(row);
 							}
 
