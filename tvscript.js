@@ -269,7 +269,7 @@
 								if (isYesterday(singleVideo["TimeWhenAdded"]))
 									formattedTimeWhenAdded = "Yesterday";
 								var row = [singleVideo["Title"], 
-									"<a href=\"" + singleVideo["VideoURL"] + "\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded, videoIndex, isWatched ? 1 : 0, 
+									"<a href=\"" + singleVideo["VideoURL"] + "\" target=\"_blank\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded, videoIndex, isWatched ? 1 : 0, 
 									singleVideo["Duration"]];
 								return row;
 							}
