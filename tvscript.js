@@ -41,13 +41,16 @@
 							
 							function showTotalVideos(allVideos)
 							{
-								var totalSeconds, totalMinutes;
+								var totalSeconds = 0;
+								var totalMinutes = 0;
 								for(var index = 0; index < allVideos.length; ++index)
 								{
 									var duration = allVideos[index]["Duration"];
+									console.log("Duration: " + duration);
 									if (duration == null)
 										continue;
 									var minsec = duration.split(":");
+									console.log(minsec);
 									if (minsec.length != 2)
 										continue;
 									var seconds = parseInt(minsec[1]);
