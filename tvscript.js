@@ -67,10 +67,10 @@
 								console.log(totalSeconds);
 								console.log(totalMinutes);
 								
-								var minutesToAdd = totalSeconds % 60; 
+								var minutesToAdd = Math.floor(totalSeconds / 60); 
 								totalMinutes += minutesToAdd;
 								totalSeconds -= minutesToAdd * 60;
-								var totalHours = totalMinutes % 60;
+								var totalHours = Math.floor(totalMinutes / 60);
 								totalMinutes -= totalHours * 60;
 								
 								console.log(totalSeconds);
