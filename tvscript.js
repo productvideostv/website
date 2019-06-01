@@ -41,7 +41,37 @@
 							
 							function showTotalVideos(allVideos)
 							{
-								$("#videostotal").text(allVideos.length + " total videos");
+								int totalSeconds, totalMinutes;
+								for(var index = 0; index < allVideos.length; ++index)
+								{
+									var duration = allVideos[index]["Duration"];
+									if (duration == null)
+										continue;
+									var minsec = duration.split(":");
+									if (minsec.length != 2)
+										continue;
+									var seconds = parseInt(minsec[1]);
+									var minutes = parseInt(minsec[0]);
+									totalSeconds += seconds;
+									totalMinutes += minutes;
+								}
+								if (totalMinutes == 0 && totalSeconds == 0)
+								{
+									$("#videostotal").text(allVideos.length + " total videos");
+									return;
+								}
+								
+								var minutesToAdd = totalSeconds % 60; 
+								totalMinutes += minutesToAdd;
+								totalSeconds -= minutesToAdd * 60;
+								int totalHours = totalMinutes % 60;
+								totalMinutes -= totalHours * 60;
+								
+								var lasting = totalMinutes + " min. " + totalSeconds + " sec. ";
+								if (totalHours != 0)
+									lasting = totalHours + " hr. " + lasting;
+								
+								$("#videostotal").text(allVideos.length + " total videos lasting " + lasting);
 							}
 							
 							function showHideWatchedCheckBox(allVideos)
