@@ -217,7 +217,7 @@
 								playlist = new tTable( {
 										titles : [
 											{ "title": "Title", "type" : "string" },
-											{ "title": "URL", "type" : "string" },
+											//{ "title": "URL", "type" : "string" },
 											{ "title": "Added", "type" : "string" },
 											{ "title": "TimeWhenAdded", "type" : "string" },
 											{ "title": "Index", "type" : "number" },
@@ -225,14 +225,17 @@
 											{ "title": "Duration (mm:ss)", "type" : "string" }
 										],
 										data : playlistData,
-										hidden_cols : [4, 5, 6],
+										//hidden_cols : [4, 5, 6],
+										hidden_cols : [3, 4, 5],
 										page_size : 50,
 										row_numbers : true,
 										goto : false, 
 										hover_cols : false, 
 										nav_arrows : false, 
-										sorting : [5],
-										sort_by : 5,
+										//sorting : [5],
+										sorting : [4],
+										//sort_by : 5,
+										sort_by : 4,
 										search : true,
 										search_auto : true,
 										search_container : "#table_id_search",
@@ -268,8 +271,8 @@
 									formattedTimeWhenAdded = "Today";
 								if (isYesterday(singleVideo["TimeWhenAdded"]))
 									formattedTimeWhenAdded = "Yesterday";
-								var row = [singleVideo["Title"], 
-									"<a href=\"" + singleVideo["VideoURL"] + "\" target=\"_blank\">" + singleVideo["VideoURL"] + "</a>", formattedTimeWhenAdded, timeWhenAdded, videoIndex, isWatched ? 1 : 0, 
+								var titleAsLink = "<a href=\"" + singleVideo["VideoURL"] + "\" target=\"_blank\">" + singleVideo["Title"] + + "</a>"
+								var row = [titleAsLink, formattedTimeWhenAdded, timeWhenAdded, videoIndex, isWatched ? 1 : 0, 
 									singleVideo["Duration"]];
 								return row;
 							}
