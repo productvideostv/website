@@ -29,7 +29,10 @@
 								for(var index = 0; index < parsedVideos.length; ++index)
 								{
 									var parsedVideo = parsedVideos[index];
-									console.log(parsedVideo);
+									if (parsedVideo["TimeWhenAdded"] == null || parsedVideo["Title"] == null || parsedVideo["VideoURL"] == null)
+									{
+										continue;
+									}
 									var timeWhenAdded = moment(parsedVideo["TimeWhenAdded"], "MM/DD/YYYY hh:mm:ss a").toDate();
 									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo["VideoURL"], TimeWhenAdded : timeWhenAdded, Description : parsedVideo["Description"], 
 									Duration : parsedVideo["Duration"]};
