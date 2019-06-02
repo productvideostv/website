@@ -127,7 +127,6 @@
 									{
 										return true;
 									}
-									index++;
 								}
 								return false;
 							}
