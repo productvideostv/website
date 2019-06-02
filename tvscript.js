@@ -31,7 +31,8 @@
 									var parsedVideo = parsedVideos[index];
 									var timeWhenAdded = moment(parsedVideo["TimeWhenAdded"], "MM/DD/YYYY hh:mm:ss a").toDate();
 									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo["VideoURL"], TimeWhenAdded : timeWhenAdded, Description : parsedVideo["Description"], 
-									Duration : parsedVideo["Duration"]};									
+									Duration : parsedVideo["Duration"]};
+									console.log(videoWithDate);
 									sortedVideos.push(videoWithDate);
 								}
 								
