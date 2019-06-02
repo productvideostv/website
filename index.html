@@ -74,6 +74,47 @@
 				color: darkgreen;
 				text-decoration: none;
 			}
+			
+			.submitVideoButton {
+				-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+				-webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+				box-shadow:inset 0px 1px 0px 0px #f5978e;
+				background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #fa1100), color-stop(1, #c62d1f));
+				background:-moz-linear-gradient(top, #fa1100 5%, #c62d1f 100%);
+				background:-webkit-linear-gradient(top, #fa1100 5%, #c62d1f 100%);
+				background:-o-linear-gradient(top, #fa1100 5%, #c62d1f 100%);
+				background:-ms-linear-gradient(top, #fa1100 5%, #c62d1f 100%);
+				background:linear-gradient(to bottom, #fa1100 5%, #c62d1f 100%);
+				filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fa1100', endColorstr='#c62d1f',GradientType=0);
+				background-color:#fa1100;
+				-moz-border-radius:6px;
+				-webkit-border-radius:6px;
+				border-radius:6px;
+				border:1px solid #d02718;
+				display:inline-block;
+				cursor:pointer;
+				color:#ffffff;
+				font-family:Trebuchet MS;
+				font-size:28px;
+				font-weight:bold;
+				padding:12px 24px;
+				text-decoration:none;
+				text-shadow:0px 1px 0px #810e05;
+			}
+			.submitVideoButton:hover {
+				background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #fa1100));
+				background:-moz-linear-gradient(top, #c62d1f 5%, #fa1100 100%);
+				background:-webkit-linear-gradient(top, #c62d1f 5%, #fa1100 100%);
+				background:-o-linear-gradient(top, #c62d1f 5%, #fa1100 100%);
+				background:-ms-linear-gradient(top, #c62d1f 5%, #fa1100 100%);
+				background:linear-gradient(to bottom, #c62d1f 5%, #fa1100 100%);
+				filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#fa1100',GradientType=0);
+				background-color:#c62d1f;
+			}
+			.submitVideoButton:active {
+				position:relative;
+				top:1px;
+			}
 		
 		</style>
 		
@@ -143,7 +184,7 @@
 						</table>
 						<div id="table_id"></div>
 						<div id="table_id_pager"></div>
-						
+						<div align="center"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdxB1bVy_0jU9xiowfnP0HZmlSEB3iuGrAmxSOemJRyGJv0EQ/viewform?usp=sf_link" target="_blank" class="submitVideoButton">Submit a product video</a></div>
 					</div>
 				</div>
 			</main>
