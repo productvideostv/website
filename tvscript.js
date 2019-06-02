@@ -124,7 +124,7 @@
 									var timeWhenAdded = allVideos[index]["TimeWhenAdded"];
 									if (isVideoWatched(videoURL, timeWhenAdded))
 									{
-										console.log("anyWatchedVideos : true" + videoURL);
+										console.log("anyWatchedVideos : true, videoURL: " + videoURL + ", timeWhenAdded: " + timeWhenAdded);
 										return true;
 									}
 								}
