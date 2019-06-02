@@ -1,7 +1,7 @@
 							var parsedResults;
 							var sortedParsedVideos;
 							
-							localStorage.clear();
+							//localStorage.clear();
 							startPapaParse();
 							
 							async function startPapaParse()
@@ -128,7 +128,6 @@
 									var timeWhenAdded = allVideos[index]["TimeWhenAdded"];
 									if (isVideoWatched(videoURL, timeWhenAdded))
 									{
-										console.log("anyWatchedVideos : true, videoURL: " + videoURL + ", timeWhenAdded: " + timeWhenAdded);
 										return true;
 									}
 								}
