@@ -111,7 +111,6 @@
 								$('#showwatchedvideos').change(showHideWatchedVideos);
 								if (anyWatchedVideos(allVideos))
 								{
-									console.log("anyWatchedVideos : true");
 									$("#watchedvideosform").show();
 								}
 								
@@ -125,6 +124,7 @@
 									var timeWhenAdded = allVideos[index]["TimeWhenAdded"];
 									if (isVideoWatched(videoURL, timeWhenAdded))
 									{
+										console.log("anyWatchedVideos : true" + videoURL);
 										return true;
 									}
 								}
