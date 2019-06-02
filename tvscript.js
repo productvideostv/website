@@ -111,6 +111,7 @@
 								$('#showwatchedvideos').change(showHideWatchedVideos);
 								if (anyWatchedVideos(allVideos))
 								{
+									console.log("anyWatchedVideos : true");
 									$("#watchedvideosform").show();
 								}
 								
