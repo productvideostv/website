@@ -343,7 +343,6 @@
 								var row = composeTableRow(videoToMark, videoIndex, true);
 								row[0] = "<I>" + row[0] + "</I>";
 								row[1] = "<I>" + row[1] + "</I>";
-								row[2] = "<I>" + row[2] + "</I>";
 								row[5] = "<I>" + row[5] + "</I>";
 								playlist.addRow(row);
 							}
