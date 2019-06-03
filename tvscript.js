@@ -15,10 +15,10 @@
 										{
 												parsedResults = results;
 												sortedParsedVideos = sortParsedVideos(parsedResults.data);
-												showTotalVideos(sortedParsedVideos);
-												showTodayVideos(sortedParsedVideos);
 												buildPlaylist(sortedParsedVideos);
 												showHideWatchedCheckBox(sortedParsedVideos);
+												showTotalVideos(sortedParsedVideos);
+												showTodayVideos(sortedParsedVideos);
 										}
 									});
 							}
