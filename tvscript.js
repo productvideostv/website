@@ -6,7 +6,7 @@
 							
 							async function startPapaParse()
 							{
-								Papa.parse("http://productvideos.tech/ProductVideosPlaylist.csv", 
+								Papa.parse("https://productvideos.tech/ProductVideosPlaylist.csv", 
 									{
 										download: true,
 										delimiter: ';',
