@@ -265,6 +265,7 @@
 							function composeTableRow(singleVideo, videoIndex, isWatched)
 							{
 								var timeWhenAdded = singleVideo["TimeWhenAdded"].toString();
+								console.log("timeWhenAdded" + timeWhenAdded);
 								var formattedTimeWhenAdded = singleVideo["TimeWhenAdded"].toLocaleDateString();
 								if (isToday(singleVideo["TimeWhenAdded"]))
 									formattedTimeWhenAdded = "Today";
@@ -321,7 +322,7 @@
 							{
 								var videoIndex = getVideoIndex(allVideos, videoToMark);
 								var videoToMarkDateString = videoToMark["TimeWhenAdded"].toString();
-								
+								console.log("videoToMarkDateString: " + videoToMarkDateString);
 								var delRow = {"3" : videoToMarkDateString};
 								playlist.delRow(delRow);
 								
