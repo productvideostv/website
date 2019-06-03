@@ -305,7 +305,6 @@
 									var row = composeTableRow(singleVideo, index, isWatched);
 									row[0] = "<I>" + row[0] + "</I>";
 									row[1] = "<I>" + row[1] + "</I>";
-									row[2] = "<I>" + row[2] + "</I>";
 									row[5] = "<I>" + row[5] + "</I>";
 									playlist.data.push(row);
 								}
@@ -329,7 +328,6 @@
 								var row = composeTableRow(videoToMark, videoIndex, false);
 								row[0] = "<strong>" + row[0] + "</strong>";
 								row[1] = "<strong>" + row[1] + "</strong>";
-								row[2] = "<strong>" + row[2] + "</strong>";
 								row[5] = "<strong>" + row[5] + "</strong>";
 								playlist.addRow(row);
 							}
