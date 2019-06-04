@@ -37,7 +37,6 @@
 							async function showContent()
 							{
 								await waitForSortedVideos();
-								console.log("showContent");
 								buildPlaylist(sortedVideos);
 								showHideWatchedCheckBox(sortedVideos);
 								showTotalVideos(sortedVideos);
@@ -388,7 +387,6 @@
 							async function createYTPlayer()
 							{
 								await waitForSortedVideos();
-								console.log("createYTPlayer");
 								
 								playingVideo = getVideoToPlayNext(sortedVideos, playingVideo);								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
@@ -410,8 +408,7 @@
 													}
 												});
 												
-								await waitForPlaylist();
-								console.log("markAsPlayingInPlaylist");								
+								await waitForPlaylist();							
 								markAsPlayingInPlaylist(sortedVideos, playingVideo);
 							}
 							
