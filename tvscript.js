@@ -1,5 +1,5 @@
 							var parsedResults;
-							var sortedParsedVideos;
+							var sortedVideos;
 							
 							//localStorage.clear();
 							startPapaParse();
@@ -14,16 +14,16 @@
 										complete: function(results) 
 										{
 												parsedResults = results;
-												sortedParsedVideos = sortParsedVideos(parsedResults.data);
+												sortedVideos = sortParsedVideos(parsedResults.data);
 										}
 									});
 							}
 							
-							async function waitForParsedResults()
+							async function waitForSortedVideos()
 							{
 								while(true)
 								{
-									if (sortedParsedVideos != null)
+									if (sortedVideos != null)
 										break;
 									await Sleep(100);
 								}
@@ -36,18 +36,18 @@
 							
 							async function showContent()
 							{
-								await waitForParsedResults();
+								await waitForSortedVideos();
 								console.log("showContent");
-								buildPlaylist(sortedParsedVideos);
-								showHideWatchedCheckBox(sortedParsedVideos);
-								showTotalVideos(sortedParsedVideos);
-								showTodayVideos(sortedParsedVideos);
+								buildPlaylist(sortedVideos);
+								showHideWatchedCheckBox(sortedVideos);
+								showTotalVideos(sortedVideos);
+								showTodayVideos(sortedVideos);
 								$("#content").show();
 							}
 							
 							function sortParsedVideos(parsedVideos)
 							{
-								var sortedVideos = [];
+								var sorted = [];
 								for(var index = 0; index < parsedVideos.length; ++index)
 								{
 									var parsedVideo = parsedVideos[index];
@@ -58,12 +58,12 @@
 									var timeWhenAdded = moment(parsedVideo["TimeWhenAdded"], "MM/DD/YYYY hh:mm:ss a").toDate();
 									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo["VideoURL"], TimeWhenAdded : timeWhenAdded, Description : parsedVideo["Description"], 
 									Duration : parsedVideo["Duration"]};
-									sortedVideos.push(videoWithDate);
+									sorted.push(videoWithDate);
 								}
 								
-								sortedVideos.sort((a,b) => (a.TimeWhenAdded > b.TimeWhenAdded) ? -1 : ((b.TimeWhenAdded > a.TimeWhenAdded) ? 1 : 0));
+								sorted.sort((a,b) => (a.TimeWhenAdded > b.TimeWhenAdded) ? -1 : ((b.TimeWhenAdded > a.TimeWhenAdded) ? 1 : 0));
 								
-								return sortedVideos;
+								return sorted;
 							}
 							
 							function calculateLasting(videos)
@@ -302,7 +302,7 @@
 							{
 								if($(this).is(":checked")) 
 								{
-									showWatchedVideos(sortedParsedVideos);
+									showWatchedVideos(sortedVideos);
 									return;
 								}
 								hideWatchedVideos();
@@ -367,6 +367,16 @@
 								row[5] = "<I>" + row[5] + "</I>";
 								playlist.addRow(row);
 							}
+							
+							async function waitForPlaylist()
+							{
+								while(true)
+								{
+									if (playlist != null)
+										break;
+									await Sleep(100);
+								}
+							}
 
 							var ytplayer;
 							function onYouTubeIframeAPIReady()
@@ -377,12 +387,10 @@
 							var playingVideo;
 							async function createYTPlayer()
 							{
-								await waitForParsedResults();
+								await waitForSortedVideos();
 								console.log("createYTPlayer");
 								
-								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
-								markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
-								
+								playingVideo = getVideoToPlayNext(sortedVideos, playingVideo);								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
 													width: "100%",
@@ -401,6 +409,10 @@
 														'onError': onPlayerError
 													}
 												});
+												
+								await waitForPlaylist();
+								console.log("markAsPlayingInPlaylist");								
+								markAsPlayingInPlaylist(sortedVideos, playingVideo);
 							}
 							
 							function onPlayerReady(event) 
@@ -420,9 +432,9 @@
 							function playNextVideo()
 							{
 								storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
-								markAsPlayedInPlaylist(sortedParsedVideos, playingVideo);
-								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
-								markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
+								markAsPlayedInPlaylist(sortedVideos, playingVideo);
+								playingVideo = getVideoToPlayNext(sortedVideos, playingVideo);
+								markAsPlayingInPlaylist(sortedVideos, playingVideo);
 								
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								if(playingVideoId != null) 
