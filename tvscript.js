@@ -23,9 +23,9 @@
 							{
 								while(true)
 								{
-									await Sleep(100);
 									if (sortedParsedVideos != null)
 										break;
+									await Sleep(100);
 								}
 							}
 							
