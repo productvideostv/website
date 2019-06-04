@@ -362,7 +362,7 @@
 							var playingVideo;
 							async function createYTPlayer()
 							{
-								//await waitForParsedResults();
+								await waitForParsedResults();
 								console.log("createYTPlayer");
 								
 								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
