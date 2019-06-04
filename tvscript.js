@@ -14,7 +14,7 @@
 										complete: function(results) 
 										{
 												parsedResults = results;
-												sortedVideos = sortParsedVideos(parsedResults.data);
+												sortedVideos = shuffleSortedVideos(sortParsedVideos(parsedResults.data));
 										}
 									});
 							}
@@ -63,6 +63,66 @@
 								sorted.sort((a,b) => (a.TimeWhenAdded > b.TimeWhenAdded) ? -1 : ((b.TimeWhenAdded > a.TimeWhenAdded) ? 1 : 0));
 								
 								return sorted;
+							}
+							
+							function shuffleSortedVideos(videos)
+							{
+								var sameDaysVideos = new Array();
+								for(var index = 0; index < videos.length; ++index)
+								{
+									var datePresent = false;
+									var timeToCompare = videos[index]["TimeWhenAdded"];
+									for(var yndex = 0; yndex < sameDaysVideos.length; ++yndex)
+									{
+										var alreadySavedTime = sameDaysVideos[yndex].TimeWhenAdded;
+										if (alreadySavedTime.getFullYear() == timeToCompare.getFullYear() && 
+											alreadySavedTime.getMonth() == timeToCompare.getMonth() && 
+											alreadySavedTime.getDate() == timeToCompare.getDate())
+										{
+											datePresent = true;
+											break;
+										}
+									}
+									if (datePresent)
+									{
+										continue;
+									}
+									var arrayOfSameDates = new Array();
+									for(var jndex = 0; jndex < videos.length; ++jndex)
+									{
+										var timeWhenAdded = videos[jndex]["TimeWhenAdded"];
+										if (timeWhenAdded.getFullYear() == timeToCompare.getFullYear() && 
+											timeWhenAdded.getMonth() == timeToCompare.getMonth() && 
+											timeWhenAdded.getDate() == timeToCompare.getDate())
+										{
+											arrayOfSameDates.push(videos[jndex]);
+										}
+									}
+									var sameDateVideo = {TimeWhenAdded : timeToCompare, Videos : arrayOfSameDates};
+									sameDaysVideos.push(sameDateVideo);
+								}
+								var resultingVideos = new Array();
+								for(var yndex = 0; yndex < sameDaysVideos.length; ++yndex)
+								{
+									var dateVideos = sameDaysVideos[yndex].Videos;
+									for(var zndex = 0; zndex < dateVideos.length; ++zndex)
+									{
+										resultingVideos.push(dateVideos[zndex]);
+									}
+								}
+								return resultingVideos;
+							}
+							
+							function shuffle(a) 
+							{
+								var j, x, i;
+								for (i = a.length - 1; i > 0; i--) {
+									j = Math.floor(Math.random() * (i + 1));
+									x = a[i];
+									a[i] = a[j];
+									a[j] = x;
+								}
+								return a;
 							}
 							
 							function calculateLasting(videos)
