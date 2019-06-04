@@ -16,6 +16,7 @@
 												parsedResults = results;
 												sortedParsedVideos = sortParsedVideos(parsedResults.data);
 												buildPlaylist(sortedParsedVideos);
+												console.log("showContent");
 												showContent();
 												showHideWatchedCheckBox(sortedParsedVideos);
 												showTotalVideos(sortedParsedVideos);
@@ -361,7 +362,8 @@
 							var playingVideo;
 							async function createYTPlayer()
 							{
-								await waitForParsedResults();
+								//await waitForParsedResults();
+								console.log("createYTPlayer");
 								
 								playingVideo = getVideoToPlayNext(sortedParsedVideos, playingVideo);
 								markAsPlayingInPlaylist(sortedParsedVideos, playingVideo);
