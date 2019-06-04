@@ -87,7 +87,7 @@
 									{
 										continue;
 									}
-									var arrayOfSameDates = new Array();
+									var videosOfSameDay = new Array();
 									for(var jndex = 0; jndex < videos.length; ++jndex)
 									{
 										var timeWhenAdded = videos[jndex]["TimeWhenAdded"];
@@ -95,19 +95,20 @@
 											timeWhenAdded.getMonth() == timeToCompare.getMonth() && 
 											timeWhenAdded.getDate() == timeToCompare.getDate())
 										{
-											arrayOfSameDates.push(videos[jndex]);
+											videosOfSameDay.push(videos[jndex]);
 										}
 									}
-									var sameDateVideo = {TimeWhenAdded : timeToCompare, Videos : arrayOfSameDates};
-									sameDaysVideos.push(sameDateVideo);
+									var shuffledVideosOfSameDay = shuffle(videosOfSameDay);
+									var sameDayVideo = {TimeWhenAdded : timeToCompare, Videos : shuffledVideosOfSameDay};
+									sameDaysVideos.push(sameDayVideo);
 								}
 								var resultingVideos = new Array();
 								for(var yndex = 0; yndex < sameDaysVideos.length; ++yndex)
 								{
-									var dateVideos = sameDaysVideos[yndex].Videos;
-									for(var zndex = 0; zndex < dateVideos.length; ++zndex)
+									var sameDayVideos = sameDaysVideos[yndex].Videos;
+									for(var zndex = 0; zndex < sameDayVideos.length; ++zndex)
 									{
-										resultingVideos.push(dateVideos[zndex]);
+										resultingVideos.push(sameDayVideos[zndex]);
 									}
 								}
 								return resultingVideos;
