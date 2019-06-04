@@ -15,18 +15,33 @@
 										{
 												parsedResults = results;
 												sortedParsedVideos = sortParsedVideos(parsedResults.data);
-												buildPlaylist(sortedParsedVideos);
-												console.log("showContent");
-												showContent();
-												showHideWatchedCheckBox(sortedParsedVideos);
-												showTotalVideos(sortedParsedVideos);
-												showTodayVideos(sortedParsedVideos);
 										}
 									});
 							}
 							
-							function showContent()
+							async function waitForParsedResults()
 							{
+								while(true)
+								{
+									await Sleep(100);
+									if (sortedParsedVideos != null)
+										break;
+								}
+							}
+							
+							$( document ).ready( function ()
+							{
+								showContent();
+							} );
+							
+							async function showContent()
+							{
+								await waitForParsedResults();
+								console.log("showContent");
+								buildPlaylist(sortedParsedVideos);
+								showHideWatchedCheckBox(sortedParsedVideos);
+								showTotalVideos(sortedParsedVideos);
+								showTodayVideos(sortedParsedVideos);
 								$("#content").show();
 							}
 							
@@ -391,16 +406,6 @@
 							function onPlayerReady(event) 
 							{
 								 event.target.playVideo();
-							}
-							
-							async function waitForParsedResults()
-							{
-								while(true)
-								{
-									await Sleep(100);
-									if (parsedResults != null)
-										break;
-								}
 							}
 							
 							
