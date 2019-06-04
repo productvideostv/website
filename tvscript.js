@@ -16,11 +16,17 @@
 												parsedResults = results;
 												sortedParsedVideos = sortParsedVideos(parsedResults.data);
 												buildPlaylist(sortedParsedVideos);
+												showContent();
 												showHideWatchedCheckBox(sortedParsedVideos);
 												showTotalVideos(sortedParsedVideos);
 												showTodayVideos(sortedParsedVideos);
 										}
 									});
+							}
+							
+							function showContent()
+							{
+								$("#content").show();
 							}
 							
 							function sortParsedVideos(parsedVideos)
