@@ -156,7 +156,7 @@
 								
 								var lasting = " " + totalMinutes + " min. " + totalSeconds + " sec. ";
 								if (totalHours != 0)
-									lasting = totalHours + " hr." + lasting;
+									lasting = " " + totalHours + " hr." + lasting;
 									
 								return lasting;
 							}
