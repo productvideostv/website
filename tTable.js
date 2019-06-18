@@ -776,23 +776,23 @@
 		new_data = _.filter( data, function ( row ){
 			var results = 0;
 			_.each( row, function ( item ){
-				if ( search_sensitive ) {
-					if ( (_.isObject( item ) && _.contains( item.value, search )) || _.contains( item, search ) ) {
+				if ( search_sensitive ) 
+				{
+					if ( (_.isObject( item ) && _.contains( item.value, search )) || _.contains( item, search ) ) 
+					{
 						results += 1;
 					}
 				} 
 				else 
 				{
-					if ( _.isObject( item ) ) 
+					var searchLowerCase = search.toLowerCase();
+					if ( _.isString( item ) )
 					{
-						if ( item.value.toLowerCase().indexOf( search ) !== -1 ) {
+						if ( item.toLowerCase().indexOf( searchLowerCase ) !== -1 ) 
+						{
 							results += 1;
 						}
-					} 
-					// else if ( item.indexOf( search ) !== -1 ) 
-					// {
-						// results += 1;
-					// }
+					}
 				}
 			} );
 			return results > 0;
