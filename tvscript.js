@@ -320,7 +320,7 @@
 										search : true,
 										search_auto : true,
 										search_container : "#table_id_search",
-										search_sensitive : true,
+										search_sensitive : false,
 										search_value : "",
 										container : "#table_id",
 										pager : "#table_id_pager"
