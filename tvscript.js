@@ -486,21 +486,26 @@
 							
 							function playNextVideo()
 							{
-								storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
-								markAsPlayedInPlaylist(sortedVideos, playingVideo);
-								playingVideo = getVideoToPlayNext(sortedVideos, playingVideo);
-								markAsPlayingInPlaylist(sortedVideos, playingVideo);
-								
-								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
-								if(playingVideoId != null) 
+								var playingVideoId = "";
+								do
 								{
-								   ytplayer.loadVideoById(playingVideoId);
-								} 
-								else 
-								{ 
-									console.log("The youtube video ID is not valid.");
-									ytplayer.stopVideo();
+									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
+									markAsPlayedInPlaylist(sortedVideos, playingVideo);
+									playingVideo = getVideoToPlayNext(sortedVideos, playingVideo);
+									markAsPlayingInPlaylist(sortedVideos, playingVideo);
+									
+									playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
+									if(playingVideoId != null) 
+									{
+									   ytplayer.loadVideoById(playingVideoId);
+									} 
+									else 
+									{ 
+										console.log("The youtube video ID is not valid.");
+										ytplayer.stopVideo();
+									}
 								}
+								while (playingVideoId != null);
 							}
 							
 							function onPlayerError(a)
