@@ -37,10 +37,17 @@
 							async function showContent()
 							{
 								await waitForSortedVideos();
+								
 								buildPlaylist(sortedVideos);
-								showHideWatchedCheckBox(sortedVideos);
+								
+								$("#showwatchedvideos").prop("checked", false);
+								$('#showwatchedvideos').change(showHideWatchedVideos);
+								
+								showWatchedCheckBox(sortedVideos);
+								
 								showTotalVideos(sortedVideos);
 								showTodayVideos(sortedVideos);
+								
 								$("#content").show();
 							}
 							
@@ -191,15 +198,12 @@
 								$("#videostoday").show();
 							}
 							
-							function showHideWatchedCheckBox(allVideos)
+							function showWatchedCheckBox(allVideos)
 							{
-								$("#showwatchedvideos").prop("checked", false);
-								$('#showwatchedvideos').change(showHideWatchedVideos);
-								if (anyWatchedVideos(allVideos))
+								if (anyWatchedVideos(allVideos) && !allVideosWatched(allVideos))
 								{
 									$("#watchedvideosform").show();
 								}
-								
 							}
 							
 							function anyWatchedVideos(allVideos)
@@ -214,6 +218,20 @@
 									}
 								}
 								return false;
+							}
+							
+							function allVideosWatched(allVideos)
+							{
+								for(var index = 0; index < allVideos.length; ++index)
+								{
+									var videoURL = allVideos[index]["VideoURL"];
+									var timeWhenAdded = allVideos[index]["TimeWhenAdded"];
+									if (!isVideoWatched(videoURL, timeWhenAdded))
+									{
+										return false;
+									}
+								}
+								return true;
 							}
 							
 							function Sleep(ms) 
@@ -268,12 +286,15 @@
 										return null;
 									++videoIndex;
 								}
+								if (videoIndex >= allVideos.length)
+									videoIndex = 0;
 								var nextVideo;
+								var allVidsWatched = allVideosWatched(allVideos);
 								while(videoIndex < allVideos.length)
 								{
 									var videoURL = allVideos[videoIndex]["VideoURL"];
 									var timeWhenAdded = allVideos[videoIndex]["TimeWhenAdded"];
-									if (!isVideoWatched(videoURL, timeWhenAdded))
+									if (allVidsWatched || !isVideoWatched(videoURL, timeWhenAdded))
 									{
 										nextVideo = allVideos[videoIndex];
 										break;
@@ -285,6 +306,8 @@
 							
 							function storePlayedVideo(videoURL, timeWhenAdded)
 							{
+								if (isVideoWatched(videoURL, timeWhenAdded))
+									return;
 								if (localStorage.getItem(timeWhenAdded) == null)
 									localStorage.setItem(timeWhenAdded, videoURL);
 							}
@@ -298,7 +321,7 @@
 							var playlist;
 							function buildPlaylist(allVideos)
 							{
-								var playlistData = composePlaylistData(allVideos, false);
+								var playlistData = composePlaylistData(allVideos, allVideosWatched(allVideos));
 								playlist = new tTable( {
 										titles : [
 											{ "title": "Title", "type" : "string" },
@@ -475,13 +498,21 @@
 								 event.target.playVideo();
 							}
 							
-							
 							function onPlayerStateChange(a)
 							{
 								if(a.data==YT.PlayerState.ENDED)
 								{
 									playNextVideo();
 								}
+							}
+							
+							function showAllVideosWatched(allVideos)
+							{
+								if (!allVideosWatched(sortedVideos))
+									return;								
+								if ($('#showwatchedvideos').is(':checked') == false)
+									$("#showwatchedvideos").prop("checked", true).change();
+								$("#watchedvideosform").hide();								
 							}
 							
 							function playNextVideo()
@@ -491,6 +522,9 @@
 								{
 									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
 									markAsPlayedInPlaylist(sortedVideos, playingVideo);
+									
+									showAllVideosWatched(sortedVideos);
+									
 									playingVideo = getVideoToPlayNext(sortedVideos, playingVideo);
 									markAsPlayingInPlaylist(sortedVideos, playingVideo);
 									
