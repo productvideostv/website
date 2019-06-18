@@ -454,12 +454,9 @@
 								ytplayer = new YT.Player('myytplayer', {
 													width: "100%",
 													height: "510",
-													//videoId: "8tPnX7OPo0Q",
-													//videoId: "04F4xlWSFh0",
-													//videoId: "GlCmAC4MHek",
 													videoId: playingVideoId,
 													playerVars: {
-													  iv_load_policy: 3,  // hide annotations
+													  iv_load_policy: 3,  
 													  autoplay : 1
 													},
 													events: {
