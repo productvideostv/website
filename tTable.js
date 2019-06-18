@@ -780,15 +780,19 @@
 					if ( (_.isObject( item ) && _.contains( item.value, search )) || _.contains( item, search ) ) {
 						results += 1;
 					}
-				} else {
-
-					if ( _.isObject( item ) ) {
+				} 
+				else 
+				{
+					if ( _.isObject( item ) ) 
+					{
 						if ( item.value.toLowerCase().indexOf( search ) !== -1 ) {
 							results += 1;
 						}
-					} else if ( item.indexOf( search ) !== -1 ) {
-						results += 1;
-					}
+					} 
+					// else if ( item.indexOf( search ) !== -1 ) 
+					// {
+						// results += 1;
+					// }
 				}
 			} );
 			return results > 0;
