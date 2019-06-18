@@ -318,7 +318,7 @@
 										sorting : [4],
 										sort_by : 4,
 										search : true,
-										search_auto : true,
+										search_auto : false,
 										search_container : "#table_id_search",
 										search_sensitive : true,
 										search_value : "",
