@@ -505,7 +505,7 @@
 										ytplayer.stopVideo();
 									}
 								}
-								while (playingVideoId != null);
+								while (playingVideoId == null);
 							}
 							
 							function onPlayerError(a)
