@@ -63,7 +63,8 @@
 									}
 									var timeWhenAdded = moment(parsedVideo["TimeWhenAdded"], "MM/DD/YYYY hh:mm:ss a").toDate();
 									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo["VideoURL"], TimeWhenAdded : timeWhenAdded, Description : parsedVideo["Description"], 
-									Duration : parsedVideo["Duration"]};
+									Duration : parsedVideo["Duration"], SourceName : parsedVideo["SourceName"], 
+									SourceLink : parsedVideo["SourceLink"]};
 									sorted.push(videoWithDate);
 								}
 								
@@ -329,7 +330,8 @@
 											{ "title": "TimeWhenAdded", "type" : "string" },
 											{ "title": "Index", "type" : "number" },
 											{ "title": "isWatched", "type" : "number" },
-											{ "title": "Duration (mm:ss)", "type" : "string" }
+											{ "title": "Duration (mm:ss)", "type" : "string" },
+											{ "title": "Source", "type" : "string" }
 										],
 										data : playlistData,
 										hidden_cols : [3, 4, 5],
@@ -376,8 +378,15 @@
 								if (isYesterday(singleVideo["TimeWhenAdded"]))
 									formattedTimeWhenAdded = "Yesterday";
 								var titleAsLink = "<a href=\"" + singleVideo["VideoURL"] + "\" target=\"_blank\">" + singleVideo["Title"] + "</a>";
+								var sourceName = singleVideo["SourceName"];
+								var sourceLink = singleVideo["SourceLink"];
+								var sourceAsLink = "";
+								if (sourceName != null && sourceLink != null)
+								{
+									sourceAsLink = "<a href=\"" + sourceLink + "\" target=\"_blank\">" + sourceName + "</a>";
+								}
 								var row = [titleAsLink, formattedTimeWhenAdded, timeWhenAdded, videoIndex, isWatched ? 1 : 0, 
-									singleVideo["Duration"]];
+									singleVideo["Duration"], sourceAsLink];
 								return row;
 							}
 							
@@ -410,6 +419,7 @@
 									row[0] = "<I>" + row[0] + "</I>";
 									row[1] = "<I>" + row[1] + "</I>";
 									row[5] = "<I>" + row[5] + "</I>";
+									row[6] = "<I>" + row[6] + "</I>";
 									playlist.data.push(row);
 								}
 								playlist.goto(playlist.page);
@@ -433,6 +443,7 @@
 								row[0] = "<strong>" + row[0] + "</strong>";
 								row[1] = "<strong>" + row[1] + "</strong>";
 								row[5] = "<strong>" + row[5] + "</strong>";
+								row[6] = "<strong>" + row[6] + "</strong>";
 								playlist.addRow(row);
 							}
 							
@@ -448,6 +459,7 @@
 								row[0] = "<I>" + row[0] + "</I>";
 								row[1] = "<I>" + row[1] + "</I>";
 								row[5] = "<I>" + row[5] + "</I>";
+								row[6] = "<I>" + row[6] + "</I>";
 								playlist.addRow(row);
 							}
 							
