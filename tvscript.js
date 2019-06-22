@@ -337,7 +337,7 @@
 										hidden_cols : [3, 4, 5],
 										page_size : 50,
 										row_numbers : true,
-										goto : true, 
+										goto : false, 
 										hover_cols : false, 
 										nav_arrows : true, 
 										sorting : [4],
