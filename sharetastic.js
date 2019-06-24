@@ -121,16 +121,17 @@ var Sharetastic = function () {
                             id: 'sharetastic-linkedin'
                         }
                     },
-                    googleplus: {
-                        order: 5,
-                        name: 'Google +',
-                        href: 'https://plus.google.com/share?' + this.generateUrl('url='),
-                        icon: {
-                            width: 32,
-                            height: 32,
-                            id: 'sharetastic-googleplus'
-                        }
-                    },
+					googleplus: false,
+                    // googleplus: {
+                        // order: 5,
+                        // name: 'Google +',
+                        // href: 'https://plus.google.com/share?' + this.generateUrl('url='),
+                        // icon: {
+                            // width: 32,
+                            // height: 32,
+                            // id: 'sharetastic-googleplus'
+                        // }
+                    // },
                     flickr: false,
                     tumblr: {
                         order: 7,
@@ -162,16 +163,17 @@ var Sharetastic = function () {
                             id: 'sharetastic-whatsapp'
                         }
                     },
-                    print: {
-                        order: 9,
-                        name: 'Print',
-                        href: 'window.print()',
-                        icon: {
-                            width: 32,
-                            height: 32,
-                            id: 'sharetastic-print'
-                        }
-                    }
+					print: false
+                    // print: {
+                        // order: 9,
+                        // name: 'Print',
+                        // href: 'window.print()',
+                        // icon: {
+                            // width: 32,
+                            // height: 32,
+                            // id: 'sharetastic-print'
+                        // }
+                    // }
                 }
             };
 
