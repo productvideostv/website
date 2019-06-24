@@ -134,6 +134,7 @@
 		</script>
 		
 		<link href="css/tTable.css" type="text/css" rel="stylesheet"/>
+		<link rel="stylesheet" href="sharetastic.css"/>
 		
 		<script src="https://apis.google.com/js/client.js?onload=clientApiLoaded"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -143,6 +144,7 @@
 		<script src="tTable.js"></script>
 		<script src="moment.js"></script>
 		<script src="tvscript.js"></script>	
+		<script src="sharetastic.js"></script>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-6283988-8"></script>
@@ -185,7 +187,18 @@
 							var firstScriptTag = document.getElementsByTagName('script')[0];
 							firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 						</script>
-						<p align="right"><a href="https://livetrafficfeed.com/online-counter" id="LTF_online_website">Online Counter</a><script type="text/javascript" src="//livetrafficfeed.com/static/online/live.js"></script><script type="text/javascript">LTF_online("ffffff","e61c1c",0);</script><br><noscript><a href="https://livetrafficfeed.com/online-counter">Online Counter</a></noscript></p>
+						<table style="width: 100%;" >
+						<tbody>
+						<tr>
+						<td width="50%" align="left">
+							<div class="sharetastic sharetastic--simple"></div>
+						</td>
+						<td width="50%" align="right">
+							<a href="https://livetrafficfeed.com/online-counter" id="LTF_online_website">Online Counter</a><script type="text/javascript" src="//livetrafficfeed.com/static/online/live.js"></script><script type="text/javascript">LTF_online("ffffff","e61c1c",0);</script><br><noscript><a href="https://livetrafficfeed.com/online-counter">Online Counter</a></noscript>
+						</td>
+						</tr>
+						</tbody>
+						</table>
 						<p align="center"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfyhWsY2iFIz9U5sJ7C83xtqIzwvSrxEfwJYcl7Cekkuu0Duw/viewform?usp=sf_link" target="_blank" class="submitVideoButton">Add my product video</a></p>
 						<p>&nbsp;</p>
 						<h2>Playlist</h2>
@@ -240,5 +253,8 @@
 			</div>
 		</footer>
 	
+		<script>
+		  $('.sharetastic').sharetastic();
+		</script>
 	</body>
 </html>
