@@ -13,11 +13,11 @@
   -ms-flex-wrap: ms-wrap;
   -o-flex-wrap: o-wrap;
   flex-wrap: wrap;
-  -webkit-justify-content: center;
-  -moz-justify-content: center;
-  -ms-justify-content: center;
-  -o-justify-content: center;
-  justify-content: center; }
+  -webkit-justify-content: left;
+  -moz-justify-content: left;
+  -ms-justify-content: left;
+  -o-justify-content: left;
+  justify-content: left; }
   .sharetastic__sprite {
     display: none; }
   .sharetastic__button {
@@ -311,8 +311,8 @@
     text-indent: 0;
     width: auto;
     white-space: normal;
-    -ms-align-items: center;
-    align-items: center;
+    -ms-align-items: left;
+    align-items: left;
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
