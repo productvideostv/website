@@ -94,7 +94,7 @@ var Sharetastic = function () {
                     twitter: {
                         order: 2,
                         name: 'Twitter',
-                        href: 'https://twitter.com/intent/tweet?text=' + this.generateTitle() + this.generateUrl(' - '),
+                        href: 'https://twitter.com/intent/tweet?text=' + this.page.title + ' - ' + this.page.description + this.generateUrl(' - '),
                         icon: {
                             width: 32,
                             height: 32,
