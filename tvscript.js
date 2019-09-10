@@ -45,7 +45,7 @@
 								
 								showWatchedCheckBox(sortedVideos);
 								
-								showTotalVideos(sortedVideos);
+								//showTotalVideos(sortedVideos);
 								showTodayVideos(sortedVideos);
 								
 								$("#content").show();
