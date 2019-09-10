@@ -44,8 +44,6 @@
 								$('#showwatchedvideos').change(showHideWatchedVideos);
 								
 								showWatchedCheckBox(sortedVideos);
-								
-								//showTotalVideos(sortedVideos);
 								showTodayVideos(sortedVideos);
 								
 								$("#content").show();
@@ -167,17 +165,6 @@
 									lasting = " " + totalHours + " hr." + lasting;
 									
 								return lasting;
-							}
-							
-							function showTotalVideos(allVideos)
-							{
-								var lasting = calculateLasting(allVideos);
-								if (lasting == "")
-								{
-									$("#videostotal").text(allVideos.length + " total videos");
-									return;
-								}								
-								$("#videostotal").text(allVideos.length + " total videos lasting" + lasting);
 							}
 							
 							function showTodayVideos(allVideos)
