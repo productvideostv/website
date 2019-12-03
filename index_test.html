@@ -328,18 +328,6 @@
 		  gtag('config', 'UA-6283988-8');
 		</script>		
 		<!-- End Google Analytics-->
-		
-		<script type="text/javascript">
-			var navTrigger = document.getElementsByClassName('nav-trigger')[0],
-			body = document.getElementsByTagName('body')[0];
-
-			navTrigger.addEventListener('click', toggleNavigation);
-
-			function toggleNavigation(event) {
-			  event.preventDefault();
-			  body.classList.toggle('nav-open');
-			}
-		</script>
 
 	</head>
 	
@@ -364,6 +352,18 @@
 		</nav>
 
 		<div class="overlay"></div> <!-- improve main element 3d movement -->
+		
+		<script type="text/javascript">
+			var navTrigger = document.getElementsByClassName('nav-trigger')[0],
+			body = document.getElementsByTagName('body')[0];
+
+			navTrigger.addEventListener('click', toggleNavigation);
+
+			function toggleNavigation(event) {
+			  event.preventDefault();
+			  body.classList.toggle('nav-open');
+			}
+		</script>
 
 		<header>
 			<div class="innertube">
@@ -386,8 +386,7 @@
 							<div id="myytplayer"></div>
 						</div></p>
 
-						<script type="text/javascript">
-						
+						<script type="text/javascript">						
 							var tag = document.createElement('script');
 							tag.src = "https://www.youtube.com/iframe_api";
 							var firstScriptTag = document.getElementsByTagName('script')[0];
