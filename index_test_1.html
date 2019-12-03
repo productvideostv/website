@@ -90,6 +90,7 @@
 				text-decoration:none;
 				text-shadow:0px 1px 0px #b23e35;
 			}
+			
 			.submitVideoButton:hover {
 				background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00));
 				background:-moz-linear-gradient(top, #ce0100 5%, #fe1a00 100%);
@@ -113,7 +114,7 @@
 			  z-index: 1;
 			  top: 0;
 			  right: 0;
-			  background-color: #111;
+			  background-color: black;
 			  overflow-x: hidden;
 			  transition: 0.5s;
 			  padding-top: 60px;
@@ -123,13 +124,13 @@
 			  padding: 8px 8px 8px 32px;
 			  text-decoration: none;
 			  font-size: 25px;
-			  color: #818181;
+			  color: #cccc;
 			  display: block;
 			  transition: 0.3s;
 			}
 
 			.sidenav a:hover {
-			  color: #f1f1f1;
+			  color: white;
 			}
 
 			.sidenav .closebtn {
@@ -140,14 +141,26 @@
 			  margin-left: 50px;
 			}
 
-			#main {
-			  transition: margin-left .2s;
-			  padding: 16px;
-			}
-
 			@media screen and (max-height: 450px) {
 			  .sidenav {padding-top: 15px;}
 			  .sidenav a {font-size: 18px;}
+			}
+			
+			#myInput {
+			  background-image: url('searchicon.png');
+			  background-position: 10px 12px;
+			  background-repeat: no-repeat;
+			  width: 100%;
+			  font-size: 16px;
+			  padding: 12px 20px 12px 40px;
+			  border: 1px solid #ddd;
+			  margin-bottom: 12px;
+			}
+
+			#myUL {
+			  list-style-type: none;
+			  padding: 0;
+			  margin: 0;
 			}
 		
 		</style>
@@ -204,27 +217,54 @@
 
 		  gtag('config', 'UA-6283988-8');
 		</script>
+		<!-- End Google Analytics -->
 
 	</head>
 	
 	<body>
 	
 		<script type="text/javascript">
-			function openNav() {
+			function openNav() 
+			{
 			  document.getElementById("mySidenav").style.width = "250px";
 			}
 
-			function closeNav() {
+			function closeNav() 
+			{
 			  document.getElementById("mySidenav").style.width = "0";
+			}
+			
+			function myFunction() 
+			{
+				var input, filter, ul, li, a, i, txtValue;
+				input = document.getElementById("myInput");
+				filter = input.value.toUpperCase();
+				ul = document.getElementById("myUL");
+				li = ul.getElementsByTagName("li");
+				for (i = 0; i < li.length; i++) 
+				{
+					a = li[i].getElementsByTagName("a")[0];
+					txtValue = a.textContent || a.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) 
+					{
+						li[i].style.display = "";
+					} else 
+					{
+						li[i].style.display = "none";
+					}
+				}
 			}
 		</script>
 		
 		<div id="mySidenav" class="sidenav">
 		  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		  <a href="#">About</a>
-		  <a href="#">Services</a>
-		  <a href="#">Clients</a>
-		  <a href="#">Contact</a>
+		  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+			<ul id="myUL">
+			  <li><a href="#">About</a>
+			  <li><a href="#">Services</a>
+			  <li><a href="#">Clients</a>
+			  <li><a href="#">Contact</a>
+			</ul>
 		</div>
 
 		<header>
