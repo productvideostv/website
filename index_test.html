@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<!-- Template by html.am -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Watch the endless stream of the best latest tech product videos | ProductVideos.Tech</title>
+		<link rel="shortcut icon" type="image/ico" href="https://productvideos.tech/favicon.ico" />
+		<style type="text/css">
+		
+			body {
+				margin:0;
+				padding:0;
+				font-family: Arial;
+				line-height: 1.5em;
+				font-size: 14px;
+			}
+			
+			header {
+				background: #f2f3f7;
+				height: 100px;
+			}
+			
+			header h1 {
+				margin: 0;
+				padding-top: 15px;
+			}
+			
+			main {
+				padding-bottom: 10010px;
+				margin-bottom: -10000px;
+				float: left;
+				width: 100%;
+			}
+			
+			footer {
+				clear: left;
+				width: 100%;
+				background: #f2f3f7;
+				text-align: center;
+				padding: 4px 0;
+			}
+	
+			#wrapper {
+				overflow: hidden;
+			}
+			
+			.innertube {
+				margin: 15px; /* Padding for content */
+				margin-top: 0;
+			}
+		
+			p {
+				color: #464646;
+			}
+	
+			nav ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+			
+			nav ul a {
+				color: darkgreen;
+				text-decoration: none;
+			}
+			
+			.submitVideoButton {
+				-moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
+				-webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
+				box-shadow:inset 0px 1px 0px 0px #f29c93;
+				background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100));
+				background:-moz-linear-gradient(top, #fe1a00 5%, #ce0100 100%);
+				background:-webkit-linear-gradient(top, #fe1a00 5%, #ce0100 100%);
+				background:-o-linear-gradient(top, #fe1a00 5%, #ce0100 100%);
+				background:-ms-linear-gradient(top, #fe1a00 5%, #ce0100 100%);
+				background:linear-gradient(to bottom, #fe1a00 5%, #ce0100 100%);
+				filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100',GradientType=0);
+				background-color:#fe1a00;
+				-moz-border-radius:6px;
+				-webkit-border-radius:6px;
+				border-radius:6px;
+				border:1px solid #d83526;
+				display:inline-block;
+				cursor:pointer;
+				color:#ffffff;
+				font-family:Arial;
+				font-size:28px;
+				font-weight:bold;
+				padding:19px 61px;
+				text-decoration:none;
+				text-shadow:0px 1px 0px #b23e35;
+			}
+			.submitVideoButton:hover {
+				background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00));
+				background:-moz-linear-gradient(top, #ce0100 5%, #fe1a00 100%);
+				background:-webkit-linear-gradient(top, #ce0100 5%, #fe1a00 100%);
+				background:-o-linear-gradient(top, #ce0100 5%, #fe1a00 100%);
+				background:-ms-linear-gradient(top, #ce0100 5%, #fe1a00 100%);
+				background:linear-gradient(to bottom, #ce0100 5%, #fe1a00 100%);
+				filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce0100', endColorstr='#fe1a00',GradientType=0);
+				background-color:#ce0100;
+			}
+			
+			.submitVideoButton:active {
+				position:relative;
+				top:1px;
+			}
+			
+			.nav-open main {
+				transform: scale(.8);
+			}
+			
+			.nav-trigger {
+			  position: fixed;
+			  z-index: 4;
+			  top: 40px;
+			  right: 40px;
+			  height: 44px;
+			  width: 44px;
+
+			  overflow: hidden;
+			  color: transparent;
+			  white-space: nowrap;
+			  text-indent: 100%;
+			}
+
+			.nav-trigger span,
+			.nav-trigger span::before,
+			.nav-trigger span::after {
+			  position: absolute;
+			  height: 4px;
+			  width: 36px;
+			  background: #999999;
+			}
+
+			.nav-trigger span {
+			  top: 50%;
+			  left: 50%;
+			  transform: translate(-50%, -50%);
+			  transition: background .3s;
+			}
+
+			.nav-trigger span::before,
+			.nav-trigger span::after {
+			  content: '';
+			  top: 0;
+			  left: 0;
+			  transition: background .3s, transform .3s;
+			}
+
+			.nav-trigger span::before {
+			  transform: translateY(-12px);
+			}
+
+			.nav-trigger span::after {
+			  transform: translateY(12px);
+			}
+
+			.nav-trigger:hover span, 
+			.nav-trigger:hover span::before,
+			.nav-trigger:hover span::after {
+			  background: white;
+			}
+
+			.nav-open .nav-trigger span {
+			  background: transparent;
+			}
+
+			.nav-open .nav-trigger span::before,
+			.nav-open .nav-trigger span::after {
+			  background: #1F2B3D;
+			}
+
+			.nav-open .nav-trigger span::before {
+			  transform: rotate(-45deg);
+			}
+
+			.nav-open .nav-trigger span::after {
+			  transform: rotate(45deg);
+			}
+
+			.overlay {
+			  position: fixed;
+			  z-index: 2;
+			  top: 0;
+			  left: 0;
+			  width: 100%;
+			  height: 100%;
+			  background: #1C1D21;
+			  opacity: 0;
+			  visibility: hidden;
+			  transition: opacity .5s, visibility .5s;
+			}
+
+			.nav-open .overlay {
+			  opacity: .6;
+			  visibility: visible;
+			}
+
+			.nav-container {
+			  position: fixed;
+			  z-index: 3;
+			  top: 0;
+			  right: 0;
+			  height: 100%;
+			  width: 90%;
+			  max-width: 460px;
+			  padding: 2em 3.5em;
+			  background: #F3F3F3;
+			  overflow: auto;
+			  transform: translateZ(0);
+			  transform: translateX(100%);
+			  transition: transform .5s cubic-bezier(.07,.23,.34,1);
+			}
+
+			.nav-open .nav-container {
+			  transform: translateX(0);
+			}
+
+			.nav-container h2 {
+			  font-size: 15px;
+			  font-weight: bold;
+			  text-transform: uppercase;
+			  color: #AAAAAA;
+			  margin: 1.5em 0;
+			}
+
+			.nav {
+			  list-style: none;
+			  padding: 0;
+			}
+
+			.nav a {
+			  display: block;
+			  padding: .4em 0;
+			  font-size: 40px;
+			  font-weight: bold;
+			  font-family: serif;
+			  text-decoration: none;
+			  color: #1F2B3D;
+			  transform: translateZ(0);
+			}
+
+			.nav-open .nav a {
+			  animation: slide-in .4s .2s backwards;
+			}
+
+			.nav-open .nav li:nth-of-type(2) a {
+			  animation-delay: .3s;
+			}
+
+			.nav-open .nav li:nth-of-type(3) a {
+			  animation-delay: .4s;
+			}
+
+			.nav-open .nav li:nth-of-type(4) a {
+			  animation-delay: .5s;
+			}
+
+			.nav-open .nav li:nth-of-type(5) a {
+			  animation-delay: .6s;
+			}
+
+			@keyframes slide-in {
+			  0% {
+				opacity: 0;
+				transform: translateX(80px);
+			  }
+
+			  100% {
+				opacity: 1;
+				transform: translateX(0);
+			  }
+			}
+		
+		</style>
+		
+		<meta name="description" content="Videos are handpicked: good-quality, teaser videos, not longer than 3 minutes, with a voice-over. New videos added every day. No repeats - you get unwatched videos every website visit.">
+		
+		<!-- START - Open Graph for Facebook, Google+ and Twitter Card Tags -->
+		 <!-- Facebook Open Graph -->
+		  <meta property="og:locale" content="en_US"/>
+		  <meta property="og:site_name" content="ProductVideos.Tech"/>
+		  <meta property="og:title" content="ProductVideos.Tech"/>
+		  <meta property="og:url" content="https://productvideos.tech"/>
+		  <meta property="og:type" content="article"/>
+		  <meta property="og:description" content="Watch the endless stream of the best latest tech product videos."/>
+		  <meta property="og:image" content="https://productvideos.tech/featuredimage.png"/>
+		  <meta property="og:image:url" content="https://productvideos.tech/featuredimage.png"/>
+		 <!-- Google+ / Schema.org -->
+		  <meta itemprop="name" content="ProductVideos.Tech"/>
+		  <meta itemprop="headline" content="ProductVideos.Tech"/>
+		  <meta itemprop="description" content="Watch the endless stream of the best latest tech product videos."/>
+		  <meta itemprop="image" content="https://productvideos.tech/featuredimage.png"/>
+		  <meta itemprop="author" content="Kentich"/>
+		 <!-- Twitter Cards -->
+		  <meta name="twitter:title" content="ProductVideos.Tech"/>
+		  <meta name="twitter:url" content="https://productvideos.tech"/>
+		  <meta name="twitter:description" content="Watch the endless stream of the best latest tech product videos."/>
+		  <meta name="twitter:image" content="https://productvideos.tech/featuredimage.png"/>
+		  <meta name="twitter:card" content="summary_large_image"/>
+		<!-- END - Open Graph for Facebook, Google+ and Twitter Card Tags 2.2.6.1 -->
+		
+		<script type="text/javascript">
+			document.write('<style type="text/css">#no-js { display: none; }</style>');
+		</script>
+		
+		<link href="css/tTable.css" type="text/css" rel="stylesheet"/>
+		<link rel="stylesheet" href="sharetastic.css"/>
+		
+		<script src="https://apis.google.com/js/client.js?onload=clientApiLoaded"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script src="papaparse.js"></script>
+		<script src="js/libs/jquery.min.js"></script>
+		<script src="js/libs/lodash.min.js"></script>
+		<script src="tTable.js"></script>
+		<script src="moment.js"></script>
+		<script src="tvscript.js"></script>	
+		<script src="sharetastic.js"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-6283988-8"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'UA-6283988-8');
+		</script>		
+		<!-- End Google Analytics-->
+		
+		<script type="text/javascript">
+			var navTrigger = document.getElementsByClassName('nav-trigger')[0],
+			body = document.getElementsByTagName('body')[0];
+
+			navTrigger.addEventListener('click', toggleNavigation);
+
+			function toggleNavigation(event) {
+			  event.preventDefault();
+			  body.classList.toggle('nav-open');
+			}
+		</script>
+
+	</head>
+	
+	<body>
+	
+		<a href="#navigation" class="nav-trigger">
+			Menu <span></span>
+		</a>
+		
+		<nav class="nav-container" id="navigation">
+		  <header>
+			<h2>Navigation</h2>
+		  </header>
+
+		  <ul class="nav">
+			<li><a href="#0">About</a></li>
+			<li><a href="#0">Services</a></li>
+			<li><a href="#0">Portfolio</a></li>
+			<li><a href="#0">Clients</a></li>
+			<li><a href="#0">Contact</a></li>
+		  </ul>
+		</nav>
+
+		<div class="overlay"></div> <!-- improve main element 3d movement -->
+
+		<header>
+			<div class="innertube">
+				<h1>Easy way to learn about new tech products.</h1>
+				<h2>Click <img src="youtube-play-black.png" alt="Play button on YouTube video-player" title="Play button on YouTube video-player" style="vertical-align:middle"> to watch the endless stream of the best latest tech product videos.</h2>
+			</div>
+		</header>
+		
+		<div id="wrapper">
+		
+			<main>
+				<div class="innertube" id="no-js"><h1>This site requires enabled JavaScript. Here's how you can do that: <a href="https://www.enable-javascript.com/">www.enable-javascript.com</a></h1></div>
+				
+				<div id="content" style="display:none;">
+					<div class="innertube">
+						
+						<div id="videostoday" style="display:none;"></div>
+						
+						<p><div align="center" class="videowrapper">
+							<div id="myytplayer"></div>
+						</div></p>
+
+						<script type="text/javascript">
+						
+							var tag = document.createElement('script');
+							tag.src = "https://www.youtube.com/iframe_api";
+							var firstScriptTag = document.getElementsByTagName('script')[0];
+							firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+						</script>
+						<p align="right"><a href="https://livetrafficfeed.com/online-counter" id="LTF_online_website">Online Counter</a><script type="text/javascript" src="//livetrafficfeed.com/static/online/live.js"></script><script type="text/javascript">LTF_online("ffffff","e61c1c",0);</script><br><noscript><a href="https://livetrafficfeed.com/online-counter">Online Counter</a></noscript></p>
+						<p align="center"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfyhWsY2iFIz9U5sJ7C83xtqIzwvSrxEfwJYcl7Cekkuu0Duw/viewform?usp=sf_link" target="_blank" class="submitVideoButton">Add your product video</a></p>
+						<p>&nbsp;</p>
+						<h1>List of videos</h1>
+						<p><strong>All videos are handpicked.</strong></p>
+						<p><ul>
+						<li>Good-quality
+						<li>Teaser videos
+						<li>Not longer than 3 minutes
+						<li>With a voice-over (so you could listen to them on the background)
+						<li>New videos added every day
+						<li>English language
+						<li>No games
+						</ul></p>
+						<p><strong><I>No repeats - you get unwatched videos every website visit.</I></strong></p>
+						<p>Videos added on the same day are shuffled every website visit.</p>
+						<div align="right">
+							<form id="watchedvideosform" style="display:none;">
+								<input type="checkbox" id="showwatchedvideos" name="showwatchedvideos" />Show previously watched videos
+							</form>
+						</div>
+						<table style="width: 100%;" >
+						<tbody>
+						<tr>
+						<td width="50%"><div id="table_id_search"></div></td>
+						<td width="50%" align="right">
+							<strong>Bold - watching now.</strong> <I>Italic - watched video.</I>
+						</td>
+						</tr>
+						</tbody>
+						</table>
+						<div id="table_id"></div>
+						<div id="table_id_pager"></div>
+						
+						<h1>Latest news</h1>
+						
+						<p>Check out latest project's news <a href="https://www.indiehackers.com/product/productvideos-tech" target="_blank">here on IndieHackers.</a></p>	
+						
+						<h1>Share this website</h1>
+						
+						<p><div class="sharetastic"></div></p>						
+						
+					</div>
+				</div>
+			</main>
+		
+		<footer>
+			<div class="innertube">
+				<p>Created by <a href="https://www.indiehackers.com/OlegGalkin" target="_blank">Kentich</a></p>
+			</div>
+		</footer>
+	
+		<script>
+		  $('.sharetastic').sharetastic();
+		</script>
+	</body>
+</html>
