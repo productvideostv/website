@@ -560,7 +560,7 @@
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
 													width: "100%",
-													height: "510",
+													height: "500",
 													videoId: playingVideoId,
 													playerVars: {
 													  iv_load_policy: 3,  
