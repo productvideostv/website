@@ -69,7 +69,7 @@
 								for(var index = 0; index < parsedVideos.length; ++index)
 								{
 									var parsedVideo = parsedVideos[index];
-									var commaCategories = parsedVideo["Category"];
+									var commaCategories = parsedVideo["Categories"];
 									if (commaCategories == null)
 										continue;
 									var categories = commaCategories.split(',');
