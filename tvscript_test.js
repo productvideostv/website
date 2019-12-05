@@ -54,7 +54,7 @@
 								var parameters = {};
 								var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) 
 								{
-									parameters[key] = value;
+									parameters[key] = unescape(value);
 								});
 								return parameters;
 							}
