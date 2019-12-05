@@ -263,9 +263,9 @@
 								{
 									var occurence = categoriesWithOccurences[zndex];
 									var category = occurence["Category"];
-									var li = $('<li/>').appendTo('#myUL');
+									var li = $("<li/>").appendTo("#myUL");
 									var categoryUrl = pvtechURL + "?category=" + escape(category);
-									$('<a />').text(category).attr("href", categoryUrl).appendTo(li);
+									$("<a />").text(category).attr("href", categoryUrl).appendTo(li);
 								}								
 							}
 							
