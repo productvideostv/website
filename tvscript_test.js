@@ -1,5 +1,6 @@
 							var parsedResults;
 							var sortedVideos;
+							var filteredVideos;
 							
 							//localStorage.clear();
 							startPapaParse();
@@ -14,16 +15,17 @@
 										complete: function(results) 
 										{
 											parsedResults = results;
-											sortedVideos = shuffleSortedVideos(sortParsedVideos(filterParsedVideosCategory(parsedResults.data)));
+											sortedVideos = shuffleSortedVideos(sortParsedVideos(parsedResults.data));
+											filteredVideos = filterParsedVideosCategory(sortedVideos);
 										}
 									});
 							}
 							
-							async function waitForSortedVideos()
+							async function waitForVideos()
 							{
 								while(true)
 								{
-									if (sortedVideos != null)
+									if (filteredVideos != null)
 										break;
 									await Sleep(100);
 								}
@@ -36,15 +38,18 @@
 							
 							async function showContent()
 							{
-								await waitForSortedVideos();
+								await waitForVideos();
 								
-								buildPlaylist(sortedVideos);
+								buildPlaylist(filteredVideos);
 								
 								$("#showwatchedvideos").prop("checked", false);
 								$('#showwatchedvideos').change(showHideWatchedVideos);
 								
-								showWatchedCheckBox(sortedVideos);
-								showTodayVideos(sortedVideos);
+								showWatchedCheckBox(filteredVideos);
+								showTodayVideos(filteredVideos);
+								
+								fillCategoriesList(sortedVideos);
+								$("#openNavBtn").show();
 								
 								$("#content").show();
 							}
@@ -65,7 +70,7 @@
 								var categoryInURL = getURLParameters()["category"];
 								if (categoryInURL == null)
 									return parsedVideos;
-								var filtered = [];
+								var filtered = new Array();
 								for(var index = 0; index < parsedVideos.length; ++index)
 								{
 									var parsedVideo = parsedVideos[index];
@@ -84,7 +89,7 @@
 							
 							function sortParsedVideos(parsedVideos)
 							{
-								var sorted = [];
+								var sorted = new Array();
 								for(var index = 0; index < parsedVideos.length; ++index)
 								{
 									var parsedVideo = parsedVideos[index];
@@ -217,6 +222,51 @@
 								}								
 								$("#videostoday").text(todayVideos.length + " videos added today lasting" + lasting);
 								$("#videostoday").show();
+							}
+							
+							function fillCategoriesList(parsedVideos)
+							{
+								var categoriesWithOccurences = new Array();
+								for(var index = 0; index < parsedVideos.length; ++index)
+								{
+									var parsedVideo = parsedVideos[index];
+									var commaCategories = parsedVideo["Categories"];
+									if (commaCategories == null)
+										continue;
+									var categories = commaCategories.split(',');
+									if (categories == null)
+										continue;
+									for(var jndex = 0; jndex < categories.length; ++jndex)
+									{
+										var occurenceFound = null;
+										var category = categories[jndex];
+										for(var yndex = 0; yndex < categoriesWithOccurences.length; ++yndex)
+										{
+											var occurence = categoriesWithOccurences[yndex];
+											if (occurence["Category"] == category)
+											{
+												occurenceFound = occurence;
+												break;
+											}
+										}
+										if (occurenceFound == null)
+										{
+											occurenceFound = {Category : category, TimesOccured : 0};
+											categoriesWithOccurences.push(occurenceFound);
+										}
+										occurenceFound["TimesOccured"]++;
+									}
+								}
+								categoriesWithOccurences.sort(function(occa, occb){return occb["TimesOccured"] - occa["TimesOccured"]});
+								var pvtechURL = location.protocol + "//" + location.host + location.pathname;
+								for(var zndex = 0; zndex < categoriesWithOccurences.length; ++zndex)
+								{
+									var occurence = categoriesWithOccurences[zndex];
+									var category = occurence["Category"];
+									var li = $('<li/>').appendTo('#myUL');
+									var categoryUrl = pvtechURL + "?category=" + escape(category);
+									$('<a />').text(category).attr("href", categoryUrl).appendTo(li);
+								}								
 							}
 							
 							function showWatchedCheckBox(allVideos)
@@ -414,7 +464,7 @@
 							{
 								if($(this).is(":checked")) 
 								{
-									showWatchedVideos(sortedVideos);
+									showWatchedVideos(filteredVideos);
 									return;
 								}
 								hideWatchedVideos();
@@ -502,9 +552,9 @@
 							var playingVideo;
 							async function createYTPlayer()
 							{
-								await waitForSortedVideos();
+								await waitForVideos();
 								
-								playingVideo = getVideoToPlayNext(sortedVideos, playingVideo);								
+								playingVideo = getVideoToPlayNext(filteredVideos, playingVideo);
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
 													width: "100%",
@@ -522,7 +572,7 @@
 												});
 												
 								await waitForPlaylist();							
-								markAsPlayingInPlaylist(sortedVideos, playingVideo);
+								markAsPlayingInPlaylist(filteredVideos, playingVideo);
 							}
 							
 							function onPlayerReady(event) 
@@ -540,7 +590,7 @@
 							
 							function showAllVideosWatched(allVideos)
 							{
-								if (!allVideosWatched(sortedVideos))
+								if (!allVideosWatched(filteredVideos))
 									return;								
 								if ($('#showwatchedvideos').is(':checked') == false)
 									$("#showwatchedvideos").prop("checked", true).change();
@@ -553,12 +603,12 @@
 								do
 								{
 									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
-									markAsPlayedInPlaylist(sortedVideos, playingVideo);
+									markAsPlayedInPlaylist(filteredVideos, playingVideo);
 									
-									showAllVideosWatched(sortedVideos);
+									showAllVideosWatched(filteredVideos);
 									
-									playingVideo = getVideoToPlayNext(sortedVideos, playingVideo);
-									markAsPlayingInPlaylist(sortedVideos, playingVideo);
+									playingVideo = getVideoToPlayNext(filteredVideos, playingVideo);
+									markAsPlayingInPlaylist(filteredVideos, playingVideo);
 									
 									playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 									if(playingVideoId != null) 
