@@ -13,8 +13,8 @@
 										header: true,
 										complete: function(results) 
 										{
-												parsedResults = results;
-												sortedVideos = shuffleSortedVideos(sortParsedVideos(parsedResults.data));
+											parsedResults = results;
+											sortedVideos = shuffleSortedVideos(sortParsedVideos(filterParsedVideosCategory(parsedResults.data)));
 										}
 									});
 							}
