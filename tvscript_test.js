@@ -100,7 +100,7 @@
 									var timeWhenAdded = moment(parsedVideo["TimeWhenAdded"], "MM/DD/YYYY hh:mm:ss a").toDate();
 									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo["VideoURL"], TimeWhenAdded : timeWhenAdded, Description : parsedVideo["Description"], 
 									Duration : parsedVideo["Duration"], SourceName : parsedVideo["SourceName"], 
-									SourceLink : parsedVideo["SourceLink"]};
+									SourceLink : parsedVideo["SourceLink"], Categories : parsedVideo["Categories"]};
 									sorted.push(videoWithDate);
 								}
 								
