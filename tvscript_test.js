@@ -240,6 +240,8 @@
 									{
 										var occurenceFound = null;
 										var category = categories[jndex];
+										if (category == null || category == "")
+											continue;
 										for(var yndex = 0; yndex < categoriesWithOccurences.length; ++yndex)
 										{
 											var occurence = categoriesWithOccurences[yndex];
