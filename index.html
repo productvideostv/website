@@ -17,7 +17,7 @@
 			
 			header {
 				background: #f2f3f7;
-				height: 60px;
+				height: 70px;
 			}
 			
 			header h1 {
@@ -106,6 +106,93 @@
 				position:relative;
 				top:1px;
 			}
+			
+			.sidenav {
+			  height: 100%;
+			  width: 0;
+			  position: fixed;
+			  z-index: 1;
+			  top: 0;
+			  right: 0;
+			  background-color: #fcfeff;
+			  overflow-x: hidden;
+			  transition: 0.5s;
+			  overflow-y: auto;
+			}
+			
+			.off-canvas-main {
+				padding: 1.875rem 2.5rem;
+				width: auto;
+				line-height: 1.5;
+			}
+
+			.sidenav a {
+			  padding-left: 0;
+			  padding-right: 0;
+			  text-decoration: none;
+			  font-size: 18px;
+			  color: #0a0a0a;
+			  display: block;
+			  transition: 0.3s;
+			  font-weight: 600;
+			}
+
+			.sidenav a:hover {
+			  color: orange;
+			}
+
+			.sidenav .closebtn {
+			  top: 0;
+			  left: 0;
+			  font-size: 36px;
+			  text-align: right;
+			}
+			
+			#navInput {
+			  background-image: url('searchicon.png');
+			  background-position: 10px 12px;
+			  background-repeat: no-repeat;
+			  width: 80%;
+			  font-size: 16px;
+			  padding: 12px 20px 12px 40px;
+			  border: 1px solid #ddd;
+			  margin-bottom: 12px;
+			}
+
+			.navUL {
+			  list-style-type: none;
+			  padding: 0;
+			  margin: 0;
+			}
+			
+			.catButton {
+				box-shadow: 0px 1px 0px 0px #fff6af;
+				background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+				background-color:#ffec64;
+				border-radius:6px;
+				border:1px solid #ffaa22;
+				display:inline-block;
+				cursor:pointer;
+				color:#333333;
+				font-family:Arial;
+				font-size:18px;
+				font-weight:bold;
+				padding:10px 15px;
+				text-decoration:none;
+				text-shadow:0px 1px 0px #ffee66;
+				display:none;
+			}
+			
+			.catButton:hover {
+				background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+				background-color:#ffab23;
+			}
+			
+			.catButton:active {
+				position:relative;
+				top:1px;
+			}
+
 		
 		</style>
 		
@@ -154,17 +241,60 @@
 		
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-6283988-8"></script>
-		<script>
+		<script type="text/javascript">
 		  window.dataLayer = window.dataLayer || [];
 		  function gtag(){dataLayer.push(arguments);}
 		  gtag('js', new Date());
 
 		  gtag('config', 'UA-6283988-8');
 		</script>
+		<!-- End Google Analytics -->
 
 	</head>
 	
-	<body>		
+	<body>
+	
+		<script type="text/javascript">
+			function openNav() 
+			{
+			  document.getElementById("navSidenav").style.width = "400px";
+			}
+
+			function closeNav() 
+			{
+			  document.getElementById("navSidenav").style.width = "0";
+			}
+			
+			function myFunction() 
+			{
+				var input, filter, ul, li, a, i, txtValue;
+				input = document.getElementById("navInput");
+				filter = input.value.toUpperCase();
+				ul = document.getElementById("navList");
+				li = ul.getElementsByTagName("li");
+				for (i = 0; i < li.length; i++) 
+				{
+					a = li[i].getElementsByTagName("a")[0];
+					txtValue = a.textContent || a.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) 
+					{
+						li[i].style.display = "";
+					} else 
+					{
+						li[i].style.display = "none";
+					}
+				}
+			}
+		</script>
+		
+		<div id="navSidenav" class="sidenav">
+			<div class="off-canvas-main">
+				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+				<input type="text" id="navInput" onkeyup="myFunction()" placeholder="Type in a category name..." title="Search for category">
+				<ul id="navList" class="navUL">			  
+				</ul>
+			</div>
+		</div>
 
 		<header>
 			<div class="innertube">
@@ -179,14 +309,26 @@
 				
 				<div id="content" style="display:none;">
 					<div class="innertube">
-
-						<div id="videostoday" style="display:none;"></div>
+						
+						<table style="width: 100%;margin-top:10px;" >
+						<tbody>
+						<tr>
+						<td style="vertical-align:middle;">
+							<div id="categoryHeader" style="font-weight:bold;"></div>
+							<div id="videostoday" style="vertical-align:middle;display:none;"></div>
+						</td>
+						<td align="right" style="vertical-align:middle;">
+							<span id="openNavBtn" onclick="openNav()" class="catButton">Categories</span>
+						</td>
+						</tr>
+						</tbody>
+						</table>
 						
 						<p><div align="center" class="videowrapper">
 							<div id="myytplayer"></div>
 						</div></p>
 
-						<script type="text/javascript">	
+						<script type="text/javascript">
 							var tag = document.createElement('script');
 							tag.src = "https://www.youtube.com/iframe_api";
 							var firstScriptTag = document.getElementsByTagName('script')[0];

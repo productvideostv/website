@@ -1,5 +1,6 @@
 							var parsedResults;
 							var sortedVideos;
+							var filteredVideos;
 							
 							//localStorage.clear();
 							startPapaParse();
@@ -13,17 +14,18 @@
 										header: true,
 										complete: function(results) 
 										{
-												parsedResults = results;
-												sortedVideos = shuffleSortedVideos(sortParsedVideos(parsedResults.data));
+											parsedResults = results;
+											sortedVideos = shuffleSortedVideos(sortParsedVideos(parsedResults.data));
+											filteredVideos = filterParsedVideosCategory(sortedVideos);
 										}
 									});
 							}
 							
-							async function waitForSortedVideos()
+							async function waitForVideos()
 							{
 								while(true)
 								{
-									if (sortedVideos != null)
+									if (filteredVideos != null)
 										break;
 									await Sleep(100);
 								}
@@ -36,22 +38,87 @@
 							
 							async function showContent()
 							{
-								await waitForSortedVideos();
+								await waitForVideos();
 								
-								buildPlaylist(sortedVideos);
+								buildPlaylist(filteredVideos);
 								
 								$("#showwatchedvideos").prop("checked", false);
 								$('#showwatchedvideos').change(showHideWatchedVideos);
 								
-								showWatchedCheckBox(sortedVideos);
-								showTodayVideos(sortedVideos);
+								showWatchedCheckBox(filteredVideos);
+								showTodayVideos(filteredVideos);
+								
+								fillCategoriesList(sortedVideos);
+								$("#openNavBtn").show();
+								
+								setCategorySiteHeader(sortedVideos);
 								
 								$("#content").show();
 							}
 							
+							function getURLParameters() 
+							{
+								var parameters = {};
+								var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) 
+								{
+									parameters[key] = unescape(value);
+								});
+								return parameters;
+							}
+
+							function getCategories(parsedVideos)
+							{
+								var categories = new Array();
+								for(var index = 0; index < parsedVideos.length; ++index)
+								{
+									var parsedVideo = parsedVideos[index];
+									var commaCategories = parsedVideo["Categories"];
+									if (commaCategories == null)
+										continue;
+									var splitCategories = commaCategories.split(',');
+									if (splitCategories == null)
+										continue;
+									for(var jndex = 0; jndex < splitCategories.length; ++jndex)
+									{
+										var category = splitCategories[jndex];
+										if (category == null || category == "")
+											continue;
+										if (jQuery.inArray(category, categories) >= 0)
+											continue;
+										categories.push(category);
+									}
+								}
+								return categories;
+							}
+							
+							function filterParsedVideosCategory(parsedVideos)
+							{
+								var categoryInURL = getURLParameters()["category"];
+								if (categoryInURL == null)
+									return parsedVideos;
+								var allCategories = getCategories(parsedVideos);
+								if (jQuery.inArray(categoryInURL, allCategories) < 0)
+									return parsedVideos;
+								var filtered = new Array();
+								for(var index = 0; index < parsedVideos.length; ++index)
+								{
+									var parsedVideo = parsedVideos[index];
+									var commaCategories = parsedVideo["Categories"];
+									if (commaCategories == null)
+										continue;
+									var categories = commaCategories.split(',');
+									if (categories == null)
+										continue;
+									if (jQuery.inArray(categoryInURL, categories) < 0)
+										continue;
+									filtered.push(parsedVideo);
+								}
+								return filtered;
+							}
+							
 							function sortParsedVideos(parsedVideos)
 							{
-								var sorted = [];
+								var sorted = new Array();
 								for(var index = 0; index < parsedVideos.length; ++index)
 								{
 									var parsedVideo = parsedVideos[index];
@@ -62,7 +129,7 @@
 									var timeWhenAdded = moment(parsedVideo["TimeWhenAdded"], "MM/DD/YYYY hh:mm:ss a").toDate();
 									var videoWithDate = {Title : parsedVideo["Title"], VideoURL : parsedVideo["VideoURL"], TimeWhenAdded : timeWhenAdded, Description : parsedVideo["Description"], 
 									Duration : parsedVideo["Duration"], SourceName : parsedVideo["SourceName"], 
-									SourceLink : parsedVideo["SourceLink"]};
+									SourceLink : parsedVideo["SourceLink"], Categories : parsedVideo["Categories"]};
 									sorted.push(videoWithDate);
 								}
 								
@@ -184,6 +251,45 @@
 								}								
 								$("#videostoday").text(todayVideos.length + " videos added today lasting" + lasting);
 								$("#videostoday").show();
+							}
+							
+							function fillCategoriesList(parsedVideos)
+							{
+								var pvtechURL = location.protocol + "//" + location.host + location.pathname;
+								
+								var allVideosLi = $("<li/>").appendTo("#navList");
+								var allVideosA = $("<a />").text("All Videos").attr("href", pvtechURL);
+								allVideosA.appendTo(allVideosLi);
+								
+								var categories = getCategories(parsedVideos);								
+								var categoryInURL = getURLParameters()["category"];
+								if (categoryInURL == null || jQuery.inArray(categoryInURL, categories) < 0)
+								{
+									allVideosA.css("color","orange");
+								}
+								categories.sort();
+								for(var zndex = 0; zndex < categories.length; ++zndex)
+								{
+									var category = categories[zndex];
+									var categoryLi = $("<li/>").appendTo("#navList");
+									var categoryUrl = pvtechURL + "?category=" + escape(category);
+									var categoryA = $("<a />").text(category).attr("href", categoryUrl);
+									categoryA.appendTo(categoryLi);
+									if (categoryInURL == category)
+										categoryA.css("color","orange");
+								}
+							}
+							
+							function setCategorySiteHeader(parsedVideos)
+							{
+								var categories = getCategories(parsedVideos);								
+								var categoryInURL = getURLParameters()["category"];
+								if (categoryInURL == null || jQuery.inArray(categoryInURL, categories) < 0)
+								{
+									$("#categoryHeader").text("");
+									return;
+								}
+								$("#categoryHeader").text("Category: " + categoryInURL);
 							}
 							
 							function showWatchedCheckBox(allVideos)
@@ -381,7 +487,7 @@
 							{
 								if($(this).is(":checked")) 
 								{
-									showWatchedVideos(sortedVideos);
+									showWatchedVideos(filteredVideos);
 									return;
 								}
 								hideWatchedVideos();
@@ -469,13 +575,13 @@
 							var playingVideo;
 							async function createYTPlayer()
 							{
-								await waitForSortedVideos();
+								await waitForVideos();
 								
-								playingVideo = getVideoToPlayNext(sortedVideos, playingVideo);								
+								playingVideo = getVideoToPlayNext(filteredVideos, playingVideo);
 								var playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 								ytplayer = new YT.Player('myytplayer', {
 													width: "100%",
-													height: "510",
+													height: "500",
 													videoId: playingVideoId,
 													playerVars: {
 													  iv_load_policy: 3,  
@@ -489,7 +595,7 @@
 												});
 												
 								await waitForPlaylist();							
-								markAsPlayingInPlaylist(sortedVideos, playingVideo);
+								markAsPlayingInPlaylist(filteredVideos, playingVideo);
 							}
 							
 							function onPlayerReady(event) 
@@ -507,7 +613,7 @@
 							
 							function showAllVideosWatched(allVideos)
 							{
-								if (!allVideosWatched(sortedVideos))
+								if (!allVideosWatched(filteredVideos))
 									return;								
 								if ($('#showwatchedvideos').is(':checked') == false)
 									$("#showwatchedvideos").prop("checked", true).change();
@@ -520,12 +626,12 @@
 								do
 								{
 									storePlayedVideo(playingVideo.VideoURL, playingVideo.TimeWhenAdded);
-									markAsPlayedInPlaylist(sortedVideos, playingVideo);
+									markAsPlayedInPlaylist(filteredVideos, playingVideo);
 									
-									showAllVideosWatched(sortedVideos);
+									showAllVideosWatched(filteredVideos);
 									
-									playingVideo = getVideoToPlayNext(sortedVideos, playingVideo);
-									markAsPlayingInPlaylist(sortedVideos, playingVideo);
+									playingVideo = getVideoToPlayNext(filteredVideos, playingVideo);
+									markAsPlayingInPlaylist(filteredVideos, playingVideo);
 									
 									playingVideoId = getYouTubeVideoIdFromUrl(playingVideo["VideoURL"]);
 									if(playingVideoId != null) 
