@@ -263,7 +263,7 @@
 								var categoryInURL = getURLParameters()["category"];
 								if (categoryInURL == null || jQuery.inArray(categoryInURL, categories) < 0)
 								{
-									allVideosA.css("font-weight","bold");
+									allVideosA.css("color","orange");
 								}
 								categories.sort();
 								for(var zndex = 0; zndex < categories.length; ++zndex)
@@ -274,7 +274,7 @@
 									var categoryA = $("<a />").text(category).attr("href", categoryUrl);
 									categoryA.appendTo(categoryLi);
 									if (categoryInURL == category)
-										categoryA.css("font-weight","bold");
+										categoryA.css("color","orange");
 								}
 							}
 							
