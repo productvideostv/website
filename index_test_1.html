@@ -114,7 +114,7 @@
 			  z-index: 1;
 			  top: 0;
 			  right: 0;
-			  background-color: black;
+			  background-color: #fcfeff;
 			  overflow-x: hidden;
 			  transition: 0.5s;
 			  padding-top: 60px;
@@ -273,9 +273,9 @@
 			function myFunction() 
 			{
 				var input, filter, ul, li, a, i, txtValue;
-				input = document.getElementById("myInput");
+				input = document.getElementById("navInput");
 				filter = input.value.toUpperCase();
-				ul = document.getElementById("myUL");
+				ul = document.getElementById("navList");
 				li = ul.getElementsByTagName("li");
 				for (i = 0; i < li.length; i++) 
 				{
@@ -296,8 +296,7 @@
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<p>Categories:</p>
 			<input type="text" id="navInput" onkeyup="myFunction()" placeholder="Type in a category name..." title="Search for category">
-			<ul id="navList" class="navUL">
-			  <li><a href="https://productvideos.tech/index_test_1.html">All Videos</a>
+			<ul id="navList" class="navUL">			  
 			</ul>
 		</div>
 
