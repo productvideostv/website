@@ -51,6 +51,8 @@
 								fillCategoriesList(sortedVideos);
 								$("#openNavBtn").show();
 								
+								setCategorySiteHeader(sortedVideos);
+								
 								$("#content").show();
 							}
 							
@@ -276,6 +278,15 @@
 									if (categoryInURL == category)
 										categoryA.css("color","orange");
 								}
+							}
+							
+							function setCategorySiteHeader(parsedVideos)
+							{
+								var categories = getCategories(parsedVideos);								
+								var categoryInURL = getURLParameters()["category"];
+								if (categoryInURL == null || jQuery.inArray(categoryInURL, categories) < 0)
+									return;
+								$("#pvtechHeader").text("Category: " + categoryInURL);
 							}
 							
 							function showWatchedCheckBox(allVideos)
