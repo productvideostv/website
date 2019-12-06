@@ -241,7 +241,7 @@
 										var category = splitCategories[jndex];
 										if (category == null || category == "")
 											continue;
-										if (jQuery.inArray(category, categories) < 0)
+										if (jQuery.inArray(category, categories) >= 0)
 											continue;
 										categories.push(category);
 									}
