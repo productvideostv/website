@@ -42,10 +42,9 @@
 								
 								buildPlaylist(filteredVideos);
 								
-								$("#showwatchedvideos").prop("checked", false);
-								$('#showwatchedvideos').change(showHideWatchedVideos);
-								
+								initShowWatchedCheckBox();								
 								showWatchedCheckBox(filteredVideos);
+								
 								showTodayVideos(filteredVideos);
 								
 								fillCategoriesList(sortedVideos);
@@ -54,6 +53,20 @@
 								setCategorySiteHeader(sortedVideos);
 								
 								$("#content").show();
+							}
+							
+							function initShowWatchedCheckBox()
+							{
+								$("#showwatchedvideos").prop("checked", showWatchedVideos());
+								$('#showwatchedvideos').change(showHideWatchedVideos);
+							}
+							
+							function showWatchedVideos()
+							{
+								var categoryInURL = getCategoryFromUrl();
+								if (isCategoryPresentAmongExisting(categoryInURL, sortedVideos))
+									return true;
+								return allVideosWatched(filteredVideos);
 							}
 							
 							function getURLParameters() 
@@ -91,13 +104,23 @@
 								return categories;
 							}
 							
+							function getCategoryFromUrl()
+							{
+								return getURLParameters()["category"];
+							}
+							
+							function isCategoryPresentAmongExisting(category, parsedVideos)
+							{
+								if (category == null)
+									return false;
+								var allCategories = getCategories(parsedVideos);
+								return jQuery.inArray(categoryInURL, allCategories) >= 0;
+							}
+							
 							function filterParsedVideosCategory(parsedVideos)
 							{
-								var categoryInURL = getURLParameters()["category"];
-								if (categoryInURL == null)
-									return parsedVideos;
-								var allCategories = getCategories(parsedVideos);
-								if (jQuery.inArray(categoryInURL, allCategories) < 0)
+								var categoryInURL = getCategoryFromUrl();
+								if (!isCategoryPresentAmongExisting(categoryInURL, parsedVideos))
 									return parsedVideos;
 								var filtered = new Array();
 								for(var index = 0; index < parsedVideos.length; ++index)
@@ -261,12 +284,11 @@
 								var allVideosA = $("<a />").text("All Videos").attr("href", pvtechURL);
 								allVideosA.appendTo(allVideosLi);
 								
-								var categories = getCategories(parsedVideos);								
-								var categoryInURL = getURLParameters()["category"];
-								if (categoryInURL == null || jQuery.inArray(categoryInURL, categories) < 0)
-								{
+								var categoryInURL = getCategoryFromUrl();
+								if (!isCategoryPresentAmongExisting(categoryInURL, parsedVideos))
 									allVideosA.css("color","orange");
-								}
+								
+								var categories = getCategories(parsedVideos);
 								categories.sort();
 								for(var zndex = 0; zndex < categories.length; ++zndex)
 								{
@@ -282,9 +304,8 @@
 							
 							function setCategorySiteHeader(parsedVideos)
 							{
-								var categories = getCategories(parsedVideos);								
-								var categoryInURL = getURLParameters()["category"];
-								if (categoryInURL == null || jQuery.inArray(categoryInURL, categories) < 0)
+								var categoryInURL = getCategoryFromUrl();
+								if (!isCategoryPresentAmongExisting(categoryInURL, parsedVideos))
 								{
 									$("#categoryHeader").text("");
 									return;
@@ -292,9 +313,14 @@
 								$("#categoryHeader").text("Category: " + categoryInURL);
 							}
 							
+							function mustShowWatchedCheckBox(allVideos)
+							{
+								return anyWatchedVideos(allVideos) && !allVideosWatched(allVideos);
+							}
+							
 							function showWatchedCheckBox(allVideos)
 							{
-								if (anyWatchedVideos(allVideos) && !allVideosWatched(allVideos))
+								if (mustShowWatchedCheckBox(allVideos))
 								{
 									$("#watchedvideosform").show();
 								}
@@ -415,7 +441,7 @@
 							var playlist;
 							function buildPlaylist(allVideos)
 							{
-								var playlistData = composePlaylistData(allVideos, allVideosWatched(allVideos));
+								var playlistData = composePlaylistData(allVideos, showWatchedVideos());
 								playlist = new tTable( {
 										titles : [
 											{ "title": "Title", "type" : "string" },
