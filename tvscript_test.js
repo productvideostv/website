@@ -285,8 +285,11 @@
 								var categories = getCategories(parsedVideos);								
 								var categoryInURL = getURLParameters()["category"];
 								if (categoryInURL == null || jQuery.inArray(categoryInURL, categories) < 0)
+								{
+									$("#categoryHeader").text("");
 									return;
-								$("#pvtechHeader").text("Category: " + categoryInURL);
+								}
+								$("#categoryHeader").text("Category: " + categoryInURL);
 							}
 							
 							function showWatchedCheckBox(allVideos)
