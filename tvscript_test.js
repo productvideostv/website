@@ -253,15 +253,28 @@
 							
 							function fillCategoriesList(parsedVideos)
 							{
-								var categories = getCategories(parsedVideos);
-								categories.sort();
 								var pvtechURL = location.protocol + "//" + location.host + location.pathname;
+								
+								var allVideosLi = $("<li/>").appendTo("#navList");
+								var allVideosA = $("<a />").text("All Videos").attr("href", pvtechURL);
+								allVideosA.appendTo(allVideosLi);
+								
+								var categories = getCategories(parsedVideos);								
+								var categoryInURL = getURLParameters()["category"];
+								if (categoryInURL == null || jQuery.inArray(categoryInURL, categories) < 0)
+								{
+									allVideosA.css("font-weight","bold");
+								}
+								categories.sort();
 								for(var zndex = 0; zndex < categories.length; ++zndex)
 								{
 									var category = categories[zndex];
-									var li = $("<li/>").appendTo("#navList");
+									var categoryLi = $("<li/>").appendTo("#navList");
 									var categoryUrl = pvtechURL + "?category=" + escape(category);
-									$("<a />").text(category).attr("href", categoryUrl).appendTo(li);
+									var categoryA = $("<a />").text(category).attr("href", categoryUrl);
+									categoryA.appendTo(categoryLi);
+									if (categoryInURL == category)
+										categoryA.css("font-weight","bold");
 								}
 							}
 							
