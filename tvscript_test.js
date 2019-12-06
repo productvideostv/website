@@ -64,11 +64,38 @@
 								return parameters;
 							}
 
+							function getCategories(parsedVideos)
+							{
+								var categories = new Array();
+								for(var index = 0; index < parsedVideos.length; ++index)
+								{
+									var parsedVideo = parsedVideos[index];
+									var commaCategories = parsedVideo["Categories"];
+									if (commaCategories == null)
+										continue;
+									var splitCategories = commaCategories.split(',');
+									if (splitCategories == null)
+										continue;
+									for(var jndex = 0; jndex < splitCategories.length; ++jndex)
+									{
+										var category = splitCategories[jndex];
+										if (category == null || category == "")
+											continue;
+										if (jQuery.inArray(category, categories) >= 0)
+											continue;
+										categories.push(category);
+									}
+								}
+								return categories;
+							}
 							
 							function filterParsedVideosCategory(parsedVideos)
 							{
 								var categoryInURL = getURLParameters()["category"];
 								if (categoryInURL == null)
+									return parsedVideos;
+								var allCategories = getCategories(parsedVideos);
+								if (jQuery.inArray(categoryInURL, allCategories) < 0)
 									return parsedVideos;
 								var filtered = new Array();
 								for(var index = 0; index < parsedVideos.length; ++index)
@@ -226,26 +253,7 @@
 							
 							function fillCategoriesList(parsedVideos)
 							{
-								var categories = new Array();
-								for(var index = 0; index < parsedVideos.length; ++index)
-								{
-									var parsedVideo = parsedVideos[index];
-									var commaCategories = parsedVideo["Categories"];
-									if (commaCategories == null)
-										continue;
-									var splitCategories = commaCategories.split(',');
-									if (splitCategories == null)
-										continue;
-									for(var jndex = 0; jndex < splitCategories.length; ++jndex)
-									{
-										var category = splitCategories[jndex];
-										if (category == null || category == "")
-											continue;
-										if (jQuery.inArray(category, categories) >= 0)
-											continue;
-										categories.push(category);
-									}
-								}
+								var categories = getCategories(parsedVideos);
 								categories.sort();
 								var pvtechURL = location.protocol + "//" + location.host + location.pathname;
 								for(var zndex = 0; zndex < categories.length; ++zndex)
