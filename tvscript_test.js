@@ -226,49 +226,35 @@
 							
 							function fillCategoriesList(parsedVideos)
 							{
-								var categoriesWithOccurences = new Array();
+								var categories = new Array();
 								for(var index = 0; index < parsedVideos.length; ++index)
 								{
 									var parsedVideo = parsedVideos[index];
 									var commaCategories = parsedVideo["Categories"];
 									if (commaCategories == null)
 										continue;
-									var categories = commaCategories.split(',');
-									if (categories == null)
+									var splitCategories = commaCategories.split(',');
+									if (splitCategories == null)
 										continue;
-									for(var jndex = 0; jndex < categories.length; ++jndex)
+									for(var jndex = 0; jndex < splitCategories.length; ++jndex)
 									{
-										var occurenceFound = null;
-										var category = categories[jndex];
+										var category = splitCategories[jndex];
 										if (category == null || category == "")
 											continue;
-										for(var yndex = 0; yndex < categoriesWithOccurences.length; ++yndex)
-										{
-											var occurence = categoriesWithOccurences[yndex];
-											if (occurence["Category"] == category)
-											{
-												occurenceFound = occurence;
-												break;
-											}
-										}
-										if (occurenceFound == null)
-										{
-											occurenceFound = {Category : category, TimesOccured : 0};
-											categoriesWithOccurences.push(occurenceFound);
-										}
-										occurenceFound["TimesOccured"]++;
+										if (jQuery.inArray(category, categories) < 0)
+											continue;
+										categories.push(category);
 									}
 								}
-								categoriesWithOccurences.sort(function(occa, occb){return occb["TimesOccured"] - occa["TimesOccured"]});
+								categories.sort();
 								var pvtechURL = location.protocol + "//" + location.host + location.pathname;
-								for(var zndex = 0; zndex < categoriesWithOccurences.length; ++zndex)
+								for(var zndex = 0; zndex < categories.length; ++zndex)
 								{
-									var occurence = categoriesWithOccurences[zndex];
-									var category = occurence["Category"];
+									var category = categories[zndex];
 									var li = $("<li/>").appendTo("#navList");
 									var categoryUrl = pvtechURL + "?category=" + escape(category);
 									$("<a />").text(category).attr("href", categoryUrl).appendTo(li);
-								}								
+								}
 							}
 							
 							function showWatchedCheckBox(allVideos)
