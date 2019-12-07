@@ -2,6 +2,8 @@
 							var sortedVideos;
 							var filteredVideos;
 							
+							var categoryName;
+							
 							//localStorage.clear();
 							startPapaParse();
 							
@@ -16,9 +18,28 @@
 										{
 											parsedResults = results;
 											sortedVideos = shuffleSortedVideos(sortParsedVideos(parsedResults.data));
-											filteredVideos = filterParsedVideosCategory(sortedVideos);
+											
+											categoryName = getCategoryName(sortedVideos);
+											
+											filteredVideos = filterParsedVideosCategory(filterSameOldVideosInCategory(sortedVideos, categoryName), categoryName);
 										}
 									});
+							}
+							
+							function getCategoryFromUrl()
+							{
+								return getURLParameters()["category"];
+							}
+							
+							function getCategoryName(sortedVideos)
+							{
+								var categoryInURL = getCategoryFromUrl();
+								return isCategoryPresentAmongExisting(categoryInURL, sortedVideos) ? categoryInURL : null;
+							}
+							
+							function isCategoryNamePresent()
+							{
+								return categoryName != null;
 							}
 							
 							async function waitForVideos()
@@ -47,10 +68,9 @@
 								
 								showTodayVideos(filteredVideos);
 								
-								fillCategoriesList(sortedVideos);
+								fillCategoriesList(sortedVideos, categoryName);
+								setCategorySiteHeader(sortedVideos, categoryName);
 								$("#openNavBtn").show();
-								
-								setCategorySiteHeader(sortedVideos);
 								
 								$("#content").show();
 							}
@@ -63,8 +83,7 @@
 							
 							function mustShowWatchedVideos()
 							{
-								var categoryInURL = getCategoryFromUrl();
-								if (isCategoryPresentAmongExisting(categoryInURL, sortedVideos))
+								if (isCategoryNamePresent())
 									return true;
 								return allVideosWatched(filteredVideos);
 							}
@@ -104,11 +123,6 @@
 								return categories;
 							}
 							
-							function getCategoryFromUrl()
-							{
-								return getURLParameters()["category"];
-							}
-							
 							function isCategoryPresentAmongExisting(category, parsedVideos)
 							{
 								if (category == null)
@@ -117,10 +131,9 @@
 								return jQuery.inArray(category, allCategories) >= 0;
 							}
 							
-							function filterParsedVideosCategory(parsedVideos)
+							function filterParsedVideosCategory(parsedVideos, categoryName)
 							{
-								var categoryInURL = getCategoryFromUrl();
-								if (!isCategoryPresentAmongExisting(categoryInURL, parsedVideos))
+								if (categoryName == null)
 									return parsedVideos;
 								var filtered = new Array();
 								for(var index = 0; index < parsedVideos.length; ++index)
@@ -132,9 +145,34 @@
 									var categories = commaCategories.split(',');
 									if (categories == null)
 										continue;
-									if (jQuery.inArray(categoryInURL, categories) < 0)
+									if (jQuery.inArray(categoryName, categories) < 0)
 										continue;
 									filtered.push(parsedVideo);
+								}
+								return filtered;
+							}
+							
+							function filterSameOldVideosInCategory(sortedVideos, categoryName)
+							{
+								if (categoryName == null)
+									return sortedVideos;
+								var filtered = new Array();
+								for(var index = 0; index < sortedVideos.length; ++index)
+								{
+									var found = false;
+									var video = sortedVideos[index];
+									for(var jndex = 0; jndex < filtered.length; ++jndex)
+									{
+										if (video["VideoURL"] == filtered[jndex]["VideoURL"])
+										{
+											found = true;
+											break;
+										}
+									}
+									if (!found)
+									{
+										filtered.push(video);
+									}
 								}
 								return filtered;
 							}
@@ -276,7 +314,7 @@
 								$("#videostoday").show();
 							}
 							
-							function fillCategoriesList(parsedVideos)
+							function fillCategoriesList(parsedVideos, categoryName)
 							{
 								var pvtechURL = location.protocol + "//" + location.host + location.pathname;
 								
@@ -284,8 +322,7 @@
 								var allVideosA = $("<a />").text("All Videos").attr("href", pvtechURL);
 								allVideosA.appendTo(allVideosLi);
 								
-								var categoryInURL = getCategoryFromUrl();
-								if (!isCategoryPresentAmongExisting(categoryInURL, parsedVideos))
+								if (categoryName == null)
 									allVideosA.css("color","orange");
 								
 								var categories = getCategories(parsedVideos);
@@ -297,20 +334,19 @@
 									var categoryUrl = pvtechURL + "?category=" + escape(category);
 									var categoryA = $("<a />").text(category).attr("href", categoryUrl);
 									categoryA.appendTo(categoryLi);
-									if (categoryInURL == category)
+									if (categoryName == category)
 										categoryA.css("color","orange");
 								}
 							}
 							
-							function setCategorySiteHeader(parsedVideos)
+							function setCategorySiteHeader(parsedVideos, categoryName)
 							{
-								var categoryInURL = getCategoryFromUrl();
-								if (!isCategoryPresentAmongExisting(categoryInURL, parsedVideos))
+								if (categoryName == null)
 								{
 									$("#categoryHeader").text("");
 									return;
 								}
-								$("#categoryHeader").text("Category: " + categoryInURL);
+								$("#categoryHeader").text("Category: " + categoryName);
 							}
 							
 							function mustShowWatchedCheckBox(allVideos)
