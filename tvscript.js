@@ -57,11 +57,11 @@
 							
 							function initShowWatchedCheckBox()
 							{
-								$("#showwatchedvideos").prop("checked", showWatchedVideos());
+								$("#showwatchedvideos").prop("checked", mustShowWatchedVideos());
 								$('#showwatchedvideos').change(showHideWatchedVideos);
 							}
 							
-							function showWatchedVideos()
+							function mustShowWatchedVideos()
 							{
 								var categoryInURL = getCategoryFromUrl();
 								if (isCategoryPresentAmongExisting(categoryInURL, sortedVideos))
@@ -441,7 +441,7 @@
 							var playlist;
 							function buildPlaylist(allVideos)
 							{
-								var playlistData = composePlaylistData(allVideos, showWatchedVideos());
+								var playlistData = composePlaylistData(allVideos, mustShowWatchedVideos());
 								playlist = new tTable( {
 										titles : [
 											{ "title": "Title", "type" : "string" },
