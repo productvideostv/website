@@ -114,7 +114,7 @@
 								if (category == null)
 									return false;
 								var allCategories = getCategories(parsedVideos);
-								return jQuery.inArray(categoryInURL, allCategories) >= 0;
+								return jQuery.inArray(category, allCategories) >= 0;
 							}
 							
 							function filterParsedVideosCategory(parsedVideos)
